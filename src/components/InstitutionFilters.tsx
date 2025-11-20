@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/Button";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
-import { Search, Plus, Upload, Download, Filter, X } from "lucide-react";
+import { Card, CardContent, CardHeader } from "./ui/Card";
+import { Plus, Upload, Download, Filter, X } from "lucide-react";
 import {
   INSTITUTION_SECTORS,
   FILTER_COUNTRIES,
