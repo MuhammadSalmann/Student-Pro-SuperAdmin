@@ -28,7 +28,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col w-64 h-screen bg-[#435663] ">
+    <div className="flex flex-col w-64 h-screen bg-[#7ea7c2] ">
       {/* bg-[#529A73]  */}
       {/* Logo Section */}
       <div className="flex items-center justify-center h-24 px-6 py-4">

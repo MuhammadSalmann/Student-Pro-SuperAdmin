@@ -6,7 +6,7 @@ const Header = () => {
 
   const getPageTitle = () => {
     const path = location.pathname;
-    if (path === "/institutions") return "Global Education providers List";
+    if (path === "/institutions") return "Global Institutions List";
     if (path === "/insurance") return "Insurance";
     if (path === "/visa-service") return "Visa Service";
     if (path === "/accommodation") return "Accommodation";
