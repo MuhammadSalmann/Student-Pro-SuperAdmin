@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Building2, Shield, Plane, Home, LogOut } from "lucide-react";
+import { Building2, ShieldCheck, Plane, Home, LogOut } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "../lib/toast";
 
@@ -10,8 +10,8 @@ const Sidebar = () => {
 
   const navItems = [
     { name: "Institutions", path: "/institutions", icon: Building2 },
-    { name: "Insurance", path: "/insurance", icon: Shield },
-    { name: "Visa Service", path: "/visa-service", icon: Plane },
+    { name: "Insurance", path: "/insurance", icon: ShieldCheck },
+    { name: "Visa & Travel", path: "/visa-service", icon: Plane },
     { name: "Accommodation", path: "/accommodation", icon: Home },
   ];
 
@@ -28,22 +28,19 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex h-screen w-64 flex-col border-r border-gray-200 bg-white">
+    <div className="flex flex-col w-64 h-screen bg-[#435663] ">
+      {/* bg-[#529A73]  */}
       {/* Logo Section */}
-      <div className="flex h-16 items-center justify-center border-b border-gray-200 px-6">
-        <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-green-500">
-            <span className="text-xl font-bold text-white">SP</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-bold text-gray-900">Student Pro</span>
-            <span className="text-xs text-gray-500">Education</span>
-          </div>
-        </div>
+      <div className="flex items-center justify-center h-24 px-6 py-4">
+        <img
+          src="/student-pro-grayscale.png"
+          alt="Student Pro Education"
+          className="h-auto w-full object-contain grayscale"
+        />
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.path);
@@ -51,26 +48,25 @@ const Sidebar = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
-                active
-                  ? "bg-gradient-to-r from-blue-50 to-green-50 text-blue-700"
-                  : "text-gray-700 hover:bg-gray-50"
-              }`}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all transform ${
+                  active
+                    ? "bg-[#4A5A6A] text-white shadow-md"
+                    : "text-white/95 hover:bg-[#4A5A6A] hover:translate-x-1"
+                }`}
             >
-              <Icon className={`h-5 w-5 ${active ? "text-blue-600" : "text-gray-500"}`} />
+              <Icon className={`h-5 w-5 ${active ? "text-white" : "text-white/80"}`} />
               <span>{item.name}</span>
             </Link>
           );
         })}
       </nav>
-
-      <div className="border-t border-gray-200 p-4">
+      <div className="p-4">
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 transition-all hover:bg-red-50"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-white hover:bg-red-600/10 transition-colors"
         >
-          <LogOut className="h-5 w-5" />
-          <span>Logout</span>
+          <LogOut className="w-5 h-5 text-white" />
+          <span className="text-white">Logout</span>
         </button>
       </div>
     </div>
