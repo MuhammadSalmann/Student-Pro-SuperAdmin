@@ -7,7 +7,7 @@ export interface Institution {
   _id: string;
   name: string;
   country: string;
-  state: string;
+  state: string[];
   sector: "University" | "College" | "Private School" | "Government School" | "English School" | "Institute";
   territory: string[];
   promoted?: string;
@@ -56,7 +56,7 @@ export interface SingleInstitutionResponse {
 export interface CreateInstitutionData {
   name: string;
   country: string;
-  state: string;
+  state: string[];
   sector: Institution["sector"];
   territory?: string[];
   promoted?: string;
