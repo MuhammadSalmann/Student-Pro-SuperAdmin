@@ -38,6 +38,7 @@ export default function Institutions() {
   // Filter states - must be defined before useInstitutions
   const [searchName, setSearchName] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
+  const [filterState, setFilterState] = useState("");
   const [filterTerritory, setFilterTerritory] = useState("");
   const [filterSector, setFilterSector] = useState("");
   const [filterGroup, setFilterGroup] = useState("");
@@ -86,6 +87,7 @@ export default function Institutions() {
     const cleanFilters = buildInstitutionFilters({
       searchName,
       filterCountry,
+      filterState,
       filterTerritory,
       filterSector,
       filterGroup,
@@ -118,6 +120,7 @@ export default function Institutions() {
   const handleClearFilters = () => {
     setSearchName("");
     setFilterCountry("");
+    setFilterState("");
     setFilterTerritory("");
     setFilterSector("");
     setFilterGroup("");
@@ -133,6 +136,179 @@ export default function Institutions() {
     
     clearFilters();
     setHasActiveFilters(false);
+  };
+
+  // Handle country change - clear state when country changes and auto-apply immediately
+  const handleFilterCountryChange = (value: string) => {
+    setFilterCountry(value);
+    // Clear state filter when country changes
+    if (value !== filterCountry) {
+      setFilterState("");
+    }
+    // Auto-apply filters immediately
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry: value,
+        filterState: "", // Reset state when country changes
+        filterTerritory,
+        filterSector,
+        filterGroup,
+        filterPromoted,
+        filterScholarship,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle state change and auto-apply
+  const handleFilterStateChange = (value: string) => {
+    setFilterState(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState: value,
+        filterTerritory,
+        filterSector,
+        filterGroup,
+        filterPromoted,
+        filterScholarship,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle territory change and auto-apply
+  const handleFilterTerritoryChange = (value: string) => {
+    setFilterTerritory(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState,
+        filterTerritory: value,
+        filterSector,
+        filterGroup,
+        filterPromoted,
+        filterScholarship,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle sector change and auto-apply
+  const handleFilterSectorChange = (value: string) => {
+    setFilterSector(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState,
+        filterTerritory,
+        filterSector: value,
+        filterGroup,
+        filterPromoted,
+        filterScholarship,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle group change and auto-apply
+  const handleFilterGroupChange = (value: string) => {
+    setFilterGroup(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState,
+        filterTerritory,
+        filterSector,
+        filterGroup: value,
+        filterPromoted,
+        filterScholarship,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle promoted change and auto-apply
+  const handleFilterPromotedChange = (value: string) => {
+    setFilterPromoted(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState,
+        filterTerritory,
+        filterSector,
+        filterGroup,
+        filterPromoted: value,
+        filterScholarship,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle 100% promotion change and auto-apply
+  const handleFilter100PromotionChange = (value: string) => {
+    setFilter100Promotion(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState,
+        filterTerritory,
+        filterSector,
+        filterGroup,
+        filterPromoted,
+        filterScholarship,
+        filter100Promotion: value,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
+  };
+
+  // Handle scholarship change and auto-apply
+  const handleFilterScholarshipChange = (value: string) => {
+    setFilterScholarship(value);
+    setTimeout(() => {
+      const cleanFilters = buildInstitutionFilters({
+        searchName,
+        filterCountry,
+        filterState,
+        filterTerritory,
+        filterSector,
+        filterGroup,
+        filterPromoted,
+        filterScholarship: value,
+        filter100Promotion,
+        pageSize,
+      });
+      updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+      setHasActiveFilters(true);
+    }, 0);
   };
 
   // Handle page size change with auto-apply
@@ -254,6 +430,7 @@ export default function Institutions() {
     const cleanFilters = buildExportFilters({
       searchName,
       filterCountry,
+      filterState,
       filterTerritory,
       filterSector,
       filterGroup,
@@ -276,6 +453,7 @@ export default function Institutions() {
       <InstitutionFilters
         searchName={searchName}
         filterCountry={filterCountry}
+        filterState={filterState}
         filterTerritory={filterTerritory}
         filterSector={filterSector}
         filterGroup={filterGroup}
@@ -287,15 +465,15 @@ export default function Institutions() {
         exporting={exporting}
         hasActiveFilters={hasActiveFilters}
         onSearchNameChange={handleSearchNameChange}
-        onFilterCountryChange={setFilterCountry}
-        onFilterTerritoryChange={setFilterTerritory}
-        onFilterSectorChange={setFilterSector}
-        onFilterGroupChange={setFilterGroup}
-        onFilterPromotedChange={setFilterPromoted}
-        onFilter100PromotionChange={setFilter100Promotion}
-        onFilterScholarshipChange={setFilterScholarship}
+        onFilterCountryChange={handleFilterCountryChange}
+        onFilterStateChange={handleFilterStateChange}
+        onFilterTerritoryChange={handleFilterTerritoryChange}
+        onFilterSectorChange={handleFilterSectorChange}
+        onFilterGroupChange={handleFilterGroupChange}
+        onFilterPromotedChange={handleFilterPromotedChange}
+        onFilter100PromotionChange={handleFilter100PromotionChange}
+        onFilterScholarshipChange={handleFilterScholarshipChange}
         onPageSizeChange={handlePageSizeChange}
-        onApplyFilters={handleApplyFilters}
         onClearFilters={handleClearFilters}
         onImport={() => setShowImportModal(true)}
         onExport={handleExportFiltered}

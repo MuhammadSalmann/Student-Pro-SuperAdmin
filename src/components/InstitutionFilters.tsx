@@ -11,11 +11,13 @@ import {
   FILTER_PROMOTIONS,
   FILTER_YES_NO,
   PAGE_SIZE_OPTIONS,
+  COUNTRY_STATES,
 } from "../utils/helpers";
 
 interface InstitutionFiltersProps {
   searchName: string;
   filterCountry: string;
+  filterState: string;
   filterTerritory: string;
   filterSector: string;
   filterGroup: string;
@@ -28,6 +30,7 @@ interface InstitutionFiltersProps {
   hasActiveFilters: boolean;
   onSearchNameChange: (value: string) => void;
   onFilterCountryChange: (value: string) => void;
+  onFilterStateChange: (value: string) => void;
   onFilterTerritoryChange: (value: string) => void;
   onFilterSectorChange: (value: string) => void;
   onFilterGroupChange: (value: string) => void;
@@ -35,7 +38,6 @@ interface InstitutionFiltersProps {
   onFilter100PromotionChange: (value: string) => void;
   onFilterScholarshipChange: (value: string) => void;
   onPageSizeChange: (value: number) => void;
-  onApplyFilters: () => void;
   onClearFilters: () => void;
   onImport: () => void;
   onExport: () => void;
@@ -46,6 +48,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
   const {
     searchName,
     filterCountry,
+    filterState,
     filterTerritory,
     filterSector,
     filterGroup,
@@ -58,6 +61,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
     hasActiveFilters,
     onSearchNameChange,
     onFilterCountryChange,
+    onFilterStateChange,
     onFilterTerritoryChange,
     onFilterSectorChange,
     onFilterGroupChange,
@@ -65,14 +69,13 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
     onFilter100PromotionChange,
     onFilterScholarshipChange,
     onPageSizeChange,
-    onApplyFilters,
     onClearFilters,
     onImport,
     onExport,
     onAddInstitution,
   } = props;
 
-  // NEW: Toggle filter visibility
+  // Toggle filter visibility
   const [showFilters, setShowFilters] = useState(false);
 
   return (
@@ -89,16 +92,6 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </Button>
 
           <div className="flex gap-1.5">
-            {/* NEW FILTER TOGGLE BUTTON */}
-            {/* <Button
-              onClick={() => setShowFilters(!showFilters)}
-              variant="outline"
-              className="flex items-center gap-1.5 h-8 text-xs px-3"
-            >
-              {showFilters ? <X size={14} /> : <Filter size={14} />}
-              {showFilters ? "Close Filters" : "Filters"}
-            </Button> */}
-
             <Button
               onClick={onImport}
               variant="outline"
@@ -153,6 +146,22 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
                 </option>
               ))}
             </select>
+
+            {/* State Filter - Only show when country is selected */}
+            {filterCountry && COUNTRY_STATES[filterCountry] && (
+              <select
+                className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+                value={filterState}
+                onChange={(e) => onFilterStateChange(e.target.value)}
+              >
+                <option value="">All States</option>
+                {COUNTRY_STATES[filterCountry].map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+            )}
 
             <select
               className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
@@ -241,14 +250,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
               ))}
             </select>
 
-            {!hasActiveFilters ? (
-              <Button
-                onClick={onApplyFilters}
-                className="h-8 text-xs bg-[#313647] hover:bg-[#10192c] text-white px-4"
-              >
-                Apply Filters
-              </Button>
-            ) : (
+            {hasActiveFilters && (
               <Button
                 onClick={onClearFilters}
                 className="h-8 text-xs bg-gray-400 hover:bg-gray-500 text-white px-4"
