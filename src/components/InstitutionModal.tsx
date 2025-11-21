@@ -10,6 +10,7 @@ import {
   INSTITUTION_SECTORS,
   FILTER_COUNTRIES,
   FILTER_TERRITORIES,
+  COUNTRY_STATES,
   getCountryCode,
   getCountryName,
 } from "../utils/helpers";
@@ -37,7 +38,7 @@ export default function InstitutionModal({
   const [formData, setFormData] = useState<Partial<CreateInstitutionData>>({
     name: "",
     country: "",
-    state: "",
+    state: [],
     sector: "University",
     scholarship: "",
     promotion: "No",
@@ -54,6 +55,9 @@ export default function InstitutionModal({
   
   // Territory input state
   const [territoryInput, setTerritoryInput] = useState("");
+  
+  // State input state
+  const [stateInput, setStateInput] = useState("");
 
   // Update form data when institution or mode changes
   useEffect(() => {
@@ -63,7 +67,7 @@ export default function InstitutionModal({
       setFormData({
         name: institution.name,
         country: getCountryName(institution.country),
-        state: institution.state,
+        state: Array.isArray(institution.state) ? institution.state : (institution.state ? [institution.state] : []),
         sector: institution.sector,
         scholarship: institution.scholarship || "",
         promotion: institution.promotion || "No",
@@ -79,7 +83,7 @@ export default function InstitutionModal({
       setFormData({
         name: "",
         country: "",
-        state: "",
+        state: [],
         sector: "University",
         scholarship: "",
         promotion: "No",
@@ -136,6 +140,31 @@ export default function InstitutionModal({
     });
   };
 
+  // Handle add state
+  const handleAddState = () => {
+    if (!stateInput.trim()) {
+      toast.error("Please select a state");
+      return;
+    }
+    if (formData.state?.includes(stateInput.trim())) {
+      toast.error("State already added");
+      return;
+    }
+    setFormData({
+      ...formData,
+      state: [...(formData.state || []), stateInput.trim()],
+    });
+    setStateInput("");
+  };
+
+  // Handle remove state
+  const handleRemoveState = (index: number) => {
+    setFormData({
+      ...formData,
+      state: (formData.state || []).filter((_, i) => i !== index),
+    });
+  };
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -144,6 +173,7 @@ export default function InstitutionModal({
     const cleanedData = {
       ...formData,
       country: formData.country ? getCountryCode(formData.country.trim()) : "",
+      state: formData.state || [],
       territory: formData.territory?.map(t => getCountryCode(t.trim())) || [],
       group: formData.group?.trim() || "",
       scholarship: formData.scholarship?.trim() || "",
@@ -162,7 +192,7 @@ export default function InstitutionModal({
     setFormData({
       name: "",
       country: "",
-      state: "",
+      state: [],
       sector: "University",
       scholarship: "",
       promotion: "No",
@@ -175,6 +205,7 @@ export default function InstitutionModal({
     });
     setNewCourse({ course: "", commission: "" });
     setTerritoryInput("");
+    setStateInput("");
   };
 
   if (!isOpen) return null;
@@ -220,7 +251,7 @@ export default function InstitutionModal({
                   required
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                  onChange={(e) => setFormData({ ...formData, country: e.target.value, state: [] })}
                 >
                   <option value="">Select Country</option>
                   {FILTER_COUNTRIES.map((country) => (
@@ -230,14 +261,64 @@ export default function InstitutionModal({
                   ))}
                 </select>
               </div>
-              <div>
-                <label className="block mb-1 text-sm font-medium text-gray-700">State</label>
-                <Input
-                  value={formData.state}
-                  onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                  placeholder="State"
-                />
-              </div>
+              {/* State Section - Only show when country is selected and has states */}
+              {formData.country && COUNTRY_STATES[formData.country] && (
+                <div className="col-span-2">
+                  <label className="block mb-1 text-sm font-medium text-gray-700">State</label>
+                  <div className="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <p className="mb-3 text-sm font-medium text-gray-700">Add State</p>
+                    <div className="flex gap-2">
+                      <select
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                        value={stateInput}
+                        onChange={(e) => setStateInput(e.target.value)}
+                      >
+                        <option value="">Select State</option>
+                        {COUNTRY_STATES[formData.country].map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                      <Button
+                        type="button"
+                        onClick={handleAddState}
+                        className="flex items-center gap-1 bg-[#313647] hover:bg-[#10192c] whitespace-nowrap"
+                        disabled={!stateInput.trim()}
+                      >
+                        <Plus size={16} />
+                        Add
+                      </Button>
+                    </div>
+                  </div>
+
+                  {formData.state && formData.state.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-gray-700">
+                        Added States ({formData.state.length})
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {formData.state.map((state, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium text-gray-700 bg-gray-100 rounded-full"
+                          >
+                            {state}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveState(idx)}
+                              className="text-red-600 hover:text-red-800"
+                              title="Remove state"
+                            >
+                              <X size={14} />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700">
                   Sector <span className="text-red-500">*</span>

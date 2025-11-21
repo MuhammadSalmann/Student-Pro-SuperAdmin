@@ -263,7 +263,7 @@ class InstitutionService {
       {
         'Name': 'Example University',
         'Country': 'USA',
-        'State': 'California',
+        'State': 'California; New York',
         'Type': 'University',
         'Territory': 'US; UK; CA',
         'Promoted': 'featured; top',
