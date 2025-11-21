@@ -227,7 +227,16 @@ export default function InstitutionModal({
             <X size={24} />
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form 
+          onSubmit={handleSubmit} 
+          onKeyDown={(e) => {
+            // Prevent Enter key from submitting the form
+            if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {
+              e.preventDefault();
+            }
+          }}
+          className="p-6 space-y-6"
+        >
           {/* Basic Information */}
           <div>
             <h3 className="mb-3 text-lg font-semibold text-gray-900">Basic Information</h3>
