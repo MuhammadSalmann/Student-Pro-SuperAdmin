@@ -343,6 +343,420 @@ export const FILTER_TERRITORIES = [
 ] as const;
 
 /**
+ * Mapping of countries to their states/provinces/territories
+ * Used for dynamic state filtering based on selected country
+ */
+export const COUNTRY_STATES: Record<string, string[]> = {
+  "Australia": [
+    "New South Wales",
+    "Victoria",
+    "Queensland",
+    "South Australia",
+    "Western Australia",
+    "Tasmania",
+    "Northern Territory",
+    "Australian Capital Territory"
+  ],
+  "Canada": [
+    "Alberta",
+    "Alberta, Calgary",
+    "British Columbia",
+    "British Columbia, Burnaby",
+    "British Columbia, Kamloops",
+    "British Columbia, Shawnigan Lake",
+    "British Columbia, Vancouver",
+    "British Columbia, Victoria",
+    "Manitoba",
+    "Manitoba, Winnipeg",
+    "Montreal",
+    "New Brunswick",
+    "Newfoundland and Labrador",
+    "Northwest Territories",
+    "Nova Scotia",
+    "Nova Scotia, Sydney",
+    "Nunavut",
+    "Ontario",
+    "Ontario, Belleville",
+    "Ontario, Brampton",
+    "Ontario, Peterborough",
+    "Ontario, St. Catharines",
+    "Ontario, Thunder Bay",
+    "Ontario, Toronto",
+    "Ontario, Waterloo",
+    "Ontario, Windsor",
+    "Prince Edward Island",
+    "Quebec",
+    "Saskatchewan",
+    "Saskatchewan (Moose Jaw, Prince Albert, Regina, Saskatoon)",
+    "Saskatchewan, Regina",
+    "Toronto",
+    "Vancouver",
+    "Yukon"
+  ],
+  "United States": [
+    "Alabama",
+    "Alabama, Auburn",
+    "Alabama, Birmingham",
+    "Alabama, Montgomery",
+    "Alaska",
+    "ALL",
+    "Arizona",
+    "Arizona, Tempe",
+    "Arizona, Tucson",
+    "Arkansas",
+    "Boston",
+    "California",
+    "California, Bakersfield",
+    "California, Fresno",
+    "California, Kentfield, Santa Monica, Irvine, San Mateo",
+    "California, Los Angeles",
+    "California, Malibu",
+    "California, Pasadena",
+    "California, Saint-Anselmo North of San Francisco",
+    "California, San Francisco",
+    "California, Santa Barbara",
+    "California, Stockton",
+    "Colorado",
+    "Colorado, Denver",
+    "Colorado, Fort Collins",
+    "Connecticut",
+    "Connecticut, Hamden",
+    "Connecticut, New Haven",
+    "Connecticut, Simsbury",
+    "Connecticut, Storrs",
+    "Delaware",
+    "Florida",
+    "Florida, Jacksonville",
+    "Florida, Miami",
+    "Florida, Orlando",
+    "Georgia",
+    "Hawaii",
+    "Idaho",
+    "Illinois",
+    "Illinois, Carbondale",
+    "Illinois, Chicago",
+    "Illinois, Decatur",
+    "Illinois, Normal",
+    "Illinois, Peoria",
+    "Indiana",
+    "Indiana, Angola",
+    "Iowa",
+    "Iowa, Des Moines",
+    "Kansas",
+    "Kansas, Lawrence",
+    "Kansas State, Lawrence",
+    "Kentucky",
+    "Louisiana",
+    "Louisiana, Baton Rouge",
+    "Louisiana, New Orleans",
+    "Maine",
+    "Maryland",
+    "Maryland, Baltimore",
+    "Maryland, Colora",
+    "Massachusetts",
+    "Massachusetts, Boston",
+    "Massachusetts, North Andover",
+    "Michigan",
+    "Minnesota",
+    "Minnesota, Minneapolis",
+    "Mississippi",
+    "Missouri",
+    "Missouri, St. Louis",
+    "Montana",
+    "Nebraska",
+    "Nebraska, Omaha",
+    "Nevada",
+    "New Hampshire",
+    "New Hampshire, Concord",
+    "New Hampshire, Henniker and Manchester",
+    "New Hampshire, Portsmouth",
+    "New Jersey",
+    "New Jersey, Camden",
+    "New Jersey, Madison",
+    "New Jersey, New Brunswick",
+    "New Mexico",
+    "New York",
+    "New York, Brookville",
+    "New York, Brooklyn",
+    "New York, Buffalo",
+    "New York, Greenvale",
+    "New York, Hempstead",
+    "New York, Long Island",
+    "New York, New York",
+    "New York, Queens",
+    "New York, Stony Brook",
+    "New York State, New York City",
+    "New York State, Rochester",
+    "North Carolina",
+    "North Dakota",
+    "Ohio",
+    "Ohio, Cleveland",
+    "Ohio, Dayton",
+    "Ohio, Kent",
+    "Oklahoma",
+    "Oklahoma, Tulsa",
+    "Oregon",
+    "Oregon, Corvallis",
+    "Oregon, Portland",
+    "Pennsylvania",
+    "Pennsylvania, Chester",
+    "Pennsylvania, Philadelphia",
+    "Pennsylvania, Pittsburgh",
+    "Philadelphia, Villanova",
+    "Rhode Island",
+    "South Carolina",
+    "South Carolina, Columbia",
+    "South Dakota",
+    "Tennessee",
+    "Texas",
+    "Texas, Christi",
+    "Texas, Georgetown",
+    "Texas, San Antonio",
+    "Texas, Waco",
+    "Utah",
+    "Utah, Salt Lake City",
+    "Vermont",
+    "Vermont, Burlington",
+    "Virginia",
+    "Virginia, Charlottesville",
+    "Virginia, Fairfax",
+    "Virginia, Harrisonburg",
+    "Virginia, Richmond",
+    "Virginia, Woodstock",
+    "Washington",
+    "Washington, D.C",
+    "Washington, D.C.",
+    "Washington, Shoreline",
+    "Washington, Spokane",
+    "West Virginia",
+    "West Virginia, Huntington",
+    "Wisconsin",
+    "Wisconsin, Eau Claire",
+    "Wisconsin, Green Bay",
+    "Wisconsin, Madison",
+    "Wisconsin, Platteville",
+    "Wisconsin, River Falls",
+    "Wisconsin, Stevens Point",
+    "Wisconsin, Superior",
+    "Wisconsin, Whitewater",
+    "Wyoming",
+    "Wyoming, Laramie"
+  ],
+  "United Kingdom": [
+    "Aberdeen",
+    "Aberystwyth",
+    "All",
+    "Banbury",
+    "Bangor",
+    "Bath",
+    "Belfast",
+    "Birmingham",
+    "Bolton",
+    "Bournemouth",
+    "Bradford",
+    "Brighton",
+    "Bristol",
+    "Buckingham",
+    "Cambridge",
+    "Cambridge & London",
+    "Cannock",
+    "Canterbury",
+    "Cardiff",
+    "Carlisle",
+    "Cheltenham",
+    "Chester",
+    "Chichester",
+    "Colchester",
+    "Coleraine",
+    "Coventry",
+    "Cranfield",
+    "Derby",
+    "Dundee",
+    "Durham",
+    "Edinburgh",
+    "Egham",
+    "Ellesmere",
+    "Elstree",
+    "Ely",
+    "England",
+    "Exeter",
+    "Falmouth",
+    "Farnham",
+    "Folkestone",
+    "Glasgow",
+    "Greater Manchester",
+    "Guildford",
+    "Harrogate",
+    "Hatfield",
+    "Huddersfield",
+    "Hull",
+    "Keele",
+    "Lancaster",
+    "Leeds",
+    "Leicester",
+    "Lincoln",
+    "Liverpool",
+    "Llanelli",
+    "London",
+    "Loughborough",
+    "Luton",
+    "Malvern",
+    "Manchester",
+    "Middlesbrough",
+    "Newcastle",
+    "Newcastle upon Tyne",
+    "Northern Ireland",
+    "Northampton",
+    "Norwich",
+    "Nottingham",
+    "Oakham",
+    "Ormskirk",
+    "Oswestry",
+    "Oxford",
+    "Pangbourne",
+    "Perth",
+    "Petworth",
+    "Plymouth",
+    "Pontypridd",
+    "Poole",
+    "Portsmouth",
+    "Preston",
+    "Reading",
+    "Rochester",
+    "Salisbury",
+    "Scotland",
+    "Scunthorpe",
+    "Sheffield",
+    "Southampton",
+    "Spinkhill",
+    "St Andrews",
+    "Stirling",
+    "Sunderland",
+    "Surrey",
+    "Sussex",
+    "Swansea",
+    "Taunton",
+    "Truro",
+    "Uttoxeter",
+    "Wales",
+    "Woldingham",
+    "Wolverhampton",
+    "Woodbridge",
+    "Worksop",
+    "Wycombe",
+    "York"
+  ],
+  "Germany": [
+    "Leipzig"
+  ],
+  "India": [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+    "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+    "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan",
+    "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
+    "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir", "Ladakh"
+  ],
+  "China": [
+    "Suzhou, Jiangsu", "Ningbo, Zhejiang", "Hangzhou, Zheijiang"
+  ],
+  "Malaysia": [
+    "Johor",
+    "Johor Bahru",
+    "Kedah",
+    "Kelantan",
+    "Kuala Lumpur",
+    "Kuala Lumpur, Springhill (Port Dickson), Kuching",
+    "Labuan",
+    "Malacca",
+    "Negeri Sembilan",
+    "Nilai",
+    "Pahang",
+    "Penang",
+    "Penang Island",
+    "Perak",
+    "Perlis",
+    "Putrajaya",
+    "Sabah",
+    "Sarawak",
+    "Selangor",
+    "Semenyih",
+    "Subang",
+    "Terengganu"
+  ],
+  "Indonesia": [
+    "West Jakarta", "Jakarta", "Bandung"
+  ],
+  "Japan": [
+    "kyoto"
+  ],
+  "France": [
+    "Paris",
+    "Yssingeaux",
+    "Lyon",
+    "Saint-Étienne",
+    "Shanghai",
+    "Casablanca"
+  ],
+  "Spain": [
+
+    "Murcia", "Marbella"
+  ],
+  "Netherlands": [
+    "Hague", "Amsterdam"
+  ],
+  "New Zealand": [
+    "Auckland",
+    "Auckland, Henderson",
+    "Auckland, Wellington",
+    "Auckland, Greymouth",
+    "Blenheim",
+    "Christchurch",
+    "Cromwell",
+    "Dunedin",
+    "Gisborne",
+    "Gore",
+    "Hamilton",
+    "Hastings",
+    "Invercargill",
+    "Napier",
+    "Nelson",
+    "New Plymouth",
+    "Otanomomo",
+    "Palmerston North",
+    "Palmerston North, Whanganui, Masterton and Levin",
+    "Queenstown",
+    "Rotorua",
+    "Tauranga",
+    "Wellington",
+    "Whangarei"
+  ],
+  "Switzerland": [
+    "Le Bouveret", "Lucerne", "Brig", "Montreux", "Glion", "Bulle", "Caux", "Leysin", "Soerenberg", "Valais"
+
+  ],
+  "Ireland": [
+    "Dublin", "Cork", "Co. Kildare", "Limerick", "Galway"
+  ],
+  "Thailand": [
+    "Bangkok", "Pathum Thani"
+  ],
+  "Viet Nam": [
+    "Hanoi", "Ho Chi Minh City", "Da Nang"
+  ],
+  "United Arab Emirates": [
+
+    "Dubai",
+
+  ],
+  "Singapore": ["Singapore"],
+  "Hungary": [
+    "Pécs"
+
+  ]
+};
+
+/**
  * List of institution groups for filter dropdown
  * Educational institution partnerships and networks
  */
@@ -384,7 +798,7 @@ export const FILTER_YES_NO = ["Yes", "No"] as const;
 /**
  * Page size options for pagination
  */
-export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25,50,100] as const;
+export const PAGE_SIZE_OPTIONS = [10, 15, 20, 25, 50, 100] as const;
 
 /**
  * Validates if a file is a valid Excel file
@@ -685,6 +1099,7 @@ export const formatTerritoryFilter = (territory: string): string => {
 export const buildInstitutionFilters = (filters: {
   searchName?: string;
   filterCountry?: string;
+  filterState?: string;
   filterTerritory?: string;
   filterSector?: string;
   filterGroup?: string;
@@ -698,6 +1113,7 @@ export const buildInstitutionFilters = (filters: {
   if (filters.pageSize) cleanFilters.pageSize = filters.pageSize;
   if (filters.searchName?.trim()) cleanFilters.name = filters.searchName.trim();
   if (filters.filterCountry) cleanFilters.country = getCountryCode(filters.filterCountry);
+  if (filters.filterState?.trim()) cleanFilters.state = filters.filterState.trim();
   if (filters.filterTerritory) cleanFilters.territory = formatTerritoryFilter(filters.filterTerritory);
   if (filters.filterSector) cleanFilters.sector = filters.filterSector;
   if (filters.filterGroup) cleanFilters.group = filters.filterGroup;
@@ -716,6 +1132,7 @@ export const buildInstitutionFilters = (filters: {
 export const buildExportFilters = (filters: {
   searchName?: string;
   filterCountry?: string;
+  filterState?: string;
   filterTerritory?: string;
   filterSector?: string;
   filterGroup?: string;
@@ -726,6 +1143,7 @@ export const buildExportFilters = (filters: {
 
   if (filters.searchName?.trim()) cleanFilters.name = filters.searchName.trim();
   if (filters.filterCountry) cleanFilters.country = getCountryCode(filters.filterCountry);
+  if (filters.filterState?.trim()) cleanFilters.state = filters.filterState.trim();
   if (filters.filterTerritory) cleanFilters.territory = formatTerritoryFilter(filters.filterTerritory);
   if (filters.filterSector) cleanFilters.sector = filters.filterSector;
   if (filters.filterGroup) cleanFilters.group = filters.filterGroup;
