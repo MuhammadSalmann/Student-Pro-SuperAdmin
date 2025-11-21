@@ -1189,7 +1189,10 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
  * @param state - State value that could be JSON array or string
  * @returns Parsed state as string (joined if array)
  */
-export const parseStateField = (state: string): string => {
+export const parseStateField = (state: string | string[]): string => {
+  if (Array.isArray(state)) {
+    return state.join(", ");
+  }
   try {
     const parsed = JSON.parse(state);
     return Array.isArray(parsed) ? parsed.join(", ") : state;
