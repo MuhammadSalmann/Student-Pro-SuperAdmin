@@ -76,20 +76,30 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
   } = props;
 
   // Toggle filter visibility
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
 
   return (
     <Card>
       <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-           <Button
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2 flex-1 max-w-md">
+             <Input
+              placeholder="Search by name..."
+              value={searchName}
+              onChange={(e) => onSearchNameChange(e.target.value)}
+              className="h-9 text-sm w-full max-w-[240px]"
+            />
+            <Button
               onClick={() => setShowFilters(!showFilters)}
               variant="outline"
-              className="flex items-center gap-1.5 h-8 text-xs px-3"
+              className="flex items-center gap-1.5 h-9 text-xs px-3 shrink-0"
             >
               {showFilters ? <X size={14} /> : <Filter size={14} />}
-              {showFilters ? "Close Filters" : "Filters"}
+              {showFilters ? "Close" : "Filters"}
             </Button>
+            
+           
+          </div>
 
           <div className="flex gap-1.5">
             <Button
@@ -127,12 +137,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
         <CardContent className="pt-3">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3 lg:grid-cols-4">
 
-            <Input
-              placeholder="Search by name..."
-              value={searchName}
-              onChange={(e) => onSearchNameChange(e.target.value)}
-              className="h-9 text-sm"
-            />
+
 
             <select
               className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
