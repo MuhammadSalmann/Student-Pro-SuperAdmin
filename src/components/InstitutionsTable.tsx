@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Edit2, Trash2, Eye, ExternalLink, Globe, ChevronDown, ChevronRight } from "lucide-react";
+import { Edit2, Trash2, Eye, Globe, ChevronDown, ChevronRight } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -132,16 +132,16 @@ export default function InstitutionsTable({
                   </TableCell>
 
                   {/* Country */}
-                  <TableCell className="font-medium">
+                  <TableCell className="text-sm font-medium text-gray-700">
                     {getCountryName(institution.country)}
                   </TableCell>
 
                   {/* State */}
-                  <TableCell>{parseStateField(institution.state)}</TableCell>
+                  <TableCell className="text-sm font-medium text-gray-700">{parseStateField(institution.state)}</TableCell>
 
                   {/* Sector */}
                   <TableCell>
-                    <span className="text-xs font-medium text-gray-700">
+                    <span className=" text-sm font-medium text-gray-700">
                       {institution.sector}
                     </span>
                   </TableCell>
@@ -153,16 +153,16 @@ export default function InstitutionsTable({
                         href={institution.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                        className="inline-flex items-center gap-1  text-blue-700 hover:text-gray-700 transition-colors"
                       >
-                        <span className="max-w-[160px] truncate" title={institution.name}>
+                        <span title={institution.name}>
                           {institution.name}
                         </span>
-                        <ExternalLink size={14} className="flex-shrink-0" />
+                       
                       </a>
                     ) : (
                       <span
-                        className="block max-w-[180px] truncate font-medium text-gray-900"
+                        className="font-medium text-gray-900"
                         title={institution.name}
                       >
                         {institution.name}
@@ -254,11 +254,10 @@ export default function InstitutionsTable({
                         href={institution.scholarship}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 hover:underline"
+                        className="inline-block rounded bg-[#00CBB8] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#00b2a1] transition-colors shadow-sm"
                         title={institution.scholarship}
                       >
-                        <span className="max-w-[70px] truncate">Scholarship</span>
-                        <ExternalLink size={12} className="flex-shrink-0" />
+                        Scholarship
                       </a>
                     ) : (
                       <span className="text-gray-400">—</span>
@@ -266,7 +265,7 @@ export default function InstitutionsTable({
                   </TableCell>
 
                   {/* Group */}
-                  <TableCell>
+                  <TableCell className="text-sm font-medium text-gray-700">
                     {institution.group &&
                     institution.group.trim() &&
                     institution.group !== "_" ? (
@@ -325,10 +324,10 @@ export default function InstitutionsTable({
                             <table className="w-full">
                               <thead>
                                 <tr className="bg-gray-100/70 border-b border-gray-200">
-                                  <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                  <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200">
                                     Course Name
                                   </th>
-                                  <th className="text-right px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider w-[100px]">
+                                  <th className="text-right px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider w-[140px]">
                                     Commission
                                   </th>
                                 </tr>
@@ -339,7 +338,7 @@ export default function InstitutionsTable({
                                     key={course._id || index}
                                     className="hover:bg-blue-50/30 transition-colors"
                                   >
-                                    <td className="px-3 py-1.5 text-sm text-gray-900">
+                                    <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200">
                                       {course.course}
                                     </td>
                                     <td className="px-3 py-1.5 text-right">
