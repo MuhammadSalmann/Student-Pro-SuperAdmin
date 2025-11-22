@@ -16,7 +16,11 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center  justify-between border-b border-gray-200 bg-teal px-6">
       <h1 className="text-2xl font-bold text-[#313647]">{getPageTitle()}</h1>
-
+  {location.pathname === "/institutions" && (
+        <p className="text-1xl text-[#313647]">
+          If your territory is not listed, please enquire with our team for confirmation.
+        </p>
+      )}
       <div className="flex items-center gap-4">
         <div className="relative">
           {/* <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
