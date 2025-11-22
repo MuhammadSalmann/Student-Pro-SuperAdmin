@@ -1183,23 +1183,43 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
 
   return debounced;
 };
-
-/**
- * Parses state field which might be a JSON array or plain string
- * @param state - State value that could be JSON array or string
- * @returns Parsed state as string (joined if array)
- */
 export const parseStateField = (state: string | string[]): string => {
+  if (!state) return "";
+
+  let items: string[] = [];
+
   if (Array.isArray(state)) {
-    return state.join(", ");
+    items = state;
+  } else if (typeof state === 'string') {
+    // Try JSON parse first
+    try {
+      const parsed = JSON.parse(state);
+      if (Array.isArray(parsed)) {
+        items = parsed;
+      } else {
+        items = [state];
+      }
+    } catch {
+      // If not JSON, split by comma
+      items = state.split(',');
+    }
   }
-  try {
-    const parsed = JSON.parse(state);
-    return Array.isArray(parsed) ? parsed.join(", ") : state;
-  } catch {
-    return state;
-  }
+
+  // Clean up items
+  const cleanedItems = items.flatMap(item => {
+    if (typeof item !== 'string') return String(item);
+
+    // Remove brackets, then split by comma (handles cases where an array element contains multiple values)
+    // Then remove quotes and trim
+    return item.replace(/[\[\]]/g, "")
+      .split(',')
+      .map(s => s.replace(/['"]+/g, "").trim())
+      .filter(s => s.length > 0);
+  });
+
+  return [...new Set(cleanedItems)].join(", ");
 };
+
 
 /**
  * Renders territory display element - returns flag emoji for countries, globe icon indicator for Global
