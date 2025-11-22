@@ -82,30 +82,28 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
     <Card>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 flex-1 max-w-md">
-             <Input
+          <div className="flex max-w-md flex-1 items-center gap-2">
+            <Input
               placeholder="Search by name..."
               value={searchName}
               onChange={(e) => onSearchNameChange(e.target.value)}
-              className="h-9 text-sm w-full max-w-[240px]"
+              className="h-9 w-full max-w-[240px] text-sm"
             />
             <Button
               onClick={() => setShowFilters(!showFilters)}
               variant="outline"
-              className="flex items-center gap-1.5 h-9 text-xs px-3 shrink-0"
+              className="flex h-9 shrink-0 items-center gap-1.5 px-3 text-xs"
             >
               {showFilters ? <X size={14} /> : <Filter size={14} />}
-              {showFilters ? "Close" : "Filters"}
+              Filters
             </Button>
-            
-           
           </div>
 
           <div className="flex gap-1.5">
             <Button
               onClick={onImport}
               variant="outline"
-              className="flex items-center gap-1.5 h-8 text-xs px-3"
+              className="flex h-8 items-center gap-1.5 px-3 text-xs"
               disabled={importing}
             >
               <Upload size={14} />
@@ -114,7 +112,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
 
             <Button
               onClick={onExport}
-              className="flex items-center gap-1.5 h-8 text-xs px-3 bg-gray-500 hover:bg-gray-700 text-white"
+              className="flex h-8 items-center gap-1.5 bg-gray-500 px-3 text-xs text-white hover:bg-gray-700"
               disabled={exporting}
             >
               <Download size={14} />
@@ -123,7 +121,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
 
             <Button
               onClick={onAddInstitution}
-              className="flex items-center gap-1.5 h-8 text-xs px-3 bg-[#313647] hover:bg-[#10192c] text-white"
+              className="flex h-8 items-center gap-1.5 bg-[#313647] px-3 text-xs text-white hover:bg-[#10192c]"
             >
               <Plus size={14} />
               Add Institution
@@ -136,11 +134,8 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
       {showFilters && (
         <CardContent className="pt-3">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3 lg:grid-cols-4">
-
-
-
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterCountry}
               onChange={(e) => onFilterCountryChange(e.target.value)}
             >
@@ -155,7 +150,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             {/* State Filter - Only show when country is selected */}
             {filterCountry && COUNTRY_STATES[filterCountry] && (
               <select
-                className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+                className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
                 value={filterState}
                 onChange={(e) => onFilterStateChange(e.target.value)}
               >
@@ -169,7 +164,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             )}
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterTerritory}
               onChange={(e) => onFilterTerritoryChange(e.target.value)}
             >
@@ -182,7 +177,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </select>
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterSector}
               onChange={(e) => onFilterSectorChange(e.target.value)}
             >
@@ -195,7 +190,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </select>
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterGroup}
               onChange={(e) => onFilterGroupChange(e.target.value)}
             >
@@ -208,7 +203,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </select>
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterPromoted}
               onChange={(e) => onFilterPromotedChange(e.target.value)}
             >
@@ -221,7 +216,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </select>
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filter100Promotion}
               onChange={(e) => onFilter100PromotionChange(e.target.value)}
             >
@@ -234,7 +229,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </select>
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterScholarship}
               onChange={(e) => onFilterScholarshipChange(e.target.value)}
             >
@@ -244,7 +239,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             </select>
 
             <select
-              className="w-full h-9 px-3 py-1.5 text-sm border rounded-lg"
+              className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={pageSize}
               onChange={(e) => onPageSizeChange(Number(e.target.value))}
             >
@@ -258,7 +253,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             {hasActiveFilters && (
               <Button
                 onClick={onClearFilters}
-                className="h-8 text-xs bg-gray-400 hover:bg-gray-500 text-white px-4"
+                className="h-8 bg-gray-400 px-4 text-xs text-white hover:bg-gray-500"
               >
                 Clear Filters
               </Button>
