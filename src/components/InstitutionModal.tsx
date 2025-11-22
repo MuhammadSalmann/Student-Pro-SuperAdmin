@@ -10,6 +10,7 @@ import {
   INSTITUTION_SECTORS,
   FILTER_COUNTRIES,
   FILTER_TERRITORIES,
+  FILTER_GROUPS,
   COUNTRY_STATES,
   getCountryCode,
   getCountryName,
@@ -364,11 +365,18 @@ export default function InstitutionModal({
               </div>
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700">Group</label>
-                <Input
+                <select
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
                   value={formData.group || ""}
                   onChange={(e) => setFormData({ ...formData, group: e.target.value })}
-                  placeholder="Group (optional)"
-                />
+                >
+                  <option value="">Select Group</option>
+                  {FILTER_GROUPS.map((group) => (
+                    <option key={group} value={group}>
+                      {group}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700">Scholarship</label>
