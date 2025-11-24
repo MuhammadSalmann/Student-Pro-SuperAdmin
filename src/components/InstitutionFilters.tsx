@@ -120,12 +120,11 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             <Button
               onClick={onExport}
               className="flex h-8 items-center gap-1.5 px-3 text-xs text-white 
-  bg-[#ABDBC0] 
+  bg-[#0A1F38] 
   rounded-md 
   transition-all duration-200 
-  hover:bg-[#99C9B3] 
-  active:bg-[#85B79E]
-   hover:bg-[#00b2a1]
+  hover:bg-[#0C2A4D] 
+  
 "
 
               disabled={exporting}

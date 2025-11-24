@@ -261,7 +261,7 @@ export default function InstitutionsTable({
                         href={institution.scholarship}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block rounded bg-[#ABDBC0] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#00b2a1] transition-colors shadow-sm"
+                        className="inline-block rounded bg-[#0A1F38] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#0C2A4D] transition-colors shadow-sm"
                         title={institution.scholarship}
                       >
                         Scholarship

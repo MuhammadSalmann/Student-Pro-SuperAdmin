@@ -78,6 +78,7 @@ export default function InstitutionModal({
         global: institution.global || false,
         course: institution.course || [],
         territory: institution.territory?.map(t => getCountryName(t)) || [],
+        parent: institution.parent || "",
       });
     } else if (mode === "create") {
       setFormData({

@@ -779,7 +779,7 @@ export const FILTER_GROUPS = [
   "SEG",
   "Shorelight",
   "Study Group",
-  "Summit",
+  "Sommet",
   "Torrens University Australia",
   "UP Education",
   "University Bridge",
