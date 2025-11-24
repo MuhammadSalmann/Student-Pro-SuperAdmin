@@ -136,7 +136,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
 
             <Button
               onClick={onAddInstitution}
-              className="flex h-8 items-center gap-1.5 bg-[#0A1F38] px-3 text-xs text-white hover:bg-[#10192c]"
+              className="flex h-8 items-center gap-1.5 bg-[#0A1F38] px-3 text-xs text-white hover:bg-[#0C2A4D] "
             >
               <Plus size={14} />
               Add Institution
@@ -268,7 +268,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             {hasActiveFilters && (
               <Button
                 onClick={onClearFilters}
-                className="h-8 bg-gray-400 px-4 text-xs text-white hover:bg-gray-500"
+                className="h-8 bg-[#0A1F38] px-4 text-xs text-white hover:bg-[#0C2A4D] "
               >
                 Clear Filters
               </Button>
