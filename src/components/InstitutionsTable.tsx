@@ -158,7 +158,7 @@ export default function InstitutionsTable({
                         <span title={institution.name}>
                           {institution.name}
                         </span>
-                       
+
                       </a>
                     ) : (
                       <span
@@ -267,10 +267,10 @@ export default function InstitutionsTable({
                   {/* Group */}
                   <TableCell className="text-sm font-medium text-gray-700">
                     {institution.group &&
-                    institution.group.trim() &&
-                    institution.group !== "_" ? (
+                      institution.group.trim() &&
+                      institution.group !== "_" ? (
                       <span
-                        className="block max-w-[90px] truncate text-xs text-gray-700"
+                        className="text-sm font-medium text-gray-700"
                         title={institution.group}
                       >
                         {institution.group}
