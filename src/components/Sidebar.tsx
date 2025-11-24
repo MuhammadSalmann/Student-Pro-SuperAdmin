@@ -31,7 +31,7 @@ const Sidebar = () => {
     <div className="flex flex-col w-64 h-screen bg-[#0A1F38] ">
       {/* bg-[#529A73]  */}
       {/* Logo Section */}
-      <div className="flex items-center justify-center h-24 px-6 py-4">
+      <div className="flex items-center justify-center px-6 pt-8 pb-6">
         <img
           src="/studentpro white.png"
           alt="Student Pro Education"
@@ -45,18 +45,17 @@ const Sidebar = () => {
           const Icon = item.icon;
           const active = isActive(item.path);
           return (
-                   <Link
-            key={item.path}
-            to={item.path}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-1xl font-medium transition-all transform ${
-              active
-                ? "bg-[#ABDBC0] text-white shadow-md" // active color
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-1xl font-medium transition-all transform ${active
+                ? "bg-[#ABDBC0] text-[#0A1F38] shadow-md" // active color
                 : "text-white hover:bg-[#ABDBC0] hover:translate-x-1"
-            }`}
-          >
-            <Icon className={`h-5 w-5 ${active ? "text-white" : "text-white/80"}`} />
-            <span>{item.name}</span>
-          </Link>
+                }`}
+            >
+              <Icon className={`h-5 w-5 ${active ? "text-[#0A1F38]" : "text-white/80"}`} />
+              <span>{item.name}</span>
+            </Link>
           );
         })}
       </nav>
