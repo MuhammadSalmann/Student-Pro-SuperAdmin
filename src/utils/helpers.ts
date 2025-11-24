@@ -761,7 +761,7 @@ export const COUNTRY_STATES: Record<string, string[]> = {
  * Educational institution partnerships and networks
  */
 export const FILTER_GROUPS = [
-  "Academies",
+  "Academies Australasia",
   "Acknowledge Education",
   "ASC International",
   "ATMC",
