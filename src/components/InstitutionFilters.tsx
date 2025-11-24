@@ -92,11 +92,18 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
             <Button
               onClick={() => setShowFilters(!showFilters)}
               variant="outline"
-              className="flex h-9 shrink-0 items-center gap-1.5 px-3 text-xs"
+              className={`flex h-9 shrink-0 items-center gap-1.5 px-3 text-white text-xs 
+    bg-[#0A1F38] 
+    border border-white/30 
+    transition-all duration-200 
+    hover:bg-[#0C2A4D] hover:text-white
+    active:bg-[#091A2C]
+  `}
             >
               {showFilters ? <X size={14} /> : <Filter size={14} />}
               Filters
             </Button>
+
           </div>
 
           <div className="flex gap-1.5">
@@ -112,7 +119,15 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
 
             <Button
               onClick={onExport}
-              className="flex h-8 items-center gap-1.5 bg-gray-500 px-3 text-xs text-white hover:bg-gray-700"
+              className="flex h-8 items-center gap-1.5 px-3 text-xs text-white 
+  bg-[#ABDBC0] 
+  rounded-md 
+  transition-all duration-200 
+  hover:bg-[#99C9B3] 
+  active:bg-[#85B79E]
+   hover:bg-[#00b2a1]
+"
+
               disabled={exporting}
             >
               <Download size={14} />
@@ -121,7 +136,7 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
 
             <Button
               onClick={onAddInstitution}
-              className="flex h-8 items-center gap-1.5 bg-[#313647] px-3 text-xs text-white hover:bg-[#10192c]"
+              className="flex h-8 items-center gap-1.5 bg-[#0A1F38] px-3 text-xs text-white hover:bg-[#10192c]"
             >
               <Plus size={14} />
               Add Institution
