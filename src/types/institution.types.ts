@@ -15,7 +15,6 @@ export interface Institution {
   promotion?: string;
   group?: string;
   url?: string;
-  parent?: string;
   global: boolean;
   course: Course[];
   createdAt: string;
@@ -64,7 +63,6 @@ export interface CreateInstitutionData {
   promotion?: string;
   group?: string;
   url?: string;
-  parent?: string;
   global?: boolean;
   course?: Course[];
 }

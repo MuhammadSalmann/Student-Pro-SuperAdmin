@@ -103,37 +103,46 @@ export default function InstitutionViewModal({
           </div>
 
           {/* Territory */}
-          {institution.territory && institution.territory.length > 0 && (
+          {(institution.global || (institution.territory && institution.territory.length > 0)) && (
             <div>
               <h3 className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Territory
               </h3>
               <div className="flex flex-wrap items-center gap-2.5">
-                {institution.territory.map((t, idx) => {
-                  const territoryData = renderTerritoryBadge(t);
-                  if (!territoryData.displayText) return null;
+                {institution.global ? (
+                  <span
+                    className="inline-flex items-center justify-center w-9 h-9 text-gray-500 hover:text-gray-700 hover:scale-110 transition-all duration-200"
+                    title="Global"
+                  >
+                    <Globe size={20} />
+                  </span>
+                ) : (
+                  institution.territory.map((t, idx) => {
+                    const territoryData = renderTerritoryBadge(t);
+                    if (!territoryData.displayText) return null;
 
-                  if (territoryData.isGlobal) {
+                    if (territoryData.isGlobal) {
+                      return (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center justify-center w-9 h-9 text-gray-500 hover:text-gray-700 hover:scale-110 transition-all duration-200"
+                          title="Global"
+                        >
+                          <Globe size={20} />
+                        </span>
+                      );
+                    }
+
                     return (
                       <span
                         key={idx}
-                        className="inline-flex items-center justify-center w-9 h-9 text-gray-500 hover:text-gray-700 hover:scale-110 transition-all duration-200"
-                        title="Global"
+                        className="px-3 py-1.5 text-sm font-normal text-gray-700 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
                       >
-                        <Globe size={20} />
+                        {territoryData.displayText}
                       </span>
                     );
-                  }
-
-                  return (
-                    <span
-                      key={idx}
-                      className="px-3 py-1.5 text-sm font-normal text-gray-700 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors"
-                    >
-                      {territoryData.displayText}
-                    </span>
-                  );
-                })}
+                  })
+                )}
               </div>
             </div>
           )}

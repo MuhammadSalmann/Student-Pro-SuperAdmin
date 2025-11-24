@@ -53,10 +53,10 @@ export default function InstitutionModal({
 
   // Course form states
   const [newCourse, setNewCourse] = useState({ course: "", commission: "" });
-  
+
   // Territory input state
   const [territoryInput, setTerritoryInput] = useState("");
-  
+
   // State input state
   const [stateInput, setStateInput] = useState("");
 
@@ -78,7 +78,6 @@ export default function InstitutionModal({
         global: institution.global || false,
         course: institution.course || [],
         territory: institution.territory?.map(t => getCountryName(t)) || [],
-        parent: institution.parent || "",
       });
     } else if (mode === "create") {
       setFormData({
@@ -169,7 +168,7 @@ export default function InstitutionModal({
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Clean up the form data before submission
     const cleanedData = {
       ...formData,
@@ -180,7 +179,7 @@ export default function InstitutionModal({
       scholarship: formData.scholarship?.trim() || "",
       url: formData.url?.trim() || "",
     } as CreateInstitutionData;
-    
+
     const success = await onSubmit(cleanedData);
     if (success) {
       onClose();
@@ -228,8 +227,8 @@ export default function InstitutionModal({
             <X size={24} />
           </button>
         </div>
-        <form 
-          onSubmit={handleSubmit} 
+        <form
+          onSubmit={handleSubmit}
           onKeyDown={(e) => {
             // Prevent Enter key from submitting the form
             if (e.key === 'Enter' && e.target instanceof HTMLInputElement) {

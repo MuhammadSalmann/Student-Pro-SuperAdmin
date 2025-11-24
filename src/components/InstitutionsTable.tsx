@@ -172,7 +172,14 @@ export default function InstitutionsTable({
 
                   {/* Territory */}
                   <TableCell>
-                    {institution.territory && institution.territory.length > 0 ? (
+                    {institution.global ? (
+                      <span
+                        className="inline-flex items-center justify-center w-8 h-8 text-gray-500 transition-transform hover:scale-110 cursor-default"
+                        title="Global"
+                      >
+                        <Globe size={14} />
+                      </span>
+                    ) : institution.territory && institution.territory.length > 0 ? (
                       <div className="flex flex-wrap gap-1 items-center max-w-[120px]">
                         {institution.territory.map((t, idx) => {
                           const territoryData = renderTerritoryBadge(t);
