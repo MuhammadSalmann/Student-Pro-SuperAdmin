@@ -50,10 +50,10 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/invoices/${id}`,
     GET: (id: string) => `/invoices/${id}`,
   },
-    INSTITUTIONS: {
+  INSTITUTIONS: {
     GET_ALL: "/institution",
     GET_BY_ID: (id: string) => `/institution/${id}`,
-    SEARCH: (query: string) => `/institutions/search/${query}`,
+    SEARCH: (query: string) => `/institution/search/${query}`,
     BY_COUNTRY: (country: string) => `/institution/country/${country}`,
     WITH_SCHOLARSHIPS: "/institution/scholarships",
     CREATE: "/institution",
@@ -61,13 +61,13 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/institution/${id}`,
     ADD_COURSE: (id: string) => `/institution/${id}/courses`,
     REMOVE_COURSE: (id: string, courseIndex: number) => `/institution/${id}/courses/${courseIndex}`,
-     // XLSX Import/Export endpoints
+    // XLSX Import/Export endpoints
     EXPORT_XLSX: "/institution/export/xlsx",
     IMPORT_XLSX: "/institution/import/xlsx",
-  
+
   },
 
-  
+
   INSURANCE: {
     LIST: "/insurance",
     CREATE: "/insurance",

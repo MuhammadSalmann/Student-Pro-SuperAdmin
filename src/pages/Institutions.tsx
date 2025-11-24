@@ -47,7 +47,7 @@ export default function Institutions() {
   const [filterScholarship, setFilterScholarship] = useState("");
   const [pageSize, setPageSize] = useState(15);
   const [hasActiveFilters, setHasActiveFilters] = useState(false);
-  
+
   // Debounce timer ref for live search
   const searchTimeoutRef = useRef<number | null>(null);
 
@@ -104,12 +104,12 @@ export default function Institutions() {
   // Handle live search as user types
   const handleSearchNameChange = (value: string) => {
     setSearchName(value);
-    
+
     // Clear existing timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
-    
+
     // Set new timeout for debounced search
     searchTimeoutRef.current = window.setTimeout(() => {
       handleApplyFilters();
@@ -128,12 +128,12 @@ export default function Institutions() {
     setFilter100Promotion("");
     setFilterScholarship("");
     setPageSize(15);
-    
+
     // Clear any pending search timeout
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current);
     }
-    
+
     clearFilters();
     setHasActiveFilters(false);
   };
@@ -160,7 +160,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || value || filterTerritory || filterSector || filterGroup || filterPromoted || filterScholarship || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -181,7 +183,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || value || filterTerritory || filterSector || filterGroup || filterPromoted || filterScholarship || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -202,7 +206,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || filterState || value || filterSector || filterGroup || filterPromoted || filterScholarship || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -223,7 +229,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || filterState || filterTerritory || value || filterGroup || filterPromoted || filterScholarship || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -244,7 +252,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || filterState || filterTerritory || filterSector || value || filterPromoted || filterScholarship || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -265,7 +275,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || filterState || filterTerritory || filterSector || filterGroup || value || filterScholarship || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -286,7 +298,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || filterState || filterTerritory || filterSector || filterGroup || filterPromoted || filterScholarship || value);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -307,7 +321,9 @@ export default function Institutions() {
         pageSize,
       });
       updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-      setHasActiveFilters(true);
+      // Check if any filters are actually active
+      const hasFilters = !!(searchName || filterCountry || filterState || filterTerritory || filterSector || filterGroup || filterPromoted || value || filter100Promotion);
+      setHasActiveFilters(hasFilters);
     }, 0);
   };
 
@@ -361,12 +377,12 @@ export default function Institutions() {
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     const validation = validateExcelFile(file);
-    
+
     if (!validation.isValid) {
       toast.error(validation.error || "Invalid file");
       return;
     }
-    
+
     setSelectedFile(file!);
   };
 
@@ -391,14 +407,14 @@ export default function Institutions() {
     try {
       // Wait for import to complete
       const result = await importFromXLSX(selectedFile);
-      
+
       // Clear the interval
       clearInterval(progressInterval);
-      
+
       if (result) {
         // Set progress to 100%
         setImportProgress(100);
-        
+
         // Wait a bit to show 100% completion before closing
         setTimeout(() => {
           setImportResult(result);
@@ -638,7 +654,7 @@ export default function Institutions() {
               </button>
             </div>
             <div className="p-6 space-y-4">
-              
+
 
               <div className="p-8 text-center transition border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-500">
                 <input
@@ -675,9 +691,9 @@ export default function Institutions() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="font-medium text-gray-700">
-                      {importProgress < 85 ? 'Uploading file...' : 
-                       importProgress < 100 ? 'Processing data...' : 
-                       'Import complete!'}
+                      {importProgress < 85 ? 'Uploading file...' :
+                        importProgress < 100 ? 'Processing data...' :
+                          'Import complete!'}
                     </span>
                     <span className="font-medium text-[#313647]">{importProgress}%</span>
                   </div>
@@ -688,8 +704,8 @@ export default function Institutions() {
                     ></div>
                   </div>
                   <p className="text-xs text-gray-600 text-center">
-                    {importProgress < 100 
-                      ? 'Please wait while we process your file. Do not close this window...' 
+                    {importProgress < 100
+                      ? 'Please wait while we process your file. Do not close this window...'
                       : 'Finalizing import...'}
                   </p>
                 </div>
@@ -709,130 +725,129 @@ export default function Institutions() {
         </div>
       )}
 
-      
+
       {/* Import Result Modal */}
-{showImportResultModal && importResult && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-40">
-    <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg bg-white shadow-xl border border-gray-200">
-      
-      {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-800">Import Summary</h2>
-        <button
-          onClick={() => {
-            setShowImportResultModal(false);
-            setImportResult(null);
-          }}
-          className="text-gray-500 hover:text-gray-700"
-        >
-          <X size={22} />
-        </button>
-      </div>
+      {showImportResultModal && importResult && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-40">
+          <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg bg-white shadow-xl border border-gray-200">
 
-      <div className="p-6 space-y-6">
-        
-        {/* Summary Stats */}
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="p-4 rounded border border-gray-200 bg-gray-50">
-            <p className="text-xs text-gray-500">Total Rows</p>
-            <p className="mt-1 text-xl font-semibold text-gray-800">
-              {importResult.summary.totalRows}
-            </p>
-          </div>
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-800">Import Summary</h2>
+              <button
+                onClick={() => {
+                  setShowImportResultModal(false);
+                  setImportResult(null);
+                }}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <X size={22} />
+              </button>
+            </div>
 
-          <div className="p-4 rounded border border-gray-200 bg-gray-50">
-            <p className="text-xs text-gray-500">Created</p>
-            <p className="mt-1 text-xl font-semibold text-gray-800">
-              {importResult.summary.created}
-            </p>
-          </div>
+            <div className="p-6 space-y-6">
 
-          <div className="p-4 rounded border border-gray-200 bg-gray-50">
-            <p className="text-xs text-gray-500">Updated</p>
-            <p className="mt-1 text-xl font-semibold text-gray-800">
-              {importResult.summary.updated}
-            </p>
-          </div>
+              {/* Summary Stats */}
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                  <p className="text-xs text-gray-500">Total Rows</p>
+                  <p className="mt-1 text-xl font-semibold text-gray-800">
+                    {importResult.summary.totalRows}
+                  </p>
+                </div>
 
-          <div className="p-4 rounded border border-gray-200 bg-gray-50">
-            <p className="text-xs text-gray-500">Errors</p>
-            <p className="mt-1 text-xl font-semibold text-gray-800">
-              {importResult.summary.errors}
-            </p>
-          </div>
-        </div>
+                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                  <p className="text-xs text-gray-500">Created</p>
+                  <p className="mt-1 text-xl font-semibold text-gray-800">
+                    {importResult.summary.created}
+                  </p>
+                </div>
 
-        {/* Imported / Updated List */}
-        {importResult.data?.length > 0 && (
-          <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-800">
-              Processed Records ({importResult.data.length})
-            </h3>
-            
-            <div className="p-3 border border-gray-200 rounded-lg max-h-64 overflow-y-auto space-y-2 bg-gray-50">
-              {importResult.data.map((institution, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center justify-between p-2 bg-white border border-gray-200 rounded"
-                >
-                  <div>
-                    <p className="font-medium text-gray-800">{institution.name}</p>
-                    <p className="text-xs text-gray-500">
-                      {institution.country} • {institution.state} • {institution.sector}
-                    </p>
+                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                  <p className="text-xs text-gray-500">Updated</p>
+                  <p className="mt-1 text-xl font-semibold text-gray-800">
+                    {importResult.summary.updated}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                  <p className="text-xs text-gray-500">Errors</p>
+                  <p className="mt-1 text-xl font-semibold text-gray-800">
+                    {importResult.summary.errors}
+                  </p>
+                </div>
+              </div>
+
+              {/* Imported / Updated List */}
+              {importResult.data?.length > 0 && (
+                <div>
+                  <h3 className="mb-2 text-base font-semibold text-gray-800">
+                    Processed Records ({importResult.data.length})
+                  </h3>
+
+                  <div className="p-3 border border-gray-200 rounded-lg max-h-64 overflow-y-auto space-y-2 bg-gray-50">
+                    {importResult.data.map((institution, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center justify-between p-2 bg-white border border-gray-200 rounded"
+                      >
+                        <div>
+                          <p className="font-medium text-gray-800">{institution.name}</p>
+                          <p className="text-xs text-gray-500">
+                            {institution.country} • {institution.state} • {institution.sector}
+                          </p>
+                        </div>
+
+                        <span className={`px-2 py-1 text-xs rounded border ${idx < importResult.summary.created
+                            ? "text-green-700 bg-green-50 border-green-200"
+                            : "text-blue-700 bg-blue-50 border-blue-200"
+                          }`}>
+                          {idx < importResult.summary.created ? "Created" : "Updated"}
+                        </span>
+                      </div>
+                    ))}
                   </div>
-
-                  <span className={`px-2 py-1 text-xs rounded border ${
-                    idx < importResult.summary.created
-                      ? "text-green-700 bg-green-50 border-green-200"
-                      : "text-blue-700 bg-blue-50 border-blue-200"
-                  }`}>
-                    {idx < importResult.summary.created ? "Created" : "Updated"}
-                  </span>
                 </div>
-              ))}
+              )}
+
+              {/* Errors */}
+              {(importResult.errors?.length ?? 0) > 0 && (
+                <div>
+                  <h3 className="mb-2 text-base font-semibold text-gray-800">
+                    Errors ({importResult.errors?.length ?? 0})
+                  </h3>
+
+                  <div className="p-3 border border-gray-300 rounded-lg max-h-64 overflow-y-auto space-y-2 bg-gray-50">
+                    {importResult.errors?.map((err, idx) => (
+                      <div key={idx} className="p-3 bg-white border border-gray-300 rounded">
+                        <p className="text-sm font-medium text-red-700">
+                          Row {err.row}: {err.error}
+                        </p>
+                        <p className="mt-1 text-xs text-gray-600">
+                          Data: {JSON.stringify(err.data)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Footer */}
+              <div className="flex justify-end pt-4 border-t border-gray-200">
+                <Button
+                  onClick={() => {
+                    setShowImportResultModal(false);
+                    setImportResult(null);
+                  }}
+                  className="bg-gray-800 hover:bg-gray-900 text-white"
+                >
+                  Close
+                </Button>
+              </div>
             </div>
           </div>
-        )}
-
-        {/* Errors */}
-        {(importResult.errors?.length ?? 0) > 0 && (
-          <div>
-            <h3 className="mb-2 text-base font-semibold text-gray-800">
-              Errors ({importResult.errors?.length ?? 0})
-            </h3>
-
-            <div className="p-3 border border-gray-300 rounded-lg max-h-64 overflow-y-auto space-y-2 bg-gray-50">
-              {importResult.errors?.map((err, idx) => (
-                <div key={idx} className="p-3 bg-white border border-gray-300 rounded">
-                  <p className="text-sm font-medium text-red-700">
-                    Row {err.row}: {err.error}
-                  </p>
-                  <p className="mt-1 text-xs text-gray-600">
-                    Data: {JSON.stringify(err.data)}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className="flex justify-end pt-4 border-t border-gray-200">
-          <Button
-            onClick={() => {
-              setShowImportResultModal(false);
-              setImportResult(null);
-            }}
-            className="bg-gray-800 hover:bg-gray-900 text-white"
-          >
-            Close
-          </Button>
         </div>
-      </div>
-    </div>
-  </div>
-)}
+      )}
 
     </div>
   );

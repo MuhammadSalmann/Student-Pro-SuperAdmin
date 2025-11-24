@@ -16,10 +16,10 @@ export const useInstitutions = (initialFilters?: InstitutionFilters) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<InstitutionFilters>({
-  page: 1,
-  pageSize: 15,
-  ...initialFilters,
-});
+    page: 1,
+    pageSize: 15,
+    ...initialFilters,
+  });
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -58,9 +58,15 @@ export const useInstitutions = (initialFilters?: InstitutionFilters) => {
 
   /**
    * Update filters and reset to page 1
+   * Note: This replaces the current filters with newFilters (except for page/pageSize defaults)
+   * This ensures that if a filter is removed from newFilters, it is also removed from state
    */
   const updateFilters = useCallback((newFilters: Partial<InstitutionFilters>) => {
-    setFilters((prev) => ({ ...prev, ...newFilters, page: 1 }));
+    setFilters((prev) => ({
+      page: 1,
+      pageSize: newFilters.pageSize || prev.pageSize || 15,
+      ...newFilters,
+    } as InstitutionFilters));
   }, []);
 
   /**
