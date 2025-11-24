@@ -293,7 +293,7 @@ export default function InstitutionModal({
                       <Button
                         type="button"
                         onClick={handleAddState}
-                        className="flex items-center gap-1 bg-[#313647] hover:bg-[#10192c] whitespace-nowrap"
+                        className="flex items-center gap-1 bg-[#0A1F38] hover:bg-[#10192c] whitespace-nowrap"
                         disabled={!stateInput.trim()}
                       >
                         <Plus size={16} />
@@ -431,7 +431,7 @@ export default function InstitutionModal({
                 <Button
                   type="button"
                   onClick={handleAddTerritory}
-                  className="flex items-center gap-1 bg-[#313647] hover:bg-[#10192c]  whitespace-nowrap"
+                  className="flex items-center gap-1 bg-[#0A1F38] hover:bg-[#10192c]  whitespace-nowrap"
                   disabled={!territoryInput.trim()}
                 >
                   <Plus size={16} />
@@ -562,7 +562,7 @@ export default function InstitutionModal({
             >
               Cancel
             </Button>
-            <Button type="submit" className="bg-[#313647] hover:bg-[#10192c] text-white">
+            <Button type="submit" className="bg-[#0A1F38] hover:bg-[#10192c] text-white">
               {mode === "create" ? "Create Institution" : "Update Institution"}
             </Button>
           </div>
