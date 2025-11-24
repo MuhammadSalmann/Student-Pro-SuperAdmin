@@ -557,7 +557,7 @@ export default function Institutions() {
                 onClick={() => changePage(page)}
                 variant={page === pagination.page ? "default" : "outline"}
                 size="sm"
-                className={`h-9 w-9 ${page === pagination.page ? 'bg-[#313647] hover:bg-[#10192c] text-white' : ''}`}
+                className={`h-9 w-9 ${page === pagination.page ? 'bg-[#0A1F38] hover:bg-[#0A1F38] text-white' : ''}`}
               >
                 {page}
               </Button>
@@ -709,7 +709,7 @@ export default function Institutions() {
         </div>
       )}
 
-      {/* Import Result Modal */}
+      
       {/* Import Result Modal */}
 {showImportResultModal && importResult && (
   <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-40">

@@ -88,8 +88,8 @@ export default function InstitutionsTable({
   return (
     <div className="border rounded-md">
       <Table>
-        <TableHeader>
-          <TableRow>
+        <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
+          <TableRow className="hover:bg-black/5 border-b-black/10 transition-colors">
             <TableHead className="w-[35px]"></TableHead>
             <TableHead className="w-[70px]">Country</TableHead>
             <TableHead className="w-[70px]">State</TableHead>
@@ -254,7 +254,7 @@ export default function InstitutionsTable({
                         href={institution.scholarship}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block rounded bg-[#00CBB8] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#00b2a1] transition-colors shadow-sm"
+                        className="inline-block rounded bg-[#ABDBC0] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#00b2a1] transition-colors shadow-sm"
                         title={institution.scholarship}
                       >
                         Scholarship
