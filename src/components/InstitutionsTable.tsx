@@ -48,29 +48,38 @@ export default function InstitutionsTable({
       const courseText = course.course || '';
       const existingCommission = course.commission || '';
 
-      const courseLines = courseText
-        .split(/\n+/)
-        .map((line: string) => line.trim())
-        .filter((line: string) => line.length > 0);
+      // If the course already has a commission, treat it as a single entry
+      // Don't split by newlines - the newlines are part of the course description
+      if (existingCommission.trim()) {
+        // Clean up trailing opening parentheses that might be left over
+        const cleanedCourseName = courseText.replace(/\s*\(\s*$/, '').trim();
 
-      if (existingCommission.trim() && courseLines.length === 1) {
         return [
           {
             ...course,
-            course: courseText,
+            course: cleanedCourseName,
             commission: existingCommission,
           },
         ];
       }
 
+      // If no commission exists, split by newlines and try to parse each line
+      const courseLines = courseText
+        .split(/\n+/)
+        .map((line: string) => line.trim())
+        .filter((line: string) => line.length > 0);
+
       return courseLines.map((line: string) => {
         const parsed = parseCourseString(line);
 
         if (parsed && parsed.commission && parsed.commission.trim()) {
+          // Clean up trailing opening parentheses
+          const cleanedCourseName = parsed.course.replace(/\s*\(\s*$/, '').trim();
+
           return {
             ...course,
             _id: undefined,
-            course: parsed.course,
+            course: cleanedCourseName,
             commission: parsed.commission,
           };
         }
@@ -79,7 +88,7 @@ export default function InstitutionsTable({
           ...course,
           _id: undefined,
           course: parsed?.course || line,
-          commission: existingCommission.trim() || 'N/A',
+          commission: 'N/A',
         };
       });
     });
