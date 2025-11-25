@@ -330,7 +330,7 @@ export default function InstitutionsTable({
                     <TableCell></TableCell>
                     <TableCell colSpan={10} className="bg-gray-50 p-0">
                       <div className="px-4 py-3">
-                        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden max-w-2xl">
+                        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden max-w-4xl">
                           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2 border-b border-gray-200">
                             <h4 className="text-sm font-semibold text-gray-800">
                               Courses for {institution.name}
@@ -343,7 +343,7 @@ export default function InstitutionsTable({
                                   <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200">
                                     Course Name
                                   </th>
-                                  <th className="text-right px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider w-[140px]">
+                                  <th className="text-right px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider min-w-[180px] max-w-[300px]">
                                     Commission
                                   </th>
                                 </tr>
@@ -357,8 +357,8 @@ export default function InstitutionsTable({
                                     <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200">
                                       {course.course}
                                     </td>
-                                    <td className="px-3 py-1.5 text-right">
-                                      <span className="text-sm font-medium text-gray-900">
+                                    <td className="px-3 py-1.5 text-right align-top min-w-[180px] max-w-[300px]">
+                                      <span className="text-sm font-medium text-gray-900 break-words whitespace-normal inline-block text-right">
                                         {course.commission || 'N/A'}
                                       </span>
                                     </td>
