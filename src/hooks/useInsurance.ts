@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { healthInsuranceService } from "../services/insuranceService";
+import healthInsuranceService from "../services/insuranceService";
 import type {
     HealthInsurance,
     CreateHealthInsuranceData,
@@ -21,9 +21,9 @@ export const useHealthInsurance = () => {
             if (response.success) {
                 setHealthInsurances(response.data);
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Error fetching health insurances:", error);
-            toast.error(error.response?.data?.message || "Failed to fetch health insurances");
+            toast.error(error instanceof Error ? error.message : "Failed to fetch health insurances");
         } finally {
             setLoading(false);
         }
@@ -36,7 +36,7 @@ export const useHealthInsurance = () => {
             if (response.success) {
                 setCountries(response.data);
             }
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Error fetching countries:", error);
         }
     };
@@ -51,9 +51,9 @@ export const useHealthInsurance = () => {
                 return true;
             }
             return false;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Error creating health insurance:", error);
-            toast.error(error.response?.data?.message || "Failed to create health insurance");
+            toast.error(error instanceof Error ? error.message : "Failed to create health insurance");
             return false;
         }
     };
@@ -71,9 +71,9 @@ export const useHealthInsurance = () => {
                 return true;
             }
             return false;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Error updating health insurance:", error);
-            toast.error(error.response?.data?.message || "Failed to update health insurance");
+            toast.error(error instanceof Error ? error.message : "Failed to update health insurance");
             return false;
         }
     };
@@ -88,9 +88,9 @@ export const useHealthInsurance = () => {
                 return true;
             }
             return false;
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error("Error deleting health insurance:", error);
-            toast.error(error.response?.data?.message || "Failed to delete health insurance");
+            toast.error(error instanceof Error ? error.message : "Failed to delete health insurance");
             return false;
         }
     };
