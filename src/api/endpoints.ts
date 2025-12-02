@@ -66,14 +66,21 @@ export const API_ENDPOINTS = {
     IMPORT_XLSX: "/institution/import/xlsx",
 
   },
-
-
-  INSURANCE: {
+   INSURANCE: {
     LIST: "/insurance",
     CREATE: "/insurance",
     UPDATE: (id: string) => `/insurance/${id}`,
     DELETE: (id: string) => `/insurance/${id}`,
     GET: (id: string) => `/insurance/${id}`,
+   },
+
+  HEALTH_INSURANCE: {
+    GET_ALL: "/health-insurance",
+    GET_BY_ID: (id: string) => `/health-insurance/${id}`,
+    GET_COUNTRIES: "/health-insurance/countries",
+    CREATE: "/health-insurance",
+    UPDATE: (id: string) => `/health-insurance/${id}`,
+    DELETE: (id: string) => `/health-insurance/${id}`,
   },
   VISA: {
     LIST: "/visa",
