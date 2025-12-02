@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useInstitutions } from "../hooks/useInstitution";
 import { Button } from "../components/ui/Button";
 import { Card, CardContent } from "../components/ui/Card";
@@ -35,6 +36,8 @@ import InstitutionsTable from "../components/InstitutionsTable";
 import InstitutionViewModal from "../components/InstitutionViewModal";
 
 export default function Institutions() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   // Filter states - must be defined before useInstitutions
   const [searchName, setSearchName] = useState("");
   const [filterCountry, setFilterCountry] = useState("");
@@ -80,6 +83,33 @@ export default function Institutions() {
   const [isImporting, setIsImporting] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle URL query parameters for country filter
+  useEffect(() => {
+    const countryParam = searchParams.get('country');
+    if (countryParam) {
+      setFilterCountry(countryParam);
+      // Clear the query parameter after setting the filter
+      setSearchParams({});
+      // Apply the filter
+      setTimeout(() => {
+        const cleanFilters = buildInstitutionFilters({
+          searchName,
+          filterCountry: countryParam,
+          filterState: "",
+          filterTerritory,
+          filterSector,
+          filterGroup,
+          filterPromoted,
+          filterScholarship,
+          filter100Promotion,
+          pageSize,
+        });
+        updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
+        setHasActiveFilters(true);
+      }, 0);
+    }
+  }, [searchParams]);
 
   // Handle filter application
   const handleApplyFilters = (overridePageSize?: number | unknown) => {
