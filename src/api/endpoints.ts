@@ -89,6 +89,14 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/visa/${id}`,
     GET: (id: string) => `/visa/${id}`,
   },
+  VISA_SERVICE: {
+    GET_ALL: "/visa-service",
+    GET_BY_ID: (id: string) => `/visa-service/${id}`,
+    GET_COUNTRIES: "/visa-service/countries",
+    CREATE: "/visa-service",
+    UPDATE: (id: string) => `/visa-service/${id}`,
+    DELETE: (id: string) => `/visa-service/${id}`,
+  },
   TRACK: {
     GET: (id: string) => `/track/${id}`,
   },
