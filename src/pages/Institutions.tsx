@@ -87,12 +87,17 @@ export default function Institutions() {
   // Handle URL query parameters for country filter
   useEffect(() => {
     const countryParam = searchParams.get('country');
-    if (countryParam) {
-      setFilterCountry(countryParam);
-      // Clear the query parameter after setting the filter
-      setSearchParams({});
-      // Apply the filter
-      setTimeout(() => {
+    if (countryParam && countryParam !== filterCountry) {
+      // Use a functional state update to avoid cascading renders
+      const applyCountryFilter = () => {
+        setFilterCountry(countryParam);
+        setFilterState("");
+        setHasActiveFilters(true);
+        
+        // Clear the query parameter after setting the filter
+        setSearchParams({});
+        
+        // Apply the filter
         const cleanFilters = buildInstitutionFilters({
           searchName,
           filterCountry: countryParam,
@@ -106,10 +111,11 @@ export default function Institutions() {
           pageSize,
         });
         updateFilters(cleanFilters as Partial<InstitutionFiltersType>);
-        setHasActiveFilters(true);
-      }, 0);
+      };
+      
+      applyCountryFilter();
     }
-  }, [searchParams]);
+  }, [searchParams, filterCountry, searchName, filterTerritory, filterSector, filterGroup, filterPromoted, filterScholarship, filter100Promotion, pageSize, setSearchParams, updateFilters]);
 
   // Handle filter application
   const handleApplyFilters = (overridePageSize?: number | unknown) => {
@@ -733,7 +739,7 @@ export default function Institutions() {
                       style={{ width: `${importProgress}%` }}
                     ></div>
                   </div>
-                  <p className="text-xs text-gray-600 text-center">
+                  <p className="text-xs text-center text-gray-600">
                     {importProgress < 100
                       ? 'Please wait while we process your file. Do not close this window...'
                       : 'Finalizing import...'}
@@ -779,28 +785,28 @@ export default function Institutions() {
 
               {/* Summary Stats */}
               <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                <div className="p-4 border border-gray-200 rounded bg-gray-50">
                   <p className="text-xs text-gray-500">Total Rows</p>
                   <p className="mt-1 text-xl font-semibold text-gray-800">
                     {importResult.summary.totalRows}
                   </p>
                 </div>
 
-                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                <div className="p-4 border border-gray-200 rounded bg-gray-50">
                   <p className="text-xs text-gray-500">Created</p>
                   <p className="mt-1 text-xl font-semibold text-gray-800">
                     {importResult.summary.created}
                   </p>
                 </div>
 
-                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                <div className="p-4 border border-gray-200 rounded bg-gray-50">
                   <p className="text-xs text-gray-500">Updated</p>
                   <p className="mt-1 text-xl font-semibold text-gray-800">
                     {importResult.summary.updated}
                   </p>
                 </div>
 
-                <div className="p-4 rounded border border-gray-200 bg-gray-50">
+                <div className="p-4 border border-gray-200 rounded bg-gray-50">
                   <p className="text-xs text-gray-500">Errors</p>
                   <p className="mt-1 text-xl font-semibold text-gray-800">
                     {importResult.summary.errors}
@@ -815,7 +821,7 @@ export default function Institutions() {
                     Processed Records ({importResult.data.length})
                   </h3>
 
-                  <div className="p-3 border border-gray-200 rounded-lg max-h-64 overflow-y-auto space-y-2 bg-gray-50">
+                  <div className="p-3 space-y-2 overflow-y-auto border border-gray-200 rounded-lg max-h-64 bg-gray-50">
                     {importResult.data.map((institution, idx) => (
                       <div
                         key={idx}
@@ -847,7 +853,7 @@ export default function Institutions() {
                     Errors ({importResult.errors?.length ?? 0})
                   </h3>
 
-                  <div className="p-3 border border-gray-300 rounded-lg max-h-64 overflow-y-auto space-y-2 bg-gray-50">
+                  <div className="p-3 space-y-2 overflow-y-auto border border-gray-300 rounded-lg max-h-64 bg-gray-50">
                     {importResult.errors?.map((err, idx) => (
                       <div key={idx} className="p-3 bg-white border border-gray-300 rounded">
                         <p className="text-sm font-medium text-red-700">
@@ -869,7 +875,7 @@ export default function Institutions() {
                     setShowImportResultModal(false);
                     setImportResult(null);
                   }}
-                  className="bg-gray-800 hover:bg-gray-900 text-white"
+                  className="text-white bg-gray-800 hover:bg-gray-900"
                 >
                   Close
                 </Button>
