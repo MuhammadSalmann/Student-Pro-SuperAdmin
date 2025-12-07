@@ -1,18 +1,18 @@
-import { X, ShieldCheck } from "lucide-react";
-import type { HealthInsurance } from "../types/insurance.types";
+import { X } from "lucide-react";
+import type { Accommodation } from "../types/accommodation";
 
-interface InsuranceViewModalProps {
+interface AccommodationViewModalProps {
   isOpen: boolean;
-  insurance: HealthInsurance | null;
+  accommodation: Accommodation | null;
   onClose: () => void;
 }
 
-export default function InsuranceViewModal({
+export default function AccommodationViewModal({
   isOpen,
-  insurance,
+  accommodation,
   onClose,
-}: InsuranceViewModalProps) {
-  if (!isOpen || !insurance) return null;
+}: AccommodationViewModalProps) {
+  if (!isOpen || !accommodation) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
@@ -20,7 +20,7 @@ export default function InsuranceViewModal({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-green-50">
           <h2 className="text-2xl font-semibold text-gray-800">
-            {insurance.company}
+            {accommodation.company}
           </h2>
           <button
             onClick={onClose}
@@ -38,16 +38,28 @@ export default function InsuranceViewModal({
               Basic Information
             </h3>
             <div className="grid grid-cols-2 gap-x-6 gap-y-5">
-              <Field label="Company Name" value={insurance.company || "N/A"} />
-              <Field label="Country" value={insurance.country || "N/A"} />
+              <Field label="Company" value={accommodation.company || "N/A"} />
+              <Field label="Country" value={accommodation.country || "N/A"} />
             </div>
           </div>
 
-          {/* Insurance Items */}
-          {insurance.items && insurance.items.length > 0 && (
+          {/* Locations */}
+          {accommodation.locations && accommodation.locations.length > 0 && (
             <div>
               <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
-                Insurance Items ({insurance.items.length})
+                Locations
+              </h3>
+              <p className="text-sm text-gray-700">
+                {accommodation.locations.join(", ")}
+              </p>
+            </div>
+          )}
+
+          {/* Items */}
+          {accommodation.items && accommodation.items.length > 0 && (
+            <div>
+              <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                Accommodation Items ({accommodation.items.length})
               </h3>
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
@@ -62,28 +74,19 @@ export default function InsuranceViewModal({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {insurance.items.map((item, index) => (
-                      <tr key={index}>
+                    {accommodation.items.map((item, index) => (
+                      <tr key={item._id || index}>
                         <td className="py-2 px-3 text-sm text-gray-800">
                           {item.name}
                         </td>
                         <td className="py-2 px-3 text-sm text-gray-800 text-right">
-                          {item.commission || 'N/A'}
+                          {typeof item.commission === 'number' ? `$${item.commission.toFixed(2)}` : item.commission}
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </div>
-          )}
-
-          {/* Empty State */}
-          {(!insurance.items || insurance.items.length === 0) && (
-            <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-              <ShieldCheck size={48} className="mb-4 text-gray-400" />
-              <p className="text-lg font-medium">No insurance items available</p>
-              <p className="text-sm">This company has no insurance plans listed</p>
             </div>
           )}
         </div>

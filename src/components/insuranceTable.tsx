@@ -79,7 +79,7 @@ export default function InsuranceTable({
                                     {/* Company */}
                                     <TableCell className="px-3 py-2">
                                         <span
-                                            className="font-medium text-gray-700"
+                                            className="text-sm text-gray-700"
                                             title={insurance.company}
                                         >
                                             {insurance.company}
@@ -87,7 +87,7 @@ export default function InsuranceTable({
                                     </TableCell>
 
                                     {/* Country */}
-                                    <TableCell className="px-3 py-2 text-sm font-medium text-gray-700">
+                                    <TableCell className="text-sm text-gray-700">
                                         {insurance.country}
                                     </TableCell>
 
