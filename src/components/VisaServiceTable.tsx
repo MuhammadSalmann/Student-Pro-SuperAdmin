@@ -40,7 +40,7 @@ export default function VisaServiceTable({
                         <TableRow key={service._id} className="hover:bg-gray-50">
                             {/* Service Type */}
                             <TableCell className="px-4 py-3">
-                                <span className="font-medium text-gray-900">
+                                <span className="text-sm text-gray-700">
                                     {service.serviceType}
                                 </span>
                             </TableCell>

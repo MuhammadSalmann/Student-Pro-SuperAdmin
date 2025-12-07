@@ -43,7 +43,7 @@ export default function InstitutionsTable({
     });
   };
 
-  const parseCourses = (courses: any[]) => {
+  const parseCourses = (courses: Array<{ course?: string; commission?: string; _id?: string }>) => {
     return courses.flatMap((course) => {
       const courseText = course.course || '';
       const existingCommission = course.commission || '';
@@ -98,7 +98,7 @@ export default function InstitutionsTable({
     <div className="border rounded-md">
       <Table>
         <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
-          <TableRow className="hover:bg-black/5 border-b-black/10 transition-colors">
+          <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
             <TableHead className="w-[35px]"></TableHead>
             <TableHead className="w-[70px]">Country</TableHead>
             <TableHead className="w-[70px]">State</TableHead>
@@ -141,16 +141,16 @@ export default function InstitutionsTable({
                   </TableCell>
 
                   {/* Country */}
-                  <TableCell className="text-sm font-medium text-gray-700">
+                  <TableCell className="text-sm text-gray-700">
                     {getCountryName(institution.country)}
                   </TableCell>
 
                   {/* State */}
-                  <TableCell className="text-sm font-medium text-gray-700">{parseStateField(institution.state)}</TableCell>
+                  <TableCell className="text-sm text-gray-700">{parseStateField(institution.state)}</TableCell>
 
                   {/* Sector */}
                   <TableCell>
-                    <span className=" text-sm font-medium text-gray-700">
+                    <span className="text-sm text-gray-700 ">
                       {institution.sector}
                     </span>
                   </TableCell>
@@ -162,7 +162,7 @@ export default function InstitutionsTable({
                         href={institution.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1  text-blue-700 hover:text-gray-700 transition-colors"
+                        className="inline-flex items-center gap-1 text-blue-700 transition-colors hover:text-gray-700"
                       >
                         <span title={institution.name}>
                           {institution.name}
@@ -183,7 +183,7 @@ export default function InstitutionsTable({
                   <TableCell>
                     {institution.global ? (
                       <span
-                        className="inline-flex items-center justify-center w-8 h-8 text-gray-500 transition-transform hover:scale-110 cursor-default"
+                        className="inline-flex items-center justify-center w-8 h-8 text-gray-500 transition-transform cursor-default hover:scale-110"
                         title="Global"
                       >
                         <Globe size={14} />
@@ -198,7 +198,7 @@ export default function InstitutionsTable({
                             return (
                               <span
                                 key={idx}
-                                className="inline-flex items-center justify-center w-8 h-8 text-gray-500 transition-transform hover:scale-110 cursor-default"
+                                className="inline-flex items-center justify-center w-8 h-8 text-gray-500 transition-transform cursor-default hover:scale-110"
                                 title="Global"
                               >
                                 <Globe size={14} />
@@ -209,7 +209,7 @@ export default function InstitutionsTable({
                           return (
                             <span
                               key={idx}
-                              className="inline-flex items-center justify-center w-7 h-5 cursor-default transition-transform hover:scale-110 select-none"
+                              className="inline-flex items-center justify-center h-5 transition-transform cursor-default select-none w-7 hover:scale-110"
                               title={territoryData.displayText}
                               aria-hidden="true"
                             >
@@ -281,12 +281,12 @@ export default function InstitutionsTable({
                   </TableCell>
 
                   {/* Group */}
-                  <TableCell className="text-sm font-medium text-gray-700">
+                  <TableCell className="text-sm text-gray-700">
                     {institution.group &&
                       institution.group.trim() &&
                       institution.group !== "_" ? (
                       <span
-                        className="text-sm font-medium text-gray-700"
+                        className="text-sm text-gray-700 text-s"
                         title={institution.group}
                       >
                         {institution.group}
@@ -328,10 +328,10 @@ export default function InstitutionsTable({
                 {isExpanded && hasCourses && (
                   <TableRow key={`${institution._id}-courses`}>
                     <TableCell></TableCell>
-                    <TableCell colSpan={10} className="bg-gray-50 p-0">
+                    <TableCell colSpan={10} className="p-0 bg-gray-50">
                       <div className="px-4 py-3">
-                        <div className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden max-w-4xl">
-                          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-2 border-b border-gray-200">
+                        <div className="max-w-4xl overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm">
+                          <div className="px-3 py-2 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
                             <h4 className="text-sm font-semibold text-gray-800">
                               Courses for {institution.name}
                             </h4>
@@ -339,7 +339,7 @@ export default function InstitutionsTable({
                           <div className="overflow-x-auto">
                             <table className="w-full">
                               <thead>
-                                <tr className="bg-gray-100/70 border-b border-gray-200">
+                                <tr className="border-b border-gray-200 bg-gray-100/70">
                                   <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200">
                                     Course Name
                                   </th>
@@ -352,13 +352,13 @@ export default function InstitutionsTable({
                                 {parsedCourses.map((course, index) => (
                                   <tr
                                     key={course._id || index}
-                                    className="hover:bg-blue-50/30 transition-colors"
+                                    className="transition-colors hover:bg-blue-50/30"
                                   >
                                     <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200">
                                       {course.course}
                                     </td>
                                     <td className="px-3 py-1.5 text-right align-top min-w-[180px] max-w-[300px]">
-                                      <span className="text-sm font-medium text-gray-900 break-words whitespace-normal inline-block text-right">
+                                      <span className="inline-block text-sm font-medium text-right text-gray-900 break-words whitespace-normal">
                                         {course.commission || 'N/A'}
                                       </span>
                                     </td>
