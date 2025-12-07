@@ -1,4 +1,4 @@
-import { X, ShieldCheck } from "lucide-react";
+import { X } from "lucide-react";
 import type { VisaService } from "../types/visaService.types";
 
 interface VisaServiceViewModalProps {
@@ -24,7 +24,7 @@ export default function VisaServiceViewModal({
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-blue-600 hover:bg-blue-100/50 rounded-full p-1 transition-all focus:outline-none focus:ring-0"
+            className="p-1 text-gray-400 transition-all rounded-full hover:text-blue-600 hover:bg-blue-100/50 focus:outline-none focus:ring-0"
           >
             <X size={22} />
           </button>
