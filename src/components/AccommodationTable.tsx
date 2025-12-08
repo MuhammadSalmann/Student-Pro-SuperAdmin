@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Eye, ChevronDown, ChevronRight } from "lucide-react";
+import { Eye, Edit2, Trash2, ChevronDown, ChevronRight } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -9,26 +9,21 @@ import {
   TableRow,
 } from "./ui/Table";
 import type { Accommodation } from "../types/accommodation";
-import AccommodationViewModal from "./AccommodationViewModal";
 
 interface AccommodationTableProps {
   accommodations: Accommodation[];
-  loading: boolean;
+  onEdit: (accommodation: Accommodation) => void;
+  onDelete: (id: string) => void;
+  onView: (accommodation: Accommodation) => void;
 }
 
 const AccommodationTable = ({
   accommodations,
-  loading,
+  onEdit,
+  onDelete,
+  onView,
 }: AccommodationTableProps) => {
-  const [selectedAccommodation, setSelectedAccommodation] =
-    useState<Accommodation | null>(null);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
-
-  const handleView = (accommodation: Accommodation) => {
-    setSelectedAccommodation(accommodation);
-    setIsViewModalOpen(true);
-  };
 
   const toggleRow = (accommodationId: string) => {
     setExpandedRows((prev) => {
@@ -42,25 +37,8 @@ const AccommodationTable = ({
     });
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-8">
-        <div className="w-8 h-8 border-b-2 rounded-full animate-spin border-primary"></div>
-      </div>
-    );
-  }
-
-  if (accommodations.length === 0) {
-    return (
-      <div className="py-8 text-center text-muted-foreground">
-        No accommodations found
-      </div>
-    );
-  }
-
   return (
-    <>
-      <div className="border rounded-md">
+    <div className="border rounded-md">
         <Table>
           <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
             <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
@@ -123,12 +101,29 @@ const AccommodationTable = ({
 
                     {/* Actions */}
                     <TableCell className="text-right">
-                      <button
-                        onClick={() => handleView(accommodation)}
-                        className="p-2 text-blue-500 transition-colors rounded-md hover:bg-gray-100"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
+                      <div className="flex justify-end gap-1.5">
+                        <button
+                          onClick={() => onView(accommodation)}
+                          className="rounded p-1.5 text-blue-600 transition hover:bg-blue-50 hover:text-blue-900"
+                          title="View Details"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <button
+                          onClick={() => onEdit(accommodation)}
+                          className="rounded p-1.5 text-green-600 transition hover:bg-green-50 hover:text-green-900"
+                          title="Edit"
+                        >
+                          <Edit2 size={16} />
+                        </button>
+                        <button
+                          onClick={() => onDelete(accommodation._id)}
+                          className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
+                          title="Delete"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
 
@@ -185,14 +180,7 @@ const AccommodationTable = ({
             })}
           </TableBody>
         </Table>
-      </div>
-
-      <AccommodationViewModal
-        accommodation={selectedAccommodation}
-        isOpen={isViewModalOpen}
-        onClose={() => setIsViewModalOpen(false)}
-      />
-    </>
+    </div>
   );
 };
 
