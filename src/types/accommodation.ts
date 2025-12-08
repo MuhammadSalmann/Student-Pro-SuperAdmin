@@ -20,3 +20,10 @@ export interface CreateAccommodationData {
   country: string;
   items: AccommodationItem[];
 }
+
+export interface UpdateAccommodationData {
+  locations?: string[];
+  company?: string;
+  country?: string;
+  items?: AccommodationItem[];
+}

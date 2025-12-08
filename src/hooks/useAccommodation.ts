@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Accommodation, CreateAccommodationData } from "../types/accommodation";
+import type { Accommodation, CreateAccommodationData, UpdateAccommodationData } from "../types/accommodation";
 import { accommodationService } from "../services/accommodationService";
 import { toast } from "../lib/toast";
 
@@ -47,7 +47,7 @@ export const useAccommodation = () => {
 
   const updateAccommodation = async (
     id: string,
-    data: CreateAccommodationData
+    data: UpdateAccommodationData
   ) => {
     try {
       await accommodationService.updateAccommodation(id, data);
