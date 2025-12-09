@@ -1,5 +1,5 @@
 import axiosInstance from "../api/axiosInstance";
-import type { Accommodation, CreateAccommodationData } from "../types/accommodation";
+import type { Accommodation, CreateAccommodationData, UpdateAccommodationData } from "../types/accommodation";
 
 class AccommodationService {
   private endpoint = "/accommodation";
@@ -26,7 +26,7 @@ class AccommodationService {
     return response.data;
   }
 
-  async updateAccommodation(id: string, data: CreateAccommodationData) {
+  async updateAccommodation(id: string, data: UpdateAccommodationData) {
     const response = await axiosInstance.put<{ data: Accommodation }>(
       `${this.endpoint}/${id}`,
       data
