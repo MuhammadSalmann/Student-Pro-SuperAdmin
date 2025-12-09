@@ -1,15 +1,25 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Building2, ShieldCheck, Plane, Home, LogOut, Plus, Minus } from "lucide-react";
+import { Building2, ShieldCheck, Plane, Home, LogOut, Plus, Minus, X } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "../lib/toast";
 import { FILTER_COUNTRIES, getCountryCode } from "../utils/helpers";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
   const [showCountries, setShowCountries] = useState(false);
+
+  // Close sidebar when route changes on mobile
+  useEffect(() => {
+    onClose();
+  }, [location.pathname]);
 
   const navItems = [
     { name: "Institutions", path: "/institutions", icon: Building2 },
@@ -37,9 +47,24 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex flex-col w-64 h-screen bg-[#0A1F38] overflow-y-auto">
-      {/* Custom Scrollbar Styles */}
-      <style>{`
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+      
+      {/* Sidebar */}
+      <div className={`
+        fixed lg:static
+        flex flex-col w-64 h-screen bg-[#0A1F38] overflow-y-auto
+        z-50 transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        {/* Custom Scrollbar Styles */}
+        <style>{`
         .countries-scroll::-webkit-scrollbar {
           width: 6px;
         }
@@ -55,6 +80,15 @@ const Sidebar = () => {
           background: rgba(171, 219, 192, 0.5);
         }
       `}</style>
+
+      {/* Close button for mobile */}
+      <button
+        onClick={onClose}
+        className="lg:hidden absolute top-4 right-4 p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+        aria-label="Close menu"
+      >
+        <X size={24} />
+      </button>
 
       {/* Logo Section */}
       <div className="flex items-center justify-center px-6 pt-8 pb-6">
@@ -145,6 +179,7 @@ const Sidebar = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 

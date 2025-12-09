@@ -1,7 +1,11 @@
-// import { Search } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
-const Header = () => {
+interface HeaderProps {
+  onMenuClick: () => void;
+}
+
+const Header = ({ onMenuClick }: HeaderProps) => {
   const location = useLocation();
 
   const getPageTitle = () => {
@@ -14,23 +18,22 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center  justify-between border-b border-gray-200 bg-teal px-6">
-      <h1 className="text-2xl font-bold text-[#313647]">{getPageTitle()}</h1>
-  {location.pathname === "/institutions" && (
-        <p className="text-1xl text-[#313647]">
+    <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 bg-teal px-3 md:px-6">
+      <div className="flex items-center gap-3 flex-1 min-w-0">
+        <button
+          onClick={onMenuClick}
+          className="lg:hidden rounded-lg p-2 text-[#313647] hover:bg-[#ABDBC0] transition-colors flex-shrink-0"
+          aria-label="Open menu"
+        >
+          <Menu size={24} />
+        </button>
+        <h1 className="text-base sm:text-lg md:text-2xl font-bold text-[#313647] truncate">{getPageTitle()}</h1>
+      </div>
+      {location.pathname === "/institutions" && (
+        <p className="hidden xl:block text-sm text-[#313647] ml-4 flex-shrink-0">
           If your territory is not listed, please enquire with our team for confirmation.
         </p>
       )}
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          {/* <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="h-10 w-64 rounded-lg border border-gray-300 bg-white pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-          /> */}
-        </div>
-      </div>
     </header>
   );
 };
