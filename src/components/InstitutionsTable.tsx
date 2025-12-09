@@ -95,8 +95,10 @@ export default function InstitutionsTable({
   };
 
   return (
-    <div className="border rounded-md">
-      <Table>
+    <>
+      {/* Desktop Table View */}
+      <div className="hidden md:block border rounded-md">
+        <Table>
         <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
           <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
             <TableHead className="w-[35px]"></TableHead>
@@ -378,5 +380,215 @@ export default function InstitutionsTable({
         </TableBody>
       </Table>
     </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {institutions.map((institution) => {
+          const isExpanded = expandedRows.has(institution._id);
+          const hasCourses = institution.course && institution.course.length > 0;
+          const parsedCourses = hasCourses ? parseCourses(institution.course) : [];
+
+          return (
+            <div key={institution._id} className="bg-white border rounded-lg shadow-sm overflow-hidden">
+              {/* Card Header */}
+              <div className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] p-3"></div>
+
+              {/* Card Body */}
+              <div className="flex gap-3">
+                {/* Expand/Collapse Button */}
+                <div className="flex items-start pt-3 pl-3">
+                  {hasCourses ? (
+                    <button
+                      onClick={() => toggleRow(institution._id)}
+                      className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition"
+                      title={isExpanded ? "Collapse courses" : "Expand courses"}
+                    >
+                      {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                    </button>
+                  ) : (
+                    <div className="w-[34px]"></div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 p-3 pt-3 pr-3 space-y-2.5">
+                {/* Name */}
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Name:</span>
+                  <div className="mt-1">
+                    {institution.url ? (
+                      <a
+                        href={institution.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-700 hover:text-gray-700 text-sm font-medium"
+                      >
+                        {institution.name}
+                      </a>
+                    ) : (
+                      <p className="text-gray-900 text-sm font-medium">{institution.name}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
+                  <div>
+                    <span className="font-medium text-gray-500 text-xs">Country:</span>
+                    <p className="text-gray-900">{getCountryName(institution.country)}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium text-gray-500 text-xs">State:</span>
+                    <p className="text-gray-900">{parseStateField(institution.state)}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium text-gray-500 text-xs">Sector:</span>
+                    <p className="text-gray-900">{institution.sector}</p>
+                  </div>
+                  <div>
+                    <span className="font-medium text-gray-500 text-xs">Group:</span>
+                    <p className="text-gray-900">
+                      {institution.group && institution.group.trim() && institution.group !== "_" 
+                        ? institution.group 
+                        : "—"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Territory */}
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Territory:</span>
+                  <div className="mt-1">
+                    {institution.global ? (
+                      <span className="inline-flex items-center gap-1 text-gray-700 text-sm">
+                        <Globe size={14} /> Global
+                      </span>
+                    ) : institution.territory && institution.territory.length > 0 ? (
+                      <div className="flex flex-wrap gap-1 items-center">
+                        {institution.territory.map((t, idx) => {
+                          const territoryData = renderTerritoryBadge(t);
+                          if (!territoryData.displayText) return null;
+
+                          if (territoryData.isGlobal) {
+                            return (
+                              <span key={idx} className="inline-flex items-center gap-1 text-gray-700 text-sm">
+                                <Globe size={14} /> Global
+                              </span>
+                            )
+                          }
+
+                          return (
+                            <span
+                              key={idx}
+                              className="inline-flex items-center justify-center h-5 w-7"
+                              title={territoryData.displayText}
+                            >
+                              {territoryData.countryCode.length === 2 ? (
+                                <img
+                                  src={`https://flagcdn.com/w20/${territoryData.countryCode.toLowerCase()}.png`}
+                                  srcSet={`https://flagcdn.com/w40/${territoryData.countryCode.toLowerCase()}.png 2x`}
+                                  width="16"
+                                  height="12"
+                                  alt={territoryData.countryCode}
+                                  loading="lazy"
+                                />
+                              ) : (
+                                <span className="text-sm">{territoryData.flag}</span>
+                              )}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <span className="text-gray-400 text-sm">—</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* 100% Promotion */}
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">100% Promotion:</span>
+                  <div className="mt-1">
+                    {institution.promotion && institution.promotion !== "" ? (
+                      <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+                        {institution.promotion}
+                      </span>
+                    ) : (
+                      <span className="text-gray-400 text-sm">—</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Promoted */}
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Promoted:</span>
+                  <div className="mt-1">
+                    {institution.promoted ? (
+                      <span className="inline-flex items-center rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800">
+                        {institution.promoted}
+                      </span>
+                    ) : (
+                      <span className="text-gray-400 text-sm">—</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Scholarship */}
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Scholarship:</span>
+                  <div className="mt-1">
+                    {institution.scholarship ? (
+                      <a
+                        href={institution.scholarship}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block rounded bg-[#ABDBC0] px-3 py-1 text-xs font-semibold text-[#0A1F38]"
+                      >
+                        View Scholarship
+                      </a>
+                    ) : (
+                      <span className="text-gray-400 text-sm">—</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-2 border-t">
+                  <button
+                    onClick={() => onEdit(institution)}
+                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-green-600 bg-green-50 hover:bg-green-100"
+                  >
+                    <Edit2 size={16} /> Edit
+                  </button>
+                  <button
+                    onClick={() => onDelete(institution._id)}
+                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-red-600 bg-red-50 hover:bg-red-100"
+                  >
+                    <Trash2 size={16} /> Delete
+                  </button>
+                </div>
+              </div>
+              </div>
+
+              {/* Expanded Courses */}
+              {isExpanded && hasCourses && (
+                <div className="border-t bg-gray-50 p-3">
+                  <h4 className="text-sm font-semibold text-gray-800 mb-2">Courses</h4>
+                  <div className="space-y-2">
+                    {parsedCourses.map((course, index) => (
+                      <div key={course._id || index} className="bg-white p-2 rounded border text-sm">
+                        <div className="font-medium text-gray-900">{course.course}</div>
+                        <div className="text-gray-600 text-xs mt-1">
+                          Commission: <span className="font-medium">{course.commission || 'N/A'}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
