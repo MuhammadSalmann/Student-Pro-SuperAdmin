@@ -65,16 +65,16 @@ export default function Insurance() {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-3 md:p-4 space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Health Insurance</h1>
-          <p className="mt-1 text-gray-600">Manage health insurance companies and their plans</p>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 truncate">Health Insurance</h1>
+          <p className="mt-1 text-sm sm:text-base text-gray-600">Manage health insurance companies and their plans</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <select
-            className="h-9 w-[120px] rounded-lg border px-3 py-1.5 text-sm"
+            className="h-9 flex-1 sm:flex-none sm:w-[120px] rounded-lg border px-3 py-1.5 text-sm"
             value={pageSize}
             onChange={(e) => setPageSize(Number(e.target.value))}
           >
@@ -86,10 +86,11 @@ export default function Insurance() {
           </select>
           <Button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 bg-[#0A1F38] text-white hover:bg-[#0C2A4D]"
+            className="flex items-center gap-2 bg-[#0A1F38] text-white hover:bg-[#0C2A4D] whitespace-nowrap text-sm px-3 sm:px-4"
           >
-            <Plus size={18} />
-            Add Insurance
+            <Plus size={16} />
+            <span className="hidden sm:inline">Add Insurance</span>
+            <span className="sm:hidden">Add</span>
           </Button>
         </div>
       </div>
