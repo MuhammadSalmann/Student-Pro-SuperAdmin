@@ -81,18 +81,18 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex max-w-md flex-1 items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex flex-col sm:flex-row flex-1 items-stretch sm:items-center gap-2">
             <Input
               placeholder="Search by name..."
               value={searchName}
               onChange={(e) => onSearchNameChange(e.target.value)}
-              className="h-9 w-full max-w-[240px] text-sm"
+              className="h-9 w-full sm:max-w-[240px] text-sm"
             />
             <Button
               onClick={() => setShowFilters(!showFilters)}
               variant="outline"
-              className={`flex h-9 shrink-0 items-center gap-1.5 px-3 text-white text-xs 
+              className={`flex h-9 shrink-0 items-center justify-center gap-1.5 px-3 text-white text-xs 
     bg-[#0A1F38] 
     border border-white/30 
     transition-all duration-200 
@@ -106,20 +106,21 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
 
           </div>
 
-          <div className="flex gap-1.5">
+          <div className="flex flex-wrap gap-1.5">
             <Button
               onClick={onImport}
               variant="outline"
-              className="flex h-8 items-center gap-1.5 px-3 text-xs"
+              className="flex flex-1 sm:flex-none h-8 items-center justify-center gap-1.5 px-3 text-xs"
               disabled={importing}
             >
               <Upload size={14} />
-              {importing ? "Importing..." : "Import"}
+              <span className="hidden sm:inline">{importing ? "Importing..." : "Import"}</span>
+              <span className="sm:hidden">{importing ? "..." : "Import"}</span>
             </Button>
 
             <Button
               onClick={onExport}
-              className="flex h-8 items-center gap-1.5 px-3 text-xs text-[#0A1F38]
+              className="flex flex-1 sm:flex-none h-8 items-center justify-center gap-1.5 px-3 text-xs text-[#0A1F38]
   bg-[#ABDBC0] 
   rounded-md 
 hover:bg-[#ABDBC0]"
@@ -127,15 +128,17 @@ hover:bg-[#ABDBC0]"
               disabled={exporting}
             >
               <Download size={14} />
-              {exporting ? "Exporting..." : "Export"}
+              <span className="hidden sm:inline">{exporting ? "Exporting..." : "Export"}</span>
+              <span className="sm:hidden">{exporting ? "..." : "Export"}</span>
             </Button>
 
             <Button
               onClick={onAddInstitution}
-              className="flex h-8 items-center gap-1.5 bg-[#0A1F38] px-3 text-xs text-white hover:bg-[#0C2A4D] "
+              className="flex flex-1 sm:flex-none h-8 items-center justify-center gap-1.5 bg-[#0A1F38] px-3 text-xs text-white hover:bg-[#0C2A4D]"
             >
               <Plus size={14} />
-              Add Institution
+              <span className="hidden sm:inline">Add Institution</span>
+              <span className="sm:hidden">Add</span>
             </Button>
           </div>
         </div>
@@ -144,7 +147,7 @@ hover:bg-[#ABDBC0]"
       {/* SHOW FILTERS ONLY WHEN OPEN */}
       {showFilters && (
         <CardContent className="pt-3">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <select
               className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterCountry}
@@ -264,7 +267,7 @@ hover:bg-[#ABDBC0]"
             {hasActiveFilters && (
               <Button
                 onClick={onClearFilters}
-                className="h-8 bg-[#0A1F38] px-4 text-xs text-white hover:bg-[#0C2A4D] "
+                className="h-9 w-full bg-[#0A1F38] px-4 text-xs text-white hover:bg-[#0C2A4D] sm:col-span-2 lg:col-span-1"
               >
                 Clear Filters
               </Button>

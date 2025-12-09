@@ -38,7 +38,9 @@ const AccommodationTable = ({
   };
 
   return (
-    <div className="border rounded-md">
+    <>
+      {/* Desktop Table View */}
+      <div className="hidden md:block border rounded-md">
         <Table>
           <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
             <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
@@ -180,7 +182,98 @@ const AccommodationTable = ({
             })}
           </TableBody>
         </Table>
-    </div>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className="md:hidden space-y-4">
+        {accommodations.map((accommodation) => {
+          const isExpanded = expandedRows.has(accommodation._id);
+          const hasItems = accommodation.items && accommodation.items.length > 0;
+
+          return (
+            <div key={accommodation._id} className="bg-white border rounded-lg shadow-sm overflow-hidden">
+              {/* Card Header */}
+              <div className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] p-3"></div>
+
+              {/* Card Body */}
+              <div className="flex gap-3">
+                {/* Expand/Collapse Button */}
+                <div className="flex items-start pt-3 pl-3">
+                  {hasItems ? (
+                    <button
+                      onClick={() => toggleRow(accommodation._id)}
+                      className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition"
+                      title={isExpanded ? "Collapse items" : "Expand items"}
+                    >
+                      {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                    </button>
+                  ) : (
+                    <div className="w-[34px]"></div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 p-3 pt-3 pr-3 space-y-2.5">
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Company:</span>
+                  <p className="text-gray-900 text-sm font-medium">{accommodation.company}</p>
+                </div>
+
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Country:</span>
+                  <p className="text-gray-900 text-sm">{accommodation.country}</p>
+                </div>
+
+                <div>
+                  <span className="font-medium text-gray-500 text-xs">Locations:</span>
+                  {accommodation.locations && accommodation.locations.length > 0 ? (
+                    <p className="text-gray-900 text-sm">{accommodation.locations.join(", ")}</p>
+                  ) : (
+                    <p className="text-gray-400 text-sm">—</p>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-2 border-t">
+                  <button
+                    onClick={() => onEdit(accommodation)}
+                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-green-600 bg-green-50 hover:bg-green-100"
+                  >
+                    <Edit2 size={16} /> Edit
+                  </button>
+                  <button
+                    onClick={() => onDelete(accommodation._id)}
+                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-red-600 bg-red-50 hover:bg-red-100"
+                  >
+                    <Trash2 size={16} /> Delete
+                  </button>
+                </div>
+              </div>
+              </div>
+
+              {/* Expanded Items */}
+              {isExpanded && hasItems && (
+                <div className="border-t bg-gray-50 p-3">
+                  <h4 className="text-sm font-semibold text-gray-800 mb-2">Items</h4>
+                  <div className="space-y-2">
+                    {accommodation.items.map((item, index) => (
+                      <div key={item._id || index} className="bg-white p-2 rounded border text-sm">
+                        <div className="font-medium text-gray-900">{item.name}</div>
+                        <div className="text-gray-600 text-xs mt-1">
+                          Commission: <span className="font-medium">
+                            {typeof item.commission === 'number' ? `$${item.commission.toFixed(2)}` : item.commission}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 
