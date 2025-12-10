@@ -170,6 +170,20 @@ export default function InstitutionViewModal({
               </div>
             </div>
           )}
+
+          {/* Application Method */}
+          {institution.applicationMethod && institution.applicationMethod.trim() && (
+            <div>
+              <h3 className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Application Method
+              </h3>
+              <div className="p-3.5 border border-gray-200 rounded-lg bg-gradient-to-r from-gray-50 to-white">
+                <p className="text-sm text-gray-800 break-words">
+                  {institution.applicationMethod}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

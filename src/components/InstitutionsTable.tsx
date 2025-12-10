@@ -118,6 +118,8 @@ export default function InstitutionsTable({
           {institutions.map((institution) => {
             const isExpanded = expandedRows.has(institution._id);
             const hasCourses = institution.course && institution.course.length > 0;
+            const hasApplicationMethod = institution.applicationMethod && institution.applicationMethod.trim() !== "";
+            const hasExpandableContent = hasCourses || hasApplicationMethod;
             const parsedCourses = hasCourses ? parseCourses(institution.course) : [];
 
             return (
@@ -125,11 +127,11 @@ export default function InstitutionsTable({
                 <TableRow key={institution._id}>
                   {/* Expand/Collapse Arrow */}
                   <TableCell>
-                    {hasCourses ? (
+                    {hasExpandableContent ? (
                       <button
                         onClick={() => toggleRow(institution._id)}
                         className="rounded p-1.5 text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
-                        title={isExpanded ? "Collapse courses" : "Expand courses"}
+                        title={isExpanded ? "Collapse details" : "Expand details"}
                       >
                         {isExpanded ? (
                           <ChevronDown size={18} />
@@ -327,48 +329,68 @@ export default function InstitutionsTable({
                 </TableRow>
 
                 {/* Expanded Course Details Row */}
-                {isExpanded && hasCourses && (
+                {isExpanded && hasExpandableContent && (
                   <TableRow key={`${institution._id}-courses`}>
                     <TableCell></TableCell>
                     <TableCell colSpan={10} className="p-0 bg-gray-50">
                       <div className="px-4 py-3">
                         <div className="max-w-4xl overflow-hidden bg-white border border-gray-200 rounded-lg shadow-sm">
-                          <div className="px-3 py-2 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
-                            <h4 className="text-sm font-semibold text-gray-800">
-                              Courses for {institution.name}
-                            </h4>
-                          </div>
-                          <div className="overflow-x-auto">
-                            <table className="w-full">
-                              <thead>
-                                <tr className="border-b border-gray-200 bg-gray-100/70">
-                                  <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200">
-                                    Course Name
-                                  </th>
-                                  <th className="text-right px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider min-w-[180px] max-w-[300px]">
-                                    Commission
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-gray-200">
-                                {parsedCourses.map((course, index) => (
-                                  <tr
-                                    key={course._id || index}
-                                    className="transition-colors hover:bg-blue-50/30"
-                                  >
-                                    <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200">
-                                      {course.course}
-                                    </td>
-                                    <td className="px-3 py-1.5 text-right align-top min-w-[180px] max-w-[300px]">
-                                      <span className="inline-block text-sm font-medium text-right text-gray-900 break-words whitespace-normal">
-                                        {course.commission || 'N/A'}
-                                      </span>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
+                          {hasCourses && (
+                            <>
+                              <div className="px-3 py-2 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+                                <h4 className="text-sm font-semibold text-gray-800">
+                                  Courses for {institution.name}
+                                </h4>
+                              </div>
+                              <div className="overflow-x-auto">
+                                <table className="w-full">
+                                  <thead>
+                                    <tr className="border-b border-gray-200 bg-gray-100/70">
+                                      <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200">
+                                        Course Name
+                                      </th>
+                                      <th className="text-right px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider min-w-[180px] max-w-[300px]">
+                                        Commission
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-gray-200">
+                                    {parsedCourses.map((course, index) => (
+                                      <tr
+                                        key={course._id || index}
+                                        className="transition-colors hover:bg-blue-50/30"
+                                      >
+                                        <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200">
+                                          {course.course}
+                                        </td>
+                                        <td className="px-3 py-1.5 text-right align-top min-w-[180px] max-w-[300px]">
+                                          <span className="inline-block text-sm font-medium text-right text-gray-900 break-words whitespace-normal">
+                                            {course.commission || 'N/A'}
+                                          </span>
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </>
+                          )}
+                          {/* Application Method */}
+                          {hasApplicationMethod && (
+                            <div className={`px-3 py-2 ${hasCourses ? 'border-t' : ''} border-gray-200 bg-gray-50`}>
+                              {!hasCourses && (
+                                <h4 className="text-sm font-semibold text-gray-800 mb-2">
+                                  Details for {institution.name}
+                                </h4>
+                              )}
+                              <p className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
+                                Application Method
+                              </p>
+                              <p className="text-sm text-gray-800 break-words">
+                                {institution.applicationMethod}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </TableCell>
@@ -386,6 +408,8 @@ export default function InstitutionsTable({
         {institutions.map((institution) => {
           const isExpanded = expandedRows.has(institution._id);
           const hasCourses = institution.course && institution.course.length > 0;
+          const hasApplicationMethod = institution.applicationMethod && institution.applicationMethod.trim() !== "";
+          const hasExpandableContent = hasCourses || hasApplicationMethod;
           const parsedCourses = hasCourses ? parseCourses(institution.course) : [];
 
           return (
@@ -397,11 +421,11 @@ export default function InstitutionsTable({
               <div className="flex gap-3">
                 {/* Expand/Collapse Button */}
                 <div className="flex items-start pt-3 pl-3">
-                  {hasCourses ? (
+                  {hasExpandableContent ? (
                     <button
                       onClick={() => toggleRow(institution._id)}
                       className="p-1.5 text-gray-600 hover:bg-gray-100 rounded transition"
-                      title={isExpanded ? "Collapse courses" : "Expand courses"}
+                      title={isExpanded ? "Collapse details" : "Expand details"}
                     >
                       {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                     </button>
@@ -570,19 +594,30 @@ export default function InstitutionsTable({
               </div>
 
               {/* Expanded Courses */}
-              {isExpanded && hasCourses && (
+              {isExpanded && hasExpandableContent && (
                 <div className="border-t bg-gray-50 p-3">
-                  <h4 className="text-sm font-semibold text-gray-800 mb-2">Courses</h4>
-                  <div className="space-y-2">
-                    {parsedCourses.map((course, index) => (
-                      <div key={course._id || index} className="bg-white p-2 rounded border text-sm">
-                        <div className="font-medium text-gray-900">{course.course}</div>
-                        <div className="text-gray-600 text-xs mt-1">
-                          Commission: <span className="font-medium">{course.commission || 'N/A'}</span>
-                        </div>
+                  {hasCourses && (
+                    <>
+                      <h4 className="text-sm font-semibold text-gray-800 mb-2">Courses</h4>
+                      <div className="space-y-2">
+                        {parsedCourses.map((course, index) => (
+                          <div key={course._id || index} className="bg-white p-2 rounded border text-sm">
+                            <div className="font-medium text-gray-900">{course.course}</div>
+                            <div className="text-gray-600 text-xs mt-1">
+                              Commission: <span className="font-medium">{course.commission || 'N/A'}</span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    </>
+                  )}
+                  {/* Application Method */}
+                  {hasApplicationMethod && (
+                    <div className={hasCourses ? "mt-3 pt-3 border-t border-gray-200" : ""}>
+                      <span className="font-medium text-gray-500 text-xs">Application Method:</span>
+                      <p className="text-gray-900 text-sm mt-1 break-words">{institution.applicationMethod}</p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
