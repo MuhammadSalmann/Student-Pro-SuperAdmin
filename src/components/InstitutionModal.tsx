@@ -49,6 +49,7 @@ export default function InstitutionModal({
     global: false,
     course: [],
     territory: [],
+    applicationMethod: "",
   });
 
   // Course form states
@@ -79,6 +80,7 @@ export default function InstitutionModal({
         course: institution.course || [],
         territory: institution.territory?.map(t => getCountryName(t)) || [],
         parent: institution.parent || "",
+        applicationMethod: institution.applicationMethod || "",
       });
     } else if (mode === "create") {
       setFormData({
@@ -94,6 +96,7 @@ export default function InstitutionModal({
         global: false,
         course: [],
         territory: [],
+        applicationMethod: "",
       });
     }
   }, [mode, institution]);
@@ -203,6 +206,7 @@ export default function InstitutionModal({
       global: false,
       course: [],
       territory: [],
+      applicationMethod: "",
     });
     setNewCourse({ course: "", commission: "" });
     setTerritoryInput("");
@@ -484,6 +488,45 @@ export default function InstitutionModal({
                   <option value="Global">Global</option>
                   <option value="All">All</option>
                 </select>
+              </div>
+            </div>
+          </div>
+
+         
+
+          {/* Application Method Section */}
+          <div>
+            <h3 className="mb-3 text-lg font-semibold text-gray-900">Application Method</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Application Method (Link or Text)
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    value={formData.applicationMethod || ""}
+                    onChange={(e) => setFormData({ ...formData, applicationMethod: e.target.value })}
+                    placeholder="Enter application method URL or text"
+                    className="flex-1"
+                  />
+                  {formData.applicationMethod && formData.applicationMethod.trim() && (
+                    <Button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, applicationMethod: "" })}
+                      variant="outline"
+                      className="flex items-center gap-1 text-red-600 hover:text-red-700 hover:bg-red-50"
+                      title="Clear application method"
+                    >
+                      <Trash2 size={16} />
+                      Clear
+                    </Button>
+                  )}
+                </div>
+                {formData.applicationMethod && formData.applicationMethod.trim() && (
+                  <p className="mt-2 text-sm text-gray-600">
+                    Current: <span className="font-medium">{formData.applicationMethod}</span>
+                  </p>
+                )}
               </div>
             </div>
           </div>

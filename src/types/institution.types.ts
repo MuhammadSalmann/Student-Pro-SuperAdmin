@@ -18,6 +18,7 @@ export interface Institution {
   parent?: string;
   global: boolean;
   course: Course[];
+  applicationMethod?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -67,6 +68,7 @@ export interface CreateInstitutionData {
   parent?: string;
   global?: boolean;
   course?: Course[];
+  applicationMethod?: string;
 }
 
 export type UpdateInstitutionData = Partial<CreateInstitutionData>;
