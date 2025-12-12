@@ -178,9 +178,9 @@ export default function InstitutionViewModal({
                 Application Method
               </h3>
               <div className="p-3.5 border border-gray-200 rounded-lg bg-gradient-to-r from-gray-50 to-white">
-                <p className="text-sm text-gray-800 break-words">
+                <a href={institution.applicationMethod} className="text-sm text-gray-800 break-words underline hover:text-blue-600 hover:underline transition-colors" target="_blank" rel="noopener noreferrer">
                   {institution.applicationMethod}
-                </p>
+                </a>
               </div>
             </div>
           )}

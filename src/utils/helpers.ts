@@ -155,7 +155,7 @@ export const COUNTRY_NAMES: Record<string, string> = {
   US: "United States",
   UZ: "Uzbekistan",
   VE: "Venezuela",
-  VN: "Viet Nam",
+  VN: "Vietnam",
   YE: "Yemen",
 };
 
@@ -288,7 +288,7 @@ export const FILTER_COUNTRIES = [
   "United Arab Emirates",
   "United Kingdom",
   "United States",
-  "Viet Nam",
+  "Vietnam",
 ] as const;
 
 /**
@@ -339,7 +339,7 @@ export const FILTER_TERRITORIES = [
   "Uganda",
   "United Arab Emirates",
   "United States",
-  "Viet Nam",
+  "Vietnam",
 ] as const;
 
 /**
@@ -741,7 +741,7 @@ export const COUNTRY_STATES: Record<string, string[]> = {
   "Thailand": [
     "Bangkok", "Pathum Thani"
   ],
-  "Viet Nam": [
+  "Vietnam": [
     "Hanoi", "Ho Chi Minh City", "Da Nang"
   ],
   "United Arab Emirates": [

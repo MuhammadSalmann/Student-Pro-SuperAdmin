@@ -386,9 +386,9 @@ export default function InstitutionsTable({
                               <p className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
                                 Application Method
                               </p>
-                              <p className="text-sm text-gray-800 break-words">
+                              <a href={institution.applicationMethod} className="text-sm text-gray-800 break-words underline hover:text-blue-600 hover:underline transition-colors" target="_blank" rel="noopener noreferrer">
                                 {institution.applicationMethod}
-                              </p>
+                              </a>
                             </div>
                           )}
                         </div>
@@ -615,7 +615,7 @@ export default function InstitutionsTable({
                   {hasApplicationMethod && (
                     <div className={hasCourses ? "mt-3 pt-3 border-t border-gray-200" : ""}>
                       <span className="font-medium text-gray-500 text-xs">Application Method:</span>
-                      <p className="text-gray-900 text-sm mt-1 break-words">{institution.applicationMethod}</p>
+                      <a href={institution.applicationMethod} className="text-gray-900 text-sm mt-1 break-words underline hover:text-blue-600 hover:underline transition-colors" target="_blank" rel="noopener noreferrer ">{institution.applicationMethod}</a>
                     </div>
                   )}
                 </div>
