@@ -108,7 +108,7 @@ export default function InstitutionsTable({
             <TableHead className="min-w-[120px]">Name</TableHead>
             <TableHead className="w-[70px]">Territory</TableHead>
             <TableHead className="w-[65px]">100% Promotion</TableHead>
-            <TableHead className="w-[65px]">Promoted</TableHead>
+            <TableHead className="w-[65px]">TAT</TableHead>
             <TableHead className="w-[65px]">Scholarship</TableHead>
             <TableHead className="w-[70px]">Group</TableHead>
             <TableHead className="w-[90px] text-right">Actions</TableHead>
@@ -253,22 +253,13 @@ export default function InstitutionsTable({
                     )}
                   </TableCell>
 
-                  {/* Promoted */}
-                  <TableCell>
-                    {institution.promoted ? (
-                      <span
-                        className="inline-flex items-center rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800"
-                        title={institution.promoted}
-                      >
-                        {institution.promoted}
-                      </span>
-                    ) : (
-                      <span className="text-gray-400">—</span>
-                    )}
+                  {/* TAT */}
+                  <TableCell className="text-sm text-gray-700">
+                    {institution.tat || <span className="text-gray-400">—</span>}
                   </TableCell>
 
                   {/* Scholarship */}
-                  <TableCell>
+                  <TableCell className="text-center">
                     {institution.scholarship ? (
                       <a
                         href={institution.scholarship}
@@ -542,17 +533,11 @@ export default function InstitutionsTable({
                   </div>
                 </div>
 
-                {/* Promoted */}
+                {/* TAT */}
                 <div>
-                  <span className="font-medium text-gray-500 text-xs">Promoted:</span>
+                  <span className="font-medium text-gray-500 text-xs">TAT:</span>
                   <div className="mt-1">
-                    {institution.promoted ? (
-                      <span className="inline-flex items-center rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800">
-                        {institution.promoted}
-                      </span>
-                    ) : (
-                      <span className="text-gray-400 text-sm">—</span>
-                    )}
+                    <span className="text-gray-700 text-sm">{institution.tat || <span className="text-gray-400">—</span>}</span>
                   </div>
                 </div>
 
