@@ -1,4 +1,5 @@
-import { Edit2, Trash2, Eye } from "lucide-react";
+import { useState } from "react";
+import { Edit2, Trash2, Eye, ChevronDown, ChevronRight } from "lucide-react";
 import {
     Table,
     TableBody,
@@ -22,6 +23,20 @@ export default function VisaServiceTable({
     onDelete,
     onView,
 }: VisaServiceTableProps) {
+    const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+
+    const toggleRow = (serviceId: string) => {
+        setExpandedRows((prev) => {
+            const newSet = new Set(prev);
+            if (newSet.has(serviceId)) {
+                newSet.delete(serviceId);
+            } else {
+                newSet.add(serviceId);
+            }
+            return newSet;
+        });
+    };
+
     return (
         <>
             {/* Desktop Table View */}
@@ -29,17 +44,41 @@ export default function VisaServiceTable({
                 <Table>
                 <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
                     <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
+                        <TableHead className="w-[35px]"></TableHead>
                         <TableHead className="px-4 py-3">Service Type</TableHead>
                         <TableHead className="px-4 py-3">Country</TableHead>
-                        <TableHead className="px-4 py-3">Service Fee</TableHead>
+                        <TableHead className="px-4 py-3">Agent Service Fee</TableHead>
+                        <TableHead className="px-4 py-3">Government Fee</TableHead>
                         <TableHead className="px-4 py-3">Referral Fee</TableHead>
                         <TableHead className="px-4 py-3 w-[120px]">Actions</TableHead>
                     </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                    {visaServices.map((service) => (
-                        <TableRow key={service._id} className="hover:bg-gray-50">
+                    {visaServices.map((service) => {
+                        const isExpanded = expandedRows.has(service._id);
+                        const hasExpandableContent = 
+                            (service.processingTime && service.processingTime.trim() !== "") ||
+                            (service.applicationField && service.applicationField.trim() !== "");
+
+                        return (
+                            <>
+                                <TableRow key={service._id} className="hover:bg-gray-50">
+                                    {/* Expand/Collapse Arrow */}
+                                    <TableCell>
+                                        <button
+                                            onClick={() => toggleRow(service._id)}
+                                            className="rounded p-1.5 text-gray-600 transition hover:bg-gray-100 hover:text-gray-900"
+                                            title={isExpanded ? "Collapse details" : "Expand details"}
+                                        >
+                                            {isExpanded ? (
+                                                <ChevronDown size={18} />
+                                            ) : (
+                                                <ChevronRight size={18} />
+                                            )}
+                                        </button>
+                                    </TableCell>
+
                             {/* Service Type */}
                             <TableCell className="px-4 py-3">
                                 <span className="text-sm text-gray-700">
@@ -56,8 +95,15 @@ export default function VisaServiceTable({
 
                             {/* Service Fee */}
                             <TableCell className="px-4 py-3">
-                                <span className="text-sm text-gray-700">
+                                <span className="text-sm text-gray-700 whitespace-pre-wrap break-words block max-w-[200px]">
                                     {service.serviceFee}
+                                </span>
+                            </TableCell>
+
+                            {/* Government Fee */}
+                            <TableCell className="px-4 py-3 text-center">
+                                <span className="text-sm text-gray-700">
+                                    {service.governmentFee || <span className="text-gray-400">—</span>}
                                 </span>
                             </TableCell>
 
@@ -94,8 +140,57 @@ export default function VisaServiceTable({
                                     </button>
                                 </div>
                             </TableCell>
-                        </TableRow>
-                    ))}
+                                </TableRow>
+
+                                {/* Expanded Content Row */}
+                                {isExpanded && (
+                                    <TableRow className="bg-gradient-to-r from-blue-50/50 to-green-50/50">
+                                        <TableCell colSpan={7} className="px-6 py-5">
+                                            <div className="bg-white/70 rounded-lg p-5 shadow-sm border border-gray-200/50">
+                                                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-4 pb-2 border-b border-gray-200">
+                                                    Additional Information
+                                                </h4>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div className="flex flex-col space-y-1.5">
+                                                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Processing Time:</span>
+                                                        <span className="text-sm text-gray-800 font-medium">
+                                                            {service.processingTime && service.processingTime.trim() !== "" ? service.processingTime : (
+                                                                <span className="text-gray-400 italic">N/A</span>
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex flex-col space-y-1.5">
+                                                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Application Method:</span>
+                                                        <span className="text-sm text-gray-800 font-medium">
+                                                            {service.applicationField && service.applicationField.trim() !== "" ? (
+                                                                /^(https?:\/\/|www\.)/i.test(service.applicationField.trim()) ? (
+                                                                    <a
+                                                                        href={service.applicationField.startsWith('http') ? service.applicationField : `https://${service.applicationField}`}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1 break-all"
+                                                                    >
+                                                                        {service.applicationField}
+                                                                        <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                                                        </svg>
+                                                                    </a>
+                                                                ) : (
+                                                                    <span className="break-words">{service.applicationField}</span>
+                                                                )
+                                                            ) : (
+                                                                <span className="text-gray-400 italic">N/A</span>
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </>
+                        );
+                    })}
                 </TableBody>
             </Table>
         </div>
@@ -122,7 +217,11 @@ export default function VisaServiceTable({
                             </div>
                             <div>
                                 <span className="font-medium text-gray-500 text-xs">Service Fee:</span>
-                                <p className="text-gray-900">{service.serviceFee}</p>
+                                <p className="text-gray-900 whitespace-pre-wrap break-words">{service.serviceFee}</p>
+                            </div>
+                            <div>
+                                <span className="font-medium text-gray-500 text-xs">Government Fee:</span>
+                                <p className="text-gray-900">{service.governmentFee || <span className="text-gray-400">—</span>}</p>
                             </div>
                             <div>
                                 <span className="font-medium text-gray-500 text-xs">Referral Fee:</span>
