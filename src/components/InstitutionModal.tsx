@@ -43,7 +43,7 @@ export default function InstitutionModal({
     sector: "University",
     scholarship: "",
     promotion: "No",
-    promoted: "",
+    tat: "",
     group: "",
     url: "",
     global: false,
@@ -73,7 +73,7 @@ export default function InstitutionModal({
         sector: institution.sector,
         scholarship: institution.scholarship || "",
         promotion: institution.promotion || "No",
-        promoted: institution.promoted || "",
+        tat: institution.tat || "",
         group: institution.group || "",
         url: institution.url || "",
         global: institution.global || false,
@@ -90,7 +90,7 @@ export default function InstitutionModal({
         sector: "University",
         scholarship: "",
         promotion: "No",
-        promoted: "",
+        tat: "",
         group: "",
         url: "",
         global: false,
@@ -200,7 +200,7 @@ export default function InstitutionModal({
       sector: "University",
       scholarship: "",
       promotion: "No",
-      promoted: "",
+      tat: "",
       group: "",
       url: "",
       global: false,
@@ -403,6 +403,16 @@ export default function InstitutionModal({
                   <option value="No">No</option>
                 </select>
               </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Turn Around Time
+                </label>
+                <Input
+                  value={formData.tat || ""}
+                  onChange={(e) => setFormData({ ...formData, tat: e.target.value })}
+                  placeholder="Enter turn around time"
+                />
+              </div>
               <div className="col-span-2">
                 <label className="block mb-1 text-sm font-medium text-gray-700">Website URL</label>
                 <Input
@@ -470,29 +480,6 @@ export default function InstitutionModal({
               </div>
             )}
           </div>
-
-          {/* Promoted Section */}
-          <div>
-            <h3 className="mb-3 text-lg font-semibold text-gray-900">Promoted</h3>
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <label className="block mb-1 text-sm font-medium text-gray-700">
-                  Promoted Status
-                </label>
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={formData.promoted || ""}
-                  onChange={(e) => setFormData({ ...formData, promoted: e.target.value })}
-                >
-                  <option value="">Select status</option>
-                  <option value="Global">Global</option>
-                  <option value="All">All</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-         
 
           {/* Application Method Section */}
           <div>

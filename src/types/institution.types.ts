@@ -10,7 +10,7 @@ export interface Institution {
   state: string[];
   sector: "University" | "College" | "Private School" | "Government School" | "English School" | "Institute";
   territory: string[];
-  promoted?: string;
+  tat?: string;
   scholarship?: string;
   promotion?: string;
   group?: string;
@@ -31,7 +31,6 @@ export interface InstitutionFilters {
   scholarship?: string;
   group?: string;
   promotion?: string;
-  promoted?: string;
   hundredPercentPromotion?: string;
   territory?: string | string[];
   name?: string;
@@ -60,7 +59,7 @@ export interface CreateInstitutionData {
   state: string[];
   sector: Institution["sector"];
   territory?: string[];
-  promoted?: string;
+  tat?: string;
   scholarship?: string;
   promotion?: string;
   group?: string;

@@ -8,7 +8,6 @@ import {
   FILTER_COUNTRIES,
   FILTER_TERRITORIES,
   FILTER_GROUPS,
-  FILTER_PROMOTIONS,
   FILTER_YES_NO,
   PAGE_SIZE_OPTIONS,
   COUNTRY_STATES,
@@ -52,7 +51,6 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
     filterTerritory,
     filterSector,
     filterGroup,
-    filterPromoted,
     filter100Promotion,
     filterScholarship,
     pageSize,
@@ -65,7 +63,6 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
     onFilterTerritoryChange,
     onFilterSectorChange,
     onFilterGroupChange,
-    onFilterPromotedChange,
     onFilter100PromotionChange,
     onFilterScholarshipChange,
     onPageSizeChange,
@@ -81,8 +78,8 @@ export default function InstitutionFilters(props: InstitutionFiltersProps) {
   return (
     <Card>
       <CardHeader className="pb-2">
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          <div className="flex flex-col sm:flex-row flex-1 items-stretch sm:items-center gap-2">
+        <div className="flex flex-col items-stretch justify-between gap-3 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-stretch flex-1 gap-2 sm:flex-row sm:items-center">
             <Input
               placeholder="Search by name..."
               value={searchName}
@@ -216,7 +213,7 @@ hover:bg-[#ABDBC0]"
               ))}
             </select>
 
-            <select
+            {/* <select
               className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"
               value={filterPromoted}
               onChange={(e) => onFilterPromotedChange(e.target.value)}
@@ -227,7 +224,7 @@ hover:bg-[#ABDBC0]"
                   {promotion}
                 </option>
               ))}
-            </select>
+            </select> */}
 
             <select
               className="h-9 w-full rounded-lg border px-3 py-1.5 text-sm"

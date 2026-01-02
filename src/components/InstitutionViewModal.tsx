@@ -74,16 +74,8 @@ export default function InstitutionViewModal({
               />
               <Field label="100% Promotion" value={institution.promotion || "N/A"} />
               <Field
-                label="Promoted"
-                value={
-                  institution.promoted ? (
-                    <span className="inline-flex items-center px-2.5 py-1 text-xs font-normal bg-green-50 text-green-700 rounded-md border border-green-100">
-                      {institution.promoted}
-                    </span>
-                  ) : (
-                    "N/A"
-                  )
-                }
+                label="Turn Around Time"
+                value={institution.tat || "N/A"}
               />
               {institution.url && (
                 <div className="col-span-2">

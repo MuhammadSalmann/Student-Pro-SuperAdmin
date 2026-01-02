@@ -5,6 +5,9 @@ export interface VisaService {
     country: string;
     serviceFee: string;
     referralFee: string;
+    governmentFee?: string;
+    processingTime?: string;
+    applicationField?: string;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -14,6 +17,9 @@ export interface CreateVisaServiceData {
     country: string;
     serviceFee: string;
     referralFee: string;
+    governmentFee?: string;
+    processingTime?: string;
+    applicationField?: string;
 }
 
 export interface UpdateVisaServiceData {
@@ -21,6 +27,9 @@ export interface UpdateVisaServiceData {
     country?: string;
     serviceFee?: string;
     referralFee?: string;
+    governmentFee?: string;
+    processingTime?: string;
+    applicationField?: string;
 }
 
 export interface VisaServiceFilters {

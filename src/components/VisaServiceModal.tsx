@@ -27,6 +27,9 @@ export default function VisaServiceModal({
     country: "",
     serviceFee: "",
     referralFee: "",
+    governmentFee: "",
+    processingTime: "",
+    applicationField: "",
   });
 
   // Update form data when visaService or mode changes
@@ -39,6 +42,9 @@ export default function VisaServiceModal({
         country: visaService.country,
         serviceFee: visaService.serviceFee,
         referralFee: visaService.referralFee,
+        governmentFee: visaService.governmentFee || "",
+        processingTime: visaService.processingTime || "",
+        applicationField: visaService.applicationField || "",
       });
     } else if (mode === "create") {
       setFormData({
@@ -46,6 +52,9 @@ export default function VisaServiceModal({
         country: "",
         serviceFee: "",
         referralFee: "",
+        governmentFee: "",
+        processingTime: "",
+        applicationField: "",
       });
     }
   }, [mode, visaService]);
@@ -77,6 +86,9 @@ export default function VisaServiceModal({
       country: formData.country.trim(),
       serviceFee: formData.serviceFee.trim(),
       referralFee: formData.referralFee.trim(),
+      governmentFee: formData.governmentFee?.trim() || "",
+      processingTime: formData.processingTime?.trim() || "",
+      applicationField: formData.applicationField?.trim() || "",
     };
 
     const success = await onSubmit(cleanedData);
@@ -93,6 +105,9 @@ export default function VisaServiceModal({
       country: "",
       serviceFee: "",
       referralFee: "",
+      governmentFee: "",
+      processingTime: "",
+      applicationField: "",
     });
   };
 
@@ -158,7 +173,7 @@ export default function VisaServiceModal({
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700">
-                  Service Fee <span className="text-red-500">*</span>
+                  Agent Service Fee <span className="text-red-500">*</span>
                 </label>
                 <Input
                   required
@@ -176,6 +191,43 @@ export default function VisaServiceModal({
                   value={formData.referralFee}
                   onChange={(e) => setFormData({ ...formData, referralFee: e.target.value })}
                   placeholder="e.g., $50, 10%"
+                />
+              </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Government Fee
+                </label>
+                <Input
+                  value={formData.governmentFee}
+                  onChange={(e) => setFormData({ ...formData, governmentFee: e.target.value })}
+                  placeholder="e.g., $100, 100 USD"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Information */}
+          <div>
+            <h3 className="mb-3 text-lg font-semibold text-gray-900">Additional Information</h3>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Processing Time
+                </label>
+                <Input
+                  value={formData.processingTime}
+                  onChange={(e) => setFormData({ ...formData, processingTime: e.target.value })}
+                  placeholder="e.g., 2-4 weeks"
+                />
+              </div>
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Application Method
+                </label>
+                <Input
+                  value={formData.applicationField}
+                  onChange={(e) => setFormData({ ...formData, applicationField: e.target.value })}
+                  placeholder="Enter application field or link"
                 />
               </div>
             </div>
