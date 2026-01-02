@@ -40,7 +40,7 @@ export default function VisaServiceTable({
     return (
         <>
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto border rounded-md">
+            <div className="hidden overflow-x-auto border rounded-md md:block">
                 <Table>
                 <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
                     <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
@@ -57,9 +57,6 @@ export default function VisaServiceTable({
                 <TableBody>
                     {visaServices.map((service) => {
                         const isExpanded = expandedRows.has(service._id);
-                        const hasExpandableContent = 
-                            (service.processingTime && service.processingTime.trim() !== "") ||
-                            (service.applicationField && service.applicationField.trim() !== "");
 
                         return (
                             <>
@@ -146,32 +143,32 @@ export default function VisaServiceTable({
                                 {isExpanded && (
                                     <TableRow className="bg-gradient-to-r from-blue-50/50 to-green-50/50">
                                         <TableCell colSpan={7} className="px-6 py-5">
-                                            <div className="bg-white/70 rounded-lg p-5 shadow-sm border border-gray-200/50">
-                                                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-4 pb-2 border-b border-gray-200">
+                                            <div className="p-5 border rounded-lg shadow-sm bg-white/70 border-gray-200/50">
+                                                <h4 className="pb-2 mb-4 text-xs font-semibold tracking-wider text-gray-700 uppercase border-b border-gray-200">
                                                     Additional Information
                                                 </h4>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                                     <div className="flex flex-col space-y-1.5">
-                                                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Processing Time:</span>
-                                                        <span className="text-sm text-gray-800 font-medium">
+                                                        <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase">Processing Time:</span>
+                                                        <span className="text-sm font-medium text-gray-800">
                                                             {service.processingTime && service.processingTime.trim() !== "" ? service.processingTime : (
-                                                                <span className="text-gray-400 italic">N/A</span>
+                                                                <span className="italic text-gray-400">N/A</span>
                                                             )}
                                                         </span>
                                                     </div>
                                                     <div className="flex flex-col space-y-1.5">
-                                                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Application Method:</span>
-                                                        <span className="text-sm text-gray-800 font-medium">
+                                                        <span className="text-xs font-semibold tracking-wide text-gray-500 uppercase">Application Method:</span>
+                                                        <span className="text-sm font-medium text-gray-800">
                                                             {service.applicationField && service.applicationField.trim() !== "" ? (
                                                                 /^(https?:\/\/|www\.)/i.test(service.applicationField.trim()) ? (
                                                                     <a
                                                                         href={service.applicationField.startsWith('http') ? service.applicationField : `https://${service.applicationField}`}
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
-                                                                        className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1 break-all"
+                                                                        className="inline-flex items-center gap-1 text-blue-600 break-all hover:text-blue-800 hover:underline"
                                                                     >
                                                                         {service.applicationField}
-                                                                        <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <svg className="flex-shrink-0 w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                                                         </svg>
                                                                     </a>
@@ -179,7 +176,7 @@ export default function VisaServiceTable({
                                                                     <span className="break-words">{service.applicationField}</span>
                                                                 )
                                                             ) : (
-                                                                <span className="text-gray-400 italic">N/A</span>
+                                                                <span className="italic text-gray-400">N/A</span>
                                                             )}
                                                         </span>
                                                     </div>
@@ -196,9 +193,9 @@ export default function VisaServiceTable({
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden space-y-4">
+        <div className="space-y-4 md:hidden">
             {visaServices.map((service) => (
-                <div key={service._id} className="bg-white border rounded-lg shadow-sm overflow-hidden">
+                <div key={service._id} className="overflow-hidden bg-white border rounded-lg shadow-sm">
                     {/* Card Header */}
                     <div className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] p-3">
                     </div>
@@ -206,25 +203,25 @@ export default function VisaServiceTable({
                     {/* Card Body */}
                     <div className="p-3 space-y-2.5">
                         <div>
-                            <span className="font-medium text-gray-500 text-xs">Service Type:</span>
-                            <p className="text-gray-900 text-sm font-medium">{service.serviceType}</p>
+                            <span className="text-xs font-medium text-gray-500">Service Type:</span>
+                            <p className="text-sm font-medium text-gray-900">{service.serviceType}</p>
                         </div>
 
                         <div className="space-y-2 text-sm">
                             <div>
-                                <span className="font-medium text-gray-500 text-xs">Country:</span>
+                                <span className="text-xs font-medium text-gray-500">Country:</span>
                                 <p className="text-gray-900">{service.country}</p>
                             </div>
                             <div>
-                                <span className="font-medium text-gray-500 text-xs">Service Fee:</span>
-                                <p className="text-gray-900 whitespace-pre-wrap break-words">{service.serviceFee}</p>
+                                <span className="text-xs font-medium text-gray-500">Service Fee:</span>
+                                <p className="text-gray-900 break-words whitespace-pre-wrap">{service.serviceFee}</p>
                             </div>
                             <div>
-                                <span className="font-medium text-gray-500 text-xs">Government Fee:</span>
+                                <span className="text-xs font-medium text-gray-500">Government Fee:</span>
                                 <p className="text-gray-900">{service.governmentFee || <span className="text-gray-400">—</span>}</p>
                             </div>
                             <div>
-                                <span className="font-medium text-gray-500 text-xs">Referral Fee:</span>
+                                <span className="text-xs font-medium text-gray-500">Referral Fee:</span>
                                 <p className="text-gray-900">{service.referralFee}</p>
                             </div>
                         </div>
@@ -233,13 +230,13 @@ export default function VisaServiceTable({
                         <div className="flex gap-2 pt-2 border-t">
                             <button
                                 onClick={() => onEdit(service)}
-                                className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-green-600 bg-green-50 hover:bg-green-100"
+                                className="flex items-center justify-center flex-1 gap-1 p-2 text-green-600 rounded bg-green-50 hover:bg-green-100"
                             >
                                 <Edit2 size={16} /> Edit
                             </button>
                             <button
                                 onClick={() => onDelete(service._id)}
-                                className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-red-600 bg-red-50 hover:bg-red-100"
+                                className="flex items-center justify-center flex-1 gap-1 p-2 text-red-600 rounded bg-red-50 hover:bg-red-100"
                             >
                                 <Trash2 size={16} /> Delete
                             </button>
