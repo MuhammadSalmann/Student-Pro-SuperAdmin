@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Building2, ShieldCheck, Plane, Home, LogOut, Plus, Minus, X } from "lucide-react";
+import { Building2, ShieldCheck, Plane, Home, LogOut, Plus, Minus, X, MessageSquare } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "../lib/toast";
 import { FILTER_COUNTRIES, getCountryCode } from "../utils/helpers";
@@ -26,6 +26,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     { name: "Insurance", path: "/insurance", icon: ShieldCheck },
     { name: "Visa & Travel", path: "/visa-service", icon: Plane },
     { name: "Accommodation", path: "/accommodation", icon: Home },
+    { name: "PopUp", path: "/popup", icon: MessageSquare },
   ];
 
   const isActive = (path: string) => location.pathname === path;
