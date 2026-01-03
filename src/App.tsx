@@ -12,6 +12,7 @@ import Institutions from "./pages/Institutions";
 import Insurance from "./pages/Insurance";
 import VisaService from "./pages/VisaService";
 import Accommodation from "./pages/Accommodation";
+import Popup from "./pages/Popup";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -93,6 +94,14 @@ return (
               element={
                 <PrivateRoute>
                   <Accommodation />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="popup"
+              element={
+                <PrivateRoute>
+                  <Popup />
                 </PrivateRoute>
               }
             />
