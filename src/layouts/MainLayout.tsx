@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import PopupManager from "../components/PopupManager";
 
 const MainLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -15,6 +16,8 @@ const MainLayout = () => {
           <Outlet />
         </main>
       </div>
+      {/* Popup Manager - Shows promotional popups */}
+      <PopupManager />
     </div>
   );
 };
