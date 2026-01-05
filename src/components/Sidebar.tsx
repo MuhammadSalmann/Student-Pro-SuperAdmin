@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Building2, ShieldCheck, Plane, Home, LogOut, Plus, Minus, X, MessageSquare } from "lucide-react";
+import { Building2, ShieldCheck, Plane, LogOut, Plus, Minus, X, MessageSquare, GraduationCap } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "../lib/toast";
 import { FILTER_COUNTRIES, getCountryCode } from "../utils/helpers";
@@ -19,13 +19,15 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   // Close sidebar when route changes on mobile
   useEffect(() => {
     onClose();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   const navItems = [
     { name: "Institutions", path: "/institutions", icon: Building2 },
     { name: "Insurance", path: "/insurance", icon: ShieldCheck },
     { name: "Visa & Travel", path: "/visa-service", icon: Plane },
-    { name: "Accommodation", path: "/accommodation", icon: Home },
+    // { name: "Accommodation", path: "/accommodation", icon: Home },
+    { name: "Skill Assessment", path: "/skill-assessment", icon: GraduationCap },
     { name: "PopUp", path: "/popup", icon: MessageSquare },
   ];
 
@@ -37,7 +39,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       await logout();
       toast.success("Logged out successfully");
       navigate("/login");
-    } catch (error) {
+    } catch {
       toast.error("Failed to logout");
     }
   };
@@ -52,7 +54,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       {/* Overlay for mobile */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
           onClick={onClose}
         />
       )}
@@ -85,7 +87,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       {/* Close button for mobile */}
       <button
         onClick={onClose}
-        className="lg:hidden absolute top-4 right-4 p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+        className="absolute p-2 text-white transition-colors rounded-lg lg:hidden top-4 right-4 hover:bg-white/10"
         aria-label="Close menu"
       >
         <X size={24} />
@@ -96,7 +98,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         <img
           src="/studentpro white.png"
           alt="Student Pro Education"
-          className="h-auto w-full object-contain grayscale"
+          className="object-contain w-full h-auto grayscale"
         />
       </div>
 
@@ -125,7 +127,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 <div className="mt-1 ml-3">
                   <button
                     onClick={() => setShowCountries(!showCountries)}
-                    className="flex items-center gap-2 w-full px-3 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors rounded-lg hover:bg-white/10 border-b border-white/10 pb-2"
+                    className="flex items-center w-full gap-2 px-3 py-2 pb-2 text-sm font-medium transition-colors border-b rounded-lg text-white/80 hover:text-white hover:bg-white/10 border-white/10"
                   >
                     {showCountries ? (
                       <Minus className="h-3.5 w-3.5" />

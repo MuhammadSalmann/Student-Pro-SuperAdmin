@@ -14,12 +14,14 @@ const Header = ({ onMenuClick }: HeaderProps) => {
     if (path === "/insurance") return "Insurance";
     if (path === "/visa-service") return "Visa Service";
     if (path === "/accommodation") return "Accommodation";
+     if (path === "/skill-assessment") return "Skill Assessment";
+      if (path === "/popup") return "PopUp";
     return "Dashboard";
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200 bg-teal px-3 md:px-6">
-      <div className="flex items-center gap-3 flex-1 min-w-0">
+    <header className="sticky top-0 z-10 flex items-center justify-between h-16 px-3 border-b border-gray-200 bg-teal md:px-6">
+      <div className="flex items-center flex-1 min-w-0 gap-3">
         <button
           onClick={onMenuClick}
           className="lg:hidden rounded-lg p-2 text-[#313647] hover:bg-[#ABDBC0] transition-colors flex-shrink-0"
