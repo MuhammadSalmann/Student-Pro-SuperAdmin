@@ -100,4 +100,13 @@ export const API_ENDPOINTS = {
   TRACK: {
     GET: (id: string) => `/track/${id}`,
   },
+  SKILL_ASSESSMENT: {
+    GET_ALL: "/skill-assessment",
+    GET_BY_ID: (id: string) => `/skill-assessment/${id}`,
+    GET_OCCUPATION_GROUPS: "/skill-assessment/occupation-groups",
+    GET_PATHWAYS_STREAMS: "/skill-assessment/pathways-streams",
+    CREATE: "/skill-assessment",
+    UPDATE: (id: string) => `/skill-assessment/${id}`,
+    DELETE: (id: string) => `/skill-assessment/${id}`,
+  },
 } as const;
