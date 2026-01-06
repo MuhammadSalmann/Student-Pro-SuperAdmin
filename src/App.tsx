@@ -14,6 +14,7 @@ import VisaService from "./pages/VisaService";
 import Accommodation from "./pages/Accommodation";
 import SkillAssessment from "./pages/SkillAssessment";
 import Popup from "./pages/Popup";
+import ContactUs from "./pages/ContactUs";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -111,6 +112,14 @@ return (
               element={
                 <PrivateRoute>
                   <Popup />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="contact-us"
+              element={
+                <PrivateRoute>
+                  <ContactUs />
                 </PrivateRoute>
               }
             />
