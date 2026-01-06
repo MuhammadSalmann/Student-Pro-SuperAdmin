@@ -1,5 +1,6 @@
-import { Menu } from "lucide-react";
+import { Menu, FileText } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import BookmarkDropdown from "./BookmarkDropdown";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -30,12 +31,25 @@ const Header = ({ onMenuClick }: HeaderProps) => {
           <Menu size={24} />
         </button>
         <h1 className="text-base sm:text-lg md:text-2xl font-bold text-[#313647] truncate">{getPageTitle()}</h1>
+        
+        {/* Territory text - moved to left side */}
+        {location.pathname === "/institutions" && (
+          <p className="hidden xl:block text-sm text-[#313647] ml-4">
+            If your territory is not listed, please enquire with our team for confirmation.
+          </p>
+        )}
       </div>
-      {location.pathname === "/institutions" && (
-        <p className="hidden xl:block text-sm text-[#313647] ml-4 flex-shrink-0">
-          If your territory is not listed, please enquire with our team for confirmation.
-        </p>
-      )}
+
+      {/* Right side icons */}
+      <div className="flex items-center gap-2 ml-4">
+        <button
+          className="p-2 rounded-lg text-[#313647] hover:bg-[#ABDBC0] transition-colors"
+          aria-label="Forms"
+        >
+          <FileText size={20} />
+        </button>
+        <BookmarkDropdown />
+      </div>
     </header>
   );
 };
