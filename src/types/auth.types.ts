@@ -1,12 +1,6 @@
 export type UserRole =
-  | "Student"
-  | "Admin"
-  | "Counsellor"
-  | "Accountant"
-  | "Marketer"
-  | "Agent"
-  | "SuperAgent"
-  | "SubAgent";
+  | "SuperAdmin"
+  | "Counsellor";
 
 export type UserStatus = "Active" | "Inactive" | "Pending";
 
