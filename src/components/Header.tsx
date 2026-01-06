@@ -11,12 +11,13 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 
   const getPageTitle = () => {
     const path = location.pathname;
-    if (path === "/institutions") return "Global Institutions List";
+    if (path === "/institutions") return "Global Education Providers List";
     if (path === "/insurance") return "Insurance";
     if (path === "/visa-service") return "Visa Service";
     if (path === "/accommodation") return "Accommodation";
-     if (path === "/skill-assessment") return "Skill Assessment";
-      if (path === "/popup") return "PopUp";
+    if (path === "/skill-assessment") return "Skill Assessment";
+    if (path === "/popup") return "PopUp";
+    if (path === "/contact-us") return "Contact Us";
     return "Dashboard";
   };
 
@@ -34,7 +35,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
         
         {/* Territory text - moved to left side */}
         {location.pathname === "/institutions" && (
-          <p className="hidden xl:block text-sm text-[#313647] ml-4">
+          <p className="hidden xl:block  text-[#313647] ml-32">
             If your territory is not listed, please enquire with our team for confirmation.
           </p>
         )}
@@ -55,3 +56,4 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 };
 
 export default Header;
+
