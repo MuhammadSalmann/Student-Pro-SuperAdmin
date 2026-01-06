@@ -1,6 +1,7 @@
 import type { Popup } from "../types/popup.types";
 import { Pencil, Trash2, Eye, ToggleLeft, ToggleRight } from "lucide-react";
 import { Button } from "./ui/Button";
+import { useAuth } from "../contexts/AuthContext";
 
 interface PopupTableProps {
   popups: Popup[];
@@ -11,6 +12,7 @@ interface PopupTableProps {
 }
 
 const PopupTable = ({ popups, onEdit, onDelete, onView, onToggleStatus }: PopupTableProps) => {
+  const { canDelete } = useAuth();
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -107,14 +109,16 @@ const PopupTable = ({ popups, onEdit, onDelete, onView, onToggleStatus }: PopupT
                     >
                       <Pencil className="w-4 h-4" />
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onDelete(popup._id)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                    {canDelete && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => onDelete(popup._id)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    )}
                   </div>
                 </td>
               </tr>

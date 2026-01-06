@@ -12,7 +12,7 @@ const Register = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
   const [formData, setFormData] = useState<RegisterData>({
-    role: "Student",
+    role: "SuperAdmin",
     first_name: "",
     last_name: "",
     email: "",

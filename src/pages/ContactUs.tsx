@@ -27,19 +27,19 @@ const ContactUs = () => {
       name: "SYDNEY",
       address: "Student Pro Education Consultancy, 116/15A Mary Street, Auburn, Sydney, NSW, 2144, Australia",
       phone: "+61 493 167017",
-      mapUrl: "https://maps.google.com/maps?q=116+Mary+Street+Auburn+NSW+2144+Australia&hl=en&z=15&output=embed",
+      mapUrl: "https://maps.google.com/maps?q=-33.85157900812134,151.0312369945889&hl=en&z=16&output=embed",
     },
     {
       name: "LAHORE",
       address: "38 A block, Park lane, Shouq Chowk M.A Road, Johar Town, Lahore, Pakistan",
       phone: "+92 306 8849988",
-      mapUrl: "https://maps.google.com/maps?q=Johar+Town+Lahore+Pakistan&hl=en&z=15&output=embed",
+      mapUrl: "https://maps.google.com/maps?q=31.469731,74.315544&hl=en&z=16&output=embed",
     },
     {
       name: "FAISALABAD",
       address: "Amir Plaza, first floor, main collage road, Kohinoor City, Faisalabad, Pakistan",
       phone: "+92 310 0002808",
-      mapUrl: "https://maps.google.com/maps?q=Kohinoor+City+Faisalabad+Pakistan&hl=en&z=15&output=embed",
+      mapUrl: "https://maps.google.com/maps?q=31.418000,73.047900&hl=en&z=16&output=embed",
     },
   ];
 
