@@ -109,4 +109,12 @@ export const API_ENDPOINTS = {
     UPDATE: (id: string) => `/skill-assessment/${id}`,
     DELETE: (id: string) => `/skill-assessment/${id}`,
   },
+  BOOKMARKS: {
+    LIST: "/bookmarks/me",
+    GET_ALL: "/bookmarks",
+    CREATE: "/bookmarks",
+    UPDATE: (id: string) => `/bookmarks/${id}`,
+    DELETE: (id: string) => `/bookmarks/${id}`,
+    GET: (id: string) => `/bookmarks/${id}`,
+  },
 } as const;
