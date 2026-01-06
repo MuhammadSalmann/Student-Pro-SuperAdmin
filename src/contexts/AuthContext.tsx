@@ -6,6 +6,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  canDelete: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (data: RegisterData) => Promise<{ email: string; userId: string }>;
   verifyEmail: (data: VerifyEmailData) => Promise<void>;
@@ -17,6 +18,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+
 
   useEffect(() => {
     initializeAuth();
@@ -48,11 +51,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         throw new Error(response.message || "Login failed");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string; error?: string } }; message?: string };
       const errorMessage =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
         "Login failed. Please check your credentials.";
       throw new Error(errorMessage);
     }
@@ -69,11 +73,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         throw new Error(response.message || "Registration failed");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string; error?: string } }; message?: string };
       const errorMessage =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
         "Registration failed. Please try again.";
       throw new Error(errorMessage);
     }
@@ -87,11 +92,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         throw new Error(response.message || "Verification failed");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { response?: { data?: { message?: string; error?: string } }; message?: string };
       const errorMessage =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
         "Verification failed. Please check your code.";
       throw new Error(errorMessage);
     }
@@ -111,6 +117,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         user,
         isAuthenticated: !!user,
         isLoading,
+        canDelete: user?.role === "SuperAdmin",
         login,
         register,
         verifyEmail,
@@ -122,6 +129,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
