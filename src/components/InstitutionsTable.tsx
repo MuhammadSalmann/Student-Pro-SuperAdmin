@@ -15,6 +15,7 @@ import {
   renderTerritoryBadge,
   parseCourseString,
 } from "../utils/helpers";
+import { useAuth } from "../contexts/AuthContext";
 
 interface InstitutionsTableProps {
   institutions: Institution[];
@@ -29,6 +30,7 @@ export default function InstitutionsTable({
   onDelete,
   onView,
 }: InstitutionsTableProps) {
+  const { canDelete } = useAuth();
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
   const toggleRow = (institutionId: string) => {
@@ -308,13 +310,15 @@ export default function InstitutionsTable({
                       >
                         <Edit2 size={16} />
                       </button>
-                      <button
-                        onClick={() => onDelete(institution._id)}
-                        className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
-                        title="Delete"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                      {canDelete && (
+                        <button
+                          onClick={() => onDelete(institution._id)}
+                          className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
+                          title="Delete"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
@@ -568,12 +572,14 @@ export default function InstitutionsTable({
                   >
                     <Edit2 size={16} /> Edit
                   </button>
-                  <button
-                    onClick={() => onDelete(institution._id)}
-                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-red-600 bg-red-50 hover:bg-red-100"
-                  >
-                    <Trash2 size={16} /> Delete
-                  </button>
+                  {canDelete && (
+                    <button
+                      onClick={() => onDelete(institution._id)}
+                      className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-red-600 bg-red-50 hover:bg-red-100"
+                    >
+                      <Trash2 size={16} /> Delete
+                    </button>
+                  )}
                 </div>
               </div>
               </div>

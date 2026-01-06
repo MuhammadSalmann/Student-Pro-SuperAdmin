@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "./ui/Table";
 import type { HealthInsurance } from "../types/insurance.types";
+import { useAuth } from "../contexts/AuthContext";
 
 interface InsuranceTableProps {
     insurances: HealthInsurance[];
@@ -23,6 +24,7 @@ export default function InsuranceTable({
     onDelete,
     onView,
 }: InsuranceTableProps) {
+    const { canDelete } = useAuth();
     const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
     const toggleRow = (insuranceId: string) => {
@@ -40,7 +42,7 @@ export default function InsuranceTable({
     return (
         <>
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-x-auto border rounded-8md">
+            <div className="hidden overflow-x-auto border md:block rounded-8md">
                 <Table>
                <TableHeader className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] shadow-sm">
   <TableRow className="transition-colors hover:bg-black/5 border-b-black/10">
@@ -112,13 +114,15 @@ export default function InsuranceTable({
                                             >
                                                 <Edit2 size={16} />
                                             </button>
-                                            <button
-                                                onClick={() => onDelete(insurance._id)}
-                                                className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
-                                                title="Delete"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
+                                            {canDelete && (
+                                                <button
+                                                    onClick={() => onDelete(insurance._id)}
+                                                    className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
+                                                    title="Delete"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            )}
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -177,13 +181,13 @@ export default function InsuranceTable({
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden space-y-4">
+        <div className="space-y-4 md:hidden">
             {insurances.map((insurance) => {
                 const isExpanded = expandedRows.has(insurance._id);
                 const hasItems = insurance.items && insurance.items.length > 0;
 
                 return (
-                    <div key={insurance._id} className="bg-white border rounded-lg shadow-sm overflow-hidden">
+                    <div key={insurance._id} className="overflow-hidden bg-white border rounded-lg shadow-sm">
                         {/* Card Header */}
                         <div className="bg-gradient-to-l from-[#ABDBC0] to-[#E3EFFE] p-3"></div>
 
@@ -207,42 +211,44 @@ export default function InsuranceTable({
                             {/* Content */}
                             <div className="flex-1 p-3 pt-3 pr-3 space-y-2.5">
                             <div>
-                                <span className="font-medium text-gray-500 text-xs">Company:</span>
-                                <p className="text-gray-900 text-sm font-medium">{insurance.company}</p>
+                                <span className="text-xs font-medium text-gray-500">Company:</span>
+                                <p className="text-sm font-medium text-gray-900">{insurance.company}</p>
                             </div>
 
                             <div>
-                                <span className="font-medium text-gray-500 text-xs">Country:</span>
-                                <p className="text-gray-900 text-sm">{insurance.country}</p>
+                                <span className="text-xs font-medium text-gray-500">Country:</span>
+                                <p className="text-sm text-gray-900">{insurance.country}</p>
                             </div>
 
                             {/* Actions */}
                             <div className="flex gap-2 pt-2 border-t">
                                 <button
                                     onClick={() => onEdit(insurance)}
-                                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-green-600 bg-green-50 hover:bg-green-100"
+                                    className="flex items-center justify-center flex-1 gap-1 p-2 text-green-600 rounded bg-green-50 hover:bg-green-100"
                                 >
                                     <Edit2 size={16} /> Edit
                                 </button>
-                                <button
-                                    onClick={() => onDelete(insurance._id)}
-                                    className="flex-1 flex items-center justify-center gap-1 rounded p-2 text-red-600 bg-red-50 hover:bg-red-100"
-                                >
-                                    <Trash2 size={16} /> Delete
-                                </button>
+                                {canDelete && (
+                                    <button
+                                        onClick={() => onDelete(insurance._id)}
+                                        className="flex items-center justify-center flex-1 gap-1 p-2 text-red-600 rounded bg-red-50 hover:bg-red-100"
+                                    >
+                                        <Trash2 size={16} /> Delete
+                                    </button>
+                                )}
                             </div>
                         </div>
                         </div>
 
                         {/* Expanded Items */}
                         {isExpanded && hasItems && (
-                            <div className="border-t bg-gray-50 p-3">
-                                <h4 className="text-sm font-semibold text-gray-800 mb-2">Insurance Items</h4>
+                            <div className="p-3 border-t bg-gray-50">
+                                <h4 className="mb-2 text-sm font-semibold text-gray-800">Insurance Items</h4>
                                 <div className="space-y-2">
                                     {insurance.items.map((item, index) => (
-                                        <div key={index} className="bg-white p-2 rounded border text-sm">
+                                        <div key={index} className="p-2 text-sm bg-white border rounded">
                                             <div className="font-medium text-gray-900">{item.name}</div>
-                                            <div className="text-gray-600 text-xs mt-1">
+                                            <div className="mt-1 text-xs text-gray-600">
                                                 Commission: <span className="font-medium">{item.commission || 'N/A'}</span>
                                             </div>
                                         </div>

@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "./ui/Table";
 import type { VisaService } from "../types/visaService.types";
+import { useAuth } from "../contexts/AuthContext";
 
 interface VisaServiceTableProps {
     visaServices: VisaService[];
@@ -23,6 +24,7 @@ export default function VisaServiceTable({
     onDelete,
     onView,
 }: VisaServiceTableProps) {
+    const { canDelete } = useAuth();
     const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
     const toggleRow = (serviceId: string) => {
@@ -128,13 +130,15 @@ export default function VisaServiceTable({
                                     >
                                         <Edit2 size={16} />
                                     </button>
-                                    <button
-                                        onClick={() => onDelete(service._id)}
-                                        className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
-                                        title="Delete"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
+                                    {canDelete && (
+                                        <button
+                                            onClick={() => onDelete(service._id)}
+                                            className="rounded p-1.5 text-red-600 transition hover:bg-red-50 hover:text-red-900"
+                                            title="Delete"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    )}
                                 </div>
                             </TableCell>
                                 </TableRow>
@@ -234,12 +238,14 @@ export default function VisaServiceTable({
                             >
                                 <Edit2 size={16} /> Edit
                             </button>
-                            <button
-                                onClick={() => onDelete(service._id)}
-                                className="flex items-center justify-center flex-1 gap-1 p-2 text-red-600 rounded bg-red-50 hover:bg-red-100"
-                            >
-                                <Trash2 size={16} /> Delete
-                            </button>
+                            {canDelete && (
+                                <button
+                                    onClick={() => onDelete(service._id)}
+                                    className="flex items-center justify-center flex-1 gap-1 p-2 text-red-600 rounded bg-red-50 hover:bg-red-100"
+                                >
+                                    <Trash2 size={16} /> Delete
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
