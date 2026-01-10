@@ -120,4 +120,11 @@ export const API_ENDPOINTS = {
     DELETE: (id: string) => `/bookmarks/${id}`,
     GET: (id: string) => `/bookmarks/${id}`,
   },
+  FORMS: {
+    GET_ALL: "/forms",
+    CREATE: "/forms",
+    UPDATE: (id: string) => `/forms/${id}`,
+    DELETE: (id: string) => `/forms/${id}`,
+    GET: (id: string) => `/forms/${id}`,
+  },
 } as const;

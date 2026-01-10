@@ -1,6 +1,7 @@
-import { Menu, FileText } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import BookmarkDropdown from "./BookmarkDropdown";
+import FormsDropdown from "./FormsDropdown";
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -43,12 +44,7 @@ const Header = ({ onMenuClick }: HeaderProps) => {
 
       {/* Right side icons */}
       <div className="flex items-center gap-2 ml-4">
-        <button
-          className="p-2 rounded-lg text-[#313647] hover:bg-[#ABDBC0] transition-colors"
-          aria-label="Forms"
-        >
-          <FileText size={20} />
-        </button>
+        <FormsDropdown />
         <BookmarkDropdown />
       </div>
     </header>
