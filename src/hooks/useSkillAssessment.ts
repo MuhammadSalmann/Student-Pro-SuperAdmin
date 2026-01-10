@@ -20,6 +20,8 @@ export const useSkillAssessments = (initialFilters?: SkillAssessmentFilters) => 
 
   const [occupationGroups, setOccupationGroups] = useState<string[]>([]);
   const [pathwaysStreams, setPathwaysStreams] = useState<string[]>([]);
+  const [exporting, setExporting] = useState<boolean>(false);
+  const [importing, setImporting] = useState<boolean>(false);
 
   /**
    * Fetch skill assessments with current filters
@@ -129,6 +131,62 @@ export const useSkillAssessments = (initialFilters?: SkillAssessmentFilters) => 
     }
   };
 
+  /**
+   * Export skill assessments to XLSX
+   */
+  const exportToXLSX = async (): Promise<boolean> => {
+    setExporting(true);
+    try {
+      const blob = await skillAssessmentService.exportToXLSX(filters);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `skill-assessments-${Date.now()}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      toast.success("Skill assessments exported successfully");
+      return true;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to export skill assessments";
+      toast.error(errorMessage);
+      return false;
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  /**
+   * Import skill assessments from XLSX
+   */
+  const importFromXLSX = async (
+    file: File,
+    onProgress?: (progress: number) => void
+  ): Promise<any> => {
+    setImporting(true);
+    try {
+      const result = await skillAssessmentService.importFromXLSX(file, onProgress);
+      toast.success(result.message || "Skill assessments imported successfully");
+      await fetchSkillAssessments();
+      return result;
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to import skill assessments";
+      toast.error(errorMessage);
+      throw err;
+    } finally {
+      setImporting(false);
+    }
+  };
+
+  /**
+   * Download XLSX template
+   */
+  const downloadTemplate = (): void => {
+    skillAssessmentService.downloadTemplate();
+    toast.success("Template downloaded successfully");
+  };
+
   // Fetch data on mount or when filters change
   useEffect(() => {
     fetchSkillAssessments();
@@ -152,6 +210,11 @@ export const useSkillAssessments = (initialFilters?: SkillAssessmentFilters) => 
     createSkillAssessment,
     updateSkillAssessment,
     deleteSkillAssessment,
+    exportToXLSX,
+    importFromXLSX,
+    downloadTemplate,
+    exporting,
+    importing,
     refetch: fetchSkillAssessments,
   };
 };

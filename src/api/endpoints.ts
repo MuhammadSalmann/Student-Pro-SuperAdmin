@@ -108,6 +108,9 @@ export const API_ENDPOINTS = {
     CREATE: "/skill-assessment",
     UPDATE: (id: string) => `/skill-assessment/${id}`,
     DELETE: (id: string) => `/skill-assessment/${id}`,
+    // XLSX Import/Export endpoints
+    EXPORT_XLSX: "/skill-assessment/export/xlsx",
+    IMPORT_XLSX: "/skill-assessment/import/xlsx",
   },
   BOOKMARKS: {
     LIST: "/bookmarks/me",
