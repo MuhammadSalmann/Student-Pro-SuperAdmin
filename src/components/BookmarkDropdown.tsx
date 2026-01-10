@@ -2,10 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Bookmark, Plus, Edit2, Trash2, ExternalLink, X } from "lucide-react";
 import { useBookmark } from "../hooks/useBookmark";
 import type { Bookmark as BookmarkType } from "../types/bookmark.types";
-import { useAuth } from "../contexts/AuthContext";
 
 const BookmarkDropdown = () => {
-  const { canDelete } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -247,15 +245,13 @@ const BookmarkDropdown = () => {
                           >
                             <Edit2 size={14} />
                           </button>
-                          {canDelete && (
-                            <button
-                              onClick={() => handleDeleteBookmark(bookmark._id)}
-                              className="p-1 text-red-600 transition-colors rounded hover:bg-gray-200"
-                              aria-label="Delete"
-                            >
-                              <Trash2 size={14} />
-                            </button>
-                          )}
+                          <button
+                            onClick={() => handleDeleteBookmark(bookmark._id)}
+                            className="p-1 text-red-600 transition-colors rounded hover:bg-gray-200"
+                            aria-label="Delete"
+                          >
+                            <Trash2 size={14} />
+                          </button>
                         </div>
                       </div>
                     )}
