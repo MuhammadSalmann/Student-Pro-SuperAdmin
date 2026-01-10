@@ -57,14 +57,16 @@ const ContactUs = () => {
               key={index}
               className="overflow-hidden transition-shadow bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl"
             >
-              {/* Name Badge with Initials */}
-              <div className="relative flex items-center justify-center h-40 bg-gray-50">
-                <div className={`flex items-center justify-center w-24 h-24 rounded-full ${
-                  index === 0 ? 'bg-gradient-to-br from-blue-600 to-green-500 shadow-lg' : 'bg-gradient-to-br from-blue-600 to-green-500 shadow-lg'
-                }`}>
-                  <span className="text-4xl font-bold text-white">
-                    {member.name.split(' ').map(n => n[0]).join('')}
-                  </span>
+              {/* Profile Image */}
+              <div className="relative flex items-center justify-center h-40 bg-gradient-to-br from-blue-50 via-teal-50 to-green-50">
+                <div className="p-1 rounded-full bg-gradient-to-br from-blue-500 via-teal-500 to-green-500">
+                  <div className="w-32 h-32 overflow-hidden bg-white rounded-full">
+                    <img
+                      src={index === 0 ? '/DanishBhatti.png' : '/ShafaqatAli.png'}
+                      alt={member.name}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
                 </div>
               </div>
 
