@@ -72,10 +72,23 @@ export default function SkillAssessmentViewModal({
             </h3>
             <div className="grid grid-cols-1 gap-5">
               <Field label="Priority Available" value={skillAssessment.priorityAvailable || "N/A"} />
-              <Field 
-                label="Documents Checklist" 
-                value={skillAssessment.documentsChecklist || "N/A"} 
-              />
+              <div>
+                <label className="block mb-1 text-sm font-medium text-gray-700">
+                  Documents Checklist
+                </label>
+                {skillAssessment.documentsChecklist ? (
+                  <ol className="text-sm text-gray-600 list-decimal list-inside space-y-1 mt-2">
+                    {skillAssessment.documentsChecklist.split(';').map((item, idx) => {
+                      const trimmedItem = item.trim();
+                      return trimmedItem ? (
+                        <li key={idx}>{trimmedItem}</li>
+                      ) : null;
+                    })}
+                  </ol>
+                ) : (
+                  <p className="text-sm text-gray-600">—</p>
+                )}
+              </div>
               <Field 
                 label="Official Link" 
                 value={
