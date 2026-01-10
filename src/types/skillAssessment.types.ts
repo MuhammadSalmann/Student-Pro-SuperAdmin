@@ -54,3 +54,26 @@ export interface PathwaysStreamsResponse {
   success: boolean;
   data: string[];
 }
+
+export interface XLSXImportResponse {
+  success: boolean;
+  message: string;
+  summary: {
+    totalRows: number;
+    created: number;
+    updated: number;
+    skipped: number;
+    errors: number;
+  };
+  data: SkillAssessment[];
+  errors?: Array<{
+    row: number;
+    error: string;
+    data: Record<string, unknown>;
+  }>;
+}
+
+export interface XLSXExportFilters {
+  occupationGroups?: string;
+  pathwaysStreams?: string;
+}
