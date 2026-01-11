@@ -36,7 +36,7 @@ export default function InstitutionModal({
   onClose,
   onSubmit,
 }: InstitutionModalProps) {
-  const { canDelete } = useAuth();
+  const { canViewCommission } = useAuth();
   // Form states
   const [formData, setFormData] = useState<Partial<CreateInstitutionData>>({
     name: "",
@@ -530,7 +530,7 @@ export default function InstitutionModal({
                 onChange={(e) => setNewCourse({ ...newCourse, course: e.target.value })}
               />
               <div className="flex gap-2">
-                {canDelete && (
+                {canViewCommission && (
                   <Input
                     placeholder="Commission (e.g., 10%)"
                     value={newCourse.commission}
@@ -541,7 +541,7 @@ export default function InstitutionModal({
                   type="button"
                   onClick={handleAddCourse}
                   className="flex items-center gap-1 bg-[#313647] hover:bg-[#10192c] whitespace-nowrap"
-                  disabled={!newCourse.course.trim() || (canDelete && !newCourse.commission.trim())}
+                  disabled={!newCourse.course.trim() || (canViewCommission && !newCourse.commission.trim())}
                 >
                   <Plus size={16} />
                   Add
@@ -564,7 +564,7 @@ export default function InstitutionModal({
                   >
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">{course.course}</p>
-                      {canDelete && <p className="text-sm text-green-600">{course.commission}</p>}
+                      {canViewCommission && <p className="text-sm text-green-600">{course.commission}</p>}
                     </div>
                     <button
                       type="button"
