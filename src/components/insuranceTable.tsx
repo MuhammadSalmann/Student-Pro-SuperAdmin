@@ -140,33 +140,43 @@ export default function InsuranceTable({
                                                         </h4>
                                                     </div>
                                                     <div className="overflow-x-auto">
-                                                        <table className="w-auto">
-                                                            <thead>
-                                                                <tr className="border-b border-gray-200 bg-gray-100/70">
-                                                                    <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200 whitespace-nowrap">
-                                                                        Item Name
-                                                                    </th>
-                                                                    <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider whitespace-nowrap">
-                                                                        Commission
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody className="divide-y divide-gray-200">
-                                                                {insurance.items.map((item, index) => (
-                                                                    <tr
-                                                                        key={index}
-                                                                        className="transition-colors hover:bg-blue-50/30"
-                                                                    >
-                                                                        <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200 whitespace-nowrap">
-                                                                            {item.name}
-                                                                        </td>
-                                                                        <td className="px-3 py-1.5 text-sm text-gray-700">
-                                                                            {item.commission || 'N/A'}
-                                                                        </td>
-                                                                    </tr>
-                                                                ))}
-                                                            </tbody>
-                                                        </table>
+                                                        {canDelete ? (
+                                                          <table className="w-auto">
+                                                              <thead>
+                                                                  <tr className="border-b border-gray-200 bg-gray-100/70">
+                                                                      <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider border-r border-gray-200 whitespace-nowrap">
+                                                                          Item Name
+                                                                      </th>
+                                                                      <th className="text-left px-3 py-1.5 text-xs font-semibold text-gray-700 uppercase tracking-wider whitespace-nowrap">
+                                                                          Commission
+                                                                      </th>
+                                                                  </tr>
+                                                              </thead>
+                                                              <tbody className="divide-y divide-gray-200">
+                                                                  {insurance.items.map((item, index) => (
+                                                                      <tr
+                                                                          key={index}
+                                                                          className="transition-colors hover:bg-blue-50/30"
+                                                                      >
+                                                                          <td className="px-3 py-1.5 text-sm text-gray-900 border-r border-gray-200 whitespace-nowrap">
+                                                                              {item.name}
+                                                                          </td>
+                                                                          <td className="px-3 py-1.5 text-sm text-gray-700">
+                                                                              {item.commission || 'N/A'}
+                                                                          </td>
+                                                                      </tr>
+                                                                  ))}
+                                                              </tbody>
+                                                          </table>
+                                                        ) : (
+                                                          <ul className="px-3 py-2 space-y-1.5 list-disc list-inside">
+                                                              {insurance.items.map((item, index) => (
+                                                                  <li key={index} className="text-sm text-gray-900">
+                                                                      {item.name}
+                                                                  </li>
+                                                              ))}
+                                                          </ul>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -248,9 +258,11 @@ export default function InsuranceTable({
                                     {insurance.items.map((item, index) => (
                                         <div key={index} className="p-2 text-sm bg-white border rounded">
                                             <div className="font-medium text-gray-900">{item.name}</div>
-                                            <div className="mt-1 text-xs text-gray-600">
-                                                Commission: <span className="font-medium">{item.commission || 'N/A'}</span>
-                                            </div>
+                                            {canDelete && (
+                                              <div className="mt-1 text-xs text-gray-600">
+                                                  Commission: <span className="font-medium">{item.commission || 'N/A'}</span>
+                                              </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
