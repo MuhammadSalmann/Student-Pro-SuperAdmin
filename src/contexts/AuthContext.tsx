@@ -7,6 +7,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   canDelete: boolean;
+  canViewCommission: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (data: RegisterData) => Promise<{ email: string; userId: string }>;
   verifyEmail: (data: VerifyEmailData) => Promise<void>;
@@ -118,6 +119,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isAuthenticated: !!user,
         isLoading,
         canDelete: user?.role === "SuperAdmin",
+        canViewCommission: user?.role === "SuperAdmin" || user?.role === "Agent",
         login,
         register,
         verifyEmail,

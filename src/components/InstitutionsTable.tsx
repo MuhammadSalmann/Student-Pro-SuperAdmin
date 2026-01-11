@@ -30,7 +30,7 @@ export default function InstitutionsTable({
   onDelete,
   onView,
 }: InstitutionsTableProps) {
-  const { canDelete } = useAuth();
+  const { canDelete, canViewCommission } = useAuth();
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
   const toggleRow = (institutionId: string) => {
@@ -338,7 +338,7 @@ export default function InstitutionsTable({
                                 </h4>
                               </div>
                               <div className="overflow-x-auto">
-                                {canDelete ? (
+                                {canViewCommission ? (
                                   <table className="w-full">
                                     <thead>
                                       <tr className="border-b border-gray-200 bg-gray-100/70">
@@ -604,7 +604,7 @@ export default function InstitutionsTable({
                         {parsedCourses.map((course, index) => (
                           <div key={course._id || index} className="bg-white p-2 rounded border text-sm">
                             <div className="font-medium text-gray-900">{course.course}</div>
-                            {canDelete && (
+                            {canViewCommission && (
                               <div className="text-gray-600 text-xs mt-1">
                                 Commission: <span className="font-medium">{course.commission || 'N/A'}</span>
                               </div>

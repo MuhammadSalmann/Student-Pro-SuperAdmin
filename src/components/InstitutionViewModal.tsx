@@ -17,7 +17,7 @@ export default function InstitutionViewModal({
   institution,
   onClose,
 }: InstitutionViewModalProps) {
-  const { canDelete } = useAuth();
+  const { canViewCommission } = useAuth();
   if (!isOpen || !institution) return null;
 
   return (
@@ -156,7 +156,7 @@ export default function InstitutionViewModal({
                     <span className="text-sm text-gray-800">
                       {courseData.course}
                     </span>
-                    {canDelete && (
+                    {canViewCommission && (
                       <span className="inline-flex items-center px-3 py-1 ml-3 text-xs font-normal border rounded-md text-emerald-700 bg-emerald-50 border-emerald-100 whitespace-nowrap">
                         {courseData.commission}
                       </span>

@@ -24,7 +24,7 @@ export default function InsuranceTable({
     onDelete,
     onView,
 }: InsuranceTableProps) {
-    const { canDelete } = useAuth();
+    const { canDelete, canViewCommission } = useAuth();
     const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
 
     const toggleRow = (insuranceId: string) => {
@@ -140,7 +140,7 @@ export default function InsuranceTable({
                                                         </h4>
                                                     </div>
                                                     <div className="overflow-x-auto">
-                                                        {canDelete ? (
+                                                        {canViewCommission ? (
                                                           <table className="w-auto">
                                                               <thead>
                                                                   <tr className="border-b border-gray-200 bg-gray-100/70">
@@ -258,7 +258,7 @@ export default function InsuranceTable({
                                     {insurance.items.map((item, index) => (
                                         <div key={index} className="p-2 text-sm bg-white border rounded">
                                             <div className="font-medium text-gray-900">{item.name}</div>
-                                            {canDelete && (
+                                            {canViewCommission && (
                                               <div className="mt-1 text-xs text-gray-600">
                                                   Commission: <span className="font-medium">{item.commission || 'N/A'}</span>
                                               </div>
