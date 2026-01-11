@@ -4,6 +4,7 @@ import {
   renderTerritoryBadge,
   formatCoursesForDisplay,
 } from "../utils/helpers";
+import { useAuth } from "../contexts/AuthContext";
 
 interface InstitutionViewModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ export default function InstitutionViewModal({
   institution,
   onClose,
 }: InstitutionViewModalProps) {
+  const { canViewCommission } = useAuth();
   if (!isOpen || !institution) return null;
 
   return (
@@ -28,7 +30,7 @@ export default function InstitutionViewModal({
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:ring-0"
+            className="text-gray-400 transition-colors hover:text-gray-600 focus:outline-none focus:ring-0"
           >
             <X size={22} />
           </button>
@@ -38,7 +40,7 @@ export default function InstitutionViewModal({
         <div className="p-6 space-y-7">
           {/* Basic Information */}
           <div>
-            <h3 className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
               Basic Information
             </h3>
             <div className="grid grid-cols-2 gap-x-6 gap-y-5">
@@ -62,7 +64,7 @@ export default function InstitutionViewModal({
                       href={institution.scholarship}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 hover:underline transition-colors text-sm"
+                      className="inline-flex items-center gap-1 text-sm text-blue-600 transition-colors hover:text-blue-700 hover:underline"
                     >
                       View Link
                       <ExternalLink size={13} />
@@ -97,13 +99,13 @@ export default function InstitutionViewModal({
           {/* Territory */}
           {(institution.global || (institution.territory && institution.territory.length > 0)) && (
             <div>
-              <h3 className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
                 Territory
               </h3>
               <div className="flex flex-wrap items-center gap-2.5">
                 {institution.global ? (
                   <span
-                    className="inline-flex items-center justify-center w-9 h-9 text-gray-500 hover:text-gray-700 hover:scale-110 transition-all duration-200"
+                    className="inline-flex items-center justify-center text-gray-500 transition-all duration-200 w-9 h-9 hover:text-gray-700 hover:scale-110"
                     title="Global"
                   >
                     <Globe size={20} />
@@ -117,7 +119,7 @@ export default function InstitutionViewModal({
                       return (
                         <span
                           key={idx}
-                          className="inline-flex items-center justify-center w-9 h-9 text-gray-500 hover:text-gray-700 hover:scale-110 transition-all duration-200"
+                          className="inline-flex items-center justify-center text-gray-500 transition-all duration-200 w-9 h-9 hover:text-gray-700 hover:scale-110"
                           title="Global"
                         >
                           <Globe size={20} />
@@ -142,7 +144,7 @@ export default function InstitutionViewModal({
           {/* Courses */}
           {institution.course && institution.course.length > 0 && (
             <div>
-              <h3 className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
                 Courses ({institution.course.length})
               </h3>
               <div className="space-y-2.5 max-h-64 overflow-y-auto pr-1">
@@ -151,12 +153,14 @@ export default function InstitutionViewModal({
                     key={courseData.key}
                     className="flex items-center justify-between p-3.5 border border-gray-200 rounded-lg bg-gradient-to-r from-gray-50 to-white hover:border-gray-300 transition-colors"
                   >
-                    <span className="text-gray-800 text-sm">
+                    <span className="text-sm text-gray-800">
                       {courseData.course}
                     </span>
-                    <span className="inline-flex items-center px-3 py-1 text-xs font-normal text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-md whitespace-nowrap ml-3">
-                      {courseData.commission}
-                    </span>
+                    {canViewCommission && (
+                      <span className="inline-flex items-center px-3 py-1 ml-3 text-xs font-normal border rounded-md text-emerald-700 bg-emerald-50 border-emerald-100 whitespace-nowrap">
+                        {courseData.commission}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -166,11 +170,11 @@ export default function InstitutionViewModal({
           {/* Application Method */}
           {institution.applicationMethod && institution.applicationMethod.trim() && (
             <div>
-              <h3 className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
                 Application Method
               </h3>
               <div className="p-3.5 border border-gray-200 rounded-lg bg-gradient-to-r from-gray-50 to-white">
-                <a href={institution.applicationMethod} className="text-sm text-gray-800 break-words underline hover:text-blue-600 hover:underline transition-colors" target="_blank" rel="noopener noreferrer">
+                <a href={institution.applicationMethod} className="text-sm text-gray-800 underline break-words transition-colors hover:text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
                   {institution.applicationMethod}
                 </a>
               </div>
