@@ -1,5 +1,6 @@
 import { X, ShieldCheck } from "lucide-react";
 import type { HealthInsurance } from "../types/insurance.types";
+import { useAuth } from "../contexts/AuthContext";
 
 interface InsuranceViewModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ export default function InsuranceViewModal({
   insurance,
   onClose,
 }: InsuranceViewModalProps) {
+  const { canViewCommission } = useAuth();
   if (!isOpen || !insurance) return null;
 
   return (
@@ -50,30 +52,40 @@ export default function InsuranceViewModal({
                 Insurance Items ({insurance.items.length})
               </h3>
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Item Name
-                      </th>
-                      <th className="text-right py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Commission
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {insurance.items.map((item, index) => (
-                      <tr key={index}>
-                        <td className="py-2 px-3 text-sm text-gray-800">
-                          {item.name}
-                        </td>
-                        <td className="py-2 px-3 text-sm text-gray-800 text-right">
-                          {item.commission || 'N/A'}
-                        </td>
+                {canViewCommission ? (
+                  <table className="w-full border-collapse">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Item Name
+                        </th>
+                        <th className="text-right py-2 px-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Commission
+                        </th>
                       </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {insurance.items.map((item, index) => (
+                        <tr key={index}>
+                          <td className="py-2 px-3 text-sm text-gray-800">
+                            {item.name}
+                          </td>
+                          <td className="py-2 px-3 text-sm text-gray-800 text-right">
+                            {item.commission || 'N/A'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <ul className="px-3 py-2 space-y-2 list-disc list-inside">
+                    {insurance.items.map((item, index) => (
+                      <li key={index} className="text-sm text-gray-800">
+                        {item.name}
+                      </li>
                     ))}
-                  </tbody>
-                </table>
+                  </ul>
+                )}
               </div>
             </div>
           )}

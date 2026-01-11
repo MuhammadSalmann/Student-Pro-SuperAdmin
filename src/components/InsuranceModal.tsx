@@ -22,7 +22,7 @@ export default function InsuranceModal({
   onClose,
   onSubmit,
 }: InsuranceModalProps) {
-  const { canDelete } = useAuth();
+  const { canViewCommission } = useAuth();
   // Form states
   const [formData, setFormData] = useState<Partial<CreateHealthInsuranceData>>({
     company: "",
@@ -61,7 +61,7 @@ export default function InsuranceModal({
       toast.error("Please enter an item name");
       return;
     }
-    if (canDelete && !newItem.commission.trim()) {
+    if (canViewCommission && !newItem.commission.trim()) {
       toast.error("Please enter commission details");
       return;
     }
@@ -199,7 +199,7 @@ export default function InsuranceModal({
                   onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
                 />
                 <div className="flex gap-2">
-                  {canDelete && (
+                  {canViewCommission && (
                     <Input
                       placeholder="Commission details"
                       value={newItem.commission}
@@ -210,7 +210,7 @@ export default function InsuranceModal({
                     type="button"
                     onClick={handleAddItem}
                     className="flex items-center gap-1 bg-[#0A1F38] hover:bg-[#10192c] whitespace-nowrap"
-                    disabled={!newItem.name.trim() || (canDelete && !newItem.commission.trim())}
+                    disabled={!newItem.name.trim() || (canViewCommission && !newItem.commission.trim())}
                   >
                     <Plus size={16} />
                     Add
@@ -235,7 +235,7 @@ export default function InsuranceModal({
                         <p className="text-sm font-medium text-gray-900 truncate">
                           {item.name}
                         </p>
-                        {canDelete && (
+                        {canViewCommission && (
                           <p className="text-sm text-gray-600 break-words">
                             {item.commission}
                           </p>

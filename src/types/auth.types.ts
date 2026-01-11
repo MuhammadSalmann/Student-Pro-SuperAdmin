@@ -1,6 +1,7 @@
 export type UserRole =
   | "SuperAdmin"
-  | "Counsellor";
+  | "Counsellor"
+  | "Agent";
 
 export type UserStatus = "Active" | "Inactive" | "Pending";
 
