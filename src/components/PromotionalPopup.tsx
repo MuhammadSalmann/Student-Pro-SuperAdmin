@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { X, Gift, Sparkles } from "lucide-react";
 import type { Popup } from "../types/popup.types";
 
@@ -10,6 +11,7 @@ interface PromotionalPopupProps {
 const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 100);
@@ -17,7 +19,10 @@ const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(onClose, 300);
+    setTimeout(() => {
+      onClose();
+      navigate("/contact-us");
+    }, 300);
   };
 
   return (
