@@ -19,10 +19,7 @@ const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(() => {
-      onClose();
-      navigate("/contact-us");
-    }, 300);
+    setTimeout(onClose, 300);
   };
 
   const handleContactUs = () => {
