@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Mail, Lock, User, Phone, Globe, MapPin, Building2, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, Phone, ArrowRight } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "../lib/toast";
 import { Button } from "../components/ui/Button";
@@ -12,16 +12,12 @@ const Register = () => {
   const navigate = useNavigate();
   const { register } = useAuth();
   const [formData, setFormData] = useState<RegisterData>({
-    role: "SuperAdmin",
+    role: "Counsellor",
     first_name: "",
     last_name: "",
     email: "",
     password: "",
     phone: "",
-    region: "",
-    country: "",
-    branch_name: "",
-    category: "",
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -150,120 +146,22 @@ const Register = () => {
                 </div>
               </div>
 
-              {/* Phone and Role - Grid */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                    Phone Number
-                  </label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="pl-10"
-                      placeholder="+1234567890"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="role" className="text-sm font-medium text-gray-700">
-                    Role
-                  </label>
-                  <select
-                    id="role"
-                    name="role"
-                    required
-                    value={formData.role}
-                    onChange={handleChange}
-                    className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    <option value="Student">Student</option>
-                    <option value="Agent">Agent</option>
-                    <option value="SuperAgent">Super Agent</option>
-                    <option value="SubAgent">Sub Agent</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Region and Country - Grid */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label htmlFor="region" className="text-sm font-medium text-gray-700">
-                    Region
-                  </label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                      id="region"
-                      name="region"
-                      type="text"
-                      required
-                      value={formData.region}
-                      onChange={handleChange}
-                      className="pl-10"
-                      placeholder="North America"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="country" className="text-sm font-medium text-gray-700">
-                    Country
-                  </label>
-                  <div className="relative">
-                    <Globe className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                      id="country"
-                      name="country"
-                      type="text"
-                      required
-                      value={formData.country}
-                      onChange={handleChange}
-                      className="pl-10"
-                      placeholder="United States"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Branch and Category - Grid */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <label htmlFor="branch_name" className="text-sm font-medium text-gray-700">
-                    Branch Name (Optional)
-                  </label>
-                  <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                      id="branch_name"
-                      name="branch_name"
-                      type="text"
-                      value={formData.branch_name}
-                      onChange={handleChange}
-                      className="pl-10"
-                      placeholder="Main Branch"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label htmlFor="category" className="text-sm font-medium text-gray-700">
-                    Category
-                  </label>
+              {/* Phone Field */}
+              <div className="space-y-2">
+                <label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                  Phone Number
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                   <Input
-                    id="category"
-                    name="category"
-                    type="text"
+                    id="phone"
+                    name="phone"
+                    type="tel"
                     required
-                    value={formData.category}
+                    value={formData.phone}
                     onChange={handleChange}
-                    placeholder="Enter category"
+                    className="pl-10"
+                    placeholder="+1234567890"
                   />
                 </div>
               </div>

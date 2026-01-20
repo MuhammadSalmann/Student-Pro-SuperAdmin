@@ -36,10 +36,6 @@ export interface RegisterData {
   email: string;
   password: string;
   phone: string;
-  region: string;
-  country: string;
-  branch_name?: string;
-  category: string;
 }
 
 export interface VerifyEmailData {
