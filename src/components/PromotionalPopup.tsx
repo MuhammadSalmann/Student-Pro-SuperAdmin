@@ -19,10 +19,12 @@ const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(() => {
-      onClose();
-      navigate("/contact-us");
-    }, 300);
+    setTimeout(onClose, 300);
+  };
+
+  const handleContactUs = () => {
+    navigate("/contact-us");
+    handleClose();
   };
 
   return (
@@ -115,7 +117,7 @@ const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
           <div className="p-6 pt-4 space-y-3 bg-white border-t border-gray-200">
             {/* Action button */}
             <button
-              onClick={handleClose}
+              onClick={handleContactUs}
               className="w-full py-3 px-6 bg-gradient-to-r from-[#0A1F38] to-[#0d2a4d] hover:from-[#0d2a4d] hover:to-[#0A1F38] text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200"
             >
                 Avail Now
