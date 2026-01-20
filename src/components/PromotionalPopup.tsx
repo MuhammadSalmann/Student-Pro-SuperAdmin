@@ -13,7 +13,7 @@ const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
 
   useEffect(() => {
     setTimeout(() => setIsVisible(true), 100);
-  }, []);
+  }, [popup]);
 
   const handleClose = () => {
     setIsVisible(false);
