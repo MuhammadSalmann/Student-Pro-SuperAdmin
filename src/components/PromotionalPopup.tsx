@@ -12,12 +12,8 @@ const PromotionalPopup = ({ popup, onClose }: PromotionalPopupProps) => {
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    // Trigger animation after mount
     setTimeout(() => setIsVisible(true), 100);
-    console.log("[Admin PromotionalPopup] Displaying popup:", popup);
-    console.log("[Admin PromotionalPopup] Photo URL:", popup.photoUrl);
-    console.log("[Admin PromotionalPopup] Photo URL exists:", popup.photoUrl && popup.photoUrl.trim() !== "");
-  }, [popup]);
+  }, []);
 
   const handleClose = () => {
     setIsVisible(false);

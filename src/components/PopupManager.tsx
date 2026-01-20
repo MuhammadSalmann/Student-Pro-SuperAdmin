@@ -13,12 +13,9 @@ const PopupManager = () => {
 
   const fetchAndShowPopups = async () => {
     try {
-      console.log("[Admin PopupManager] Fetching active popups...");
       const { popups } = await popupService.getActivePopups();
-      console.log("[Admin PopupManager] Received popups:", popups);
       
       if (popups.length === 0) {
-        console.log("[Admin PopupManager] No active popups found");
         return;
       }
 
@@ -45,13 +42,12 @@ const PopupManager = () => {
       const popupsToShow = popups; // Show all popups for testing
 
       if (popupsToShow.length > 0) {
-        console.log("[Admin PopupManager] Showing popups:", popupsToShow);
         setActivePopups(popupsToShow);
         setCurrentPopupIndex(0);
         setShowPopup(true);
       }
     } catch (error) {
-      console.error("[Admin PopupManager] Error fetching popups:", error);
+      console.error("Error fetching popups:", error);
     }
   };
 
@@ -63,7 +59,6 @@ const PopupManager = () => {
 
   const handleClosePopup = () => {
     const currentPopup = activePopups[currentPopupIndex];
-    console.log("[Admin PopupManager] Closing popup:", currentPopup._id);
     
     // Save closed popup to localStorage
     const closedPopupsStr = localStorage.getItem(POPUP_STORAGE_KEY);
@@ -76,17 +71,11 @@ const PopupManager = () => {
 
     // Show next popup if available
     if (currentPopupIndex < activePopups.length - 1) {
-      console.log("[Admin PopupManager] Showing next popup at index:", currentPopupIndex + 1);
       setCurrentPopupIndex(currentPopupIndex + 1);
     } else {
-      console.log("[Admin PopupManager] No more popups to show");
       setShowPopup(false);
     }
   };
-
-  useEffect(() => {
-    console.log("[Admin PopupManager] State changed - showPopup:", showPopup, "currentIndex:", currentPopupIndex, "total:", activePopups.length);
-  }, [showPopup, currentPopupIndex, activePopups]);
 
   if (!showPopup || activePopups.length === 0) {
     return null;
