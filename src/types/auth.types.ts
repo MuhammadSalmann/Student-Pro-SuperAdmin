@@ -1,7 +1,4 @@
-export type UserRole =
-  | "SuperAdmin"
-  | "Counsellor"
-  | "Agent";
+export type UserRole = "SuperAdmin" | "Counsellor" | "Agent";
 
 export type UserStatus = "Active" | "Inactive" | "Pending";
 
@@ -25,7 +22,8 @@ export interface User {
 }
 
 export interface LoginCredentials {
-  email: string;
+  email?: string;
+  username?: string;
   password: string;
 }
 
