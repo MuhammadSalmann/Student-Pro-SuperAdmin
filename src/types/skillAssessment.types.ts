@@ -5,7 +5,8 @@ export interface SkillAssessment {
   standardFeeAUD?: string;
   priorityFeeAUD?: string;
   standardProcessingTime?: string;
-  priorityProcessingTime?: string;
+  assessingBodyName?: string;
+  assessingBodyLink?: string;
   priorityAvailable?: string;
   documentsChecklist?: string;
   officialLink?: string;
@@ -37,7 +38,8 @@ export interface CreateSkillAssessmentData {
   standardFeeAUD?: string;
   priorityFeeAUD?: string;
   standardProcessingTime?: string;
-  priorityProcessingTime?: string;
+  assessingBodyName?: string;
+  assessingBodyLink?: string;
   priorityAvailable?: string;
   documentsChecklist?: string;
   officialLink?: string;

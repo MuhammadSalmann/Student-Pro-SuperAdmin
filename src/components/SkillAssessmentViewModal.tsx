@@ -15,26 +15,26 @@ export default function SkillAssessmentViewModal({
   if (!isOpen || !skillAssessment) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white shadow-2xl border border-gray-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-gray-100 bg-white shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-green-50">
+        <div className="flex items-center justify-between border-b border-gray-100 bg-gradient-to-r from-blue-50 to-green-50 p-6">
           <h2 className="text-2xl font-semibold text-gray-800">
             {skillAssessment.occupationGroups}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-blue-600 hover:bg-blue-100/50 rounded-full p-1 transition-all focus:outline-none focus:ring-0"
+            className="rounded-full p-1 text-gray-400 transition-all hover:bg-blue-100/50 hover:text-blue-600 focus:outline-none focus:ring-0"
           >
             <X size={22} />
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6 space-y-6">
+        <div className="space-y-6 p-6">
           {/* Basic Information */}
           <div>
-            <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
+            <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-gray-500">
               Skill Assessment Information
             </h3>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -45,7 +45,7 @@ export default function SkillAssessmentViewModal({
 
           {/* Fee Information */}
           <div>
-            <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
+            <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-gray-500">
               Fee Details
             </h3>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -54,60 +54,107 @@ export default function SkillAssessmentViewModal({
             </div>
           </div>
 
-          {/* Processing Time Information */}
+          {/* Processing Time & Assessing Body */}
           <div>
-            <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
-              Processing Time
+            <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-gray-500">
+              Processing Time & Assessing Body
             </h3>
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <Field label="Standard Processing Time" value={skillAssessment.standardProcessingTime || "N/A"} />
-              <Field label="Priority Processing Time" value={skillAssessment.priorityProcessingTime || "N/A"} />
+              <Field
+                label="Standard Processing Time"
+                value={skillAssessment.standardProcessingTime || "N/A"}
+              />
+              <Field
+                label="Assessing Body Name"
+                value={
+                  skillAssessment.assessingBodyName ? (
+                    skillAssessment.assessingBodyLink ? (
+                      <a
+                        href={skillAssessment.assessingBodyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 hover:underline"
+                      >
+                        {skillAssessment.assessingBodyName}
+                        <svg
+                          className="h-3 w-3 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                      </a>
+                    ) : (
+                      skillAssessment.assessingBodyName
+                    )
+                  ) : (
+                    "N/A"
+                  )
+                }
+              />
             </div>
           </div>
 
           {/* Additional Information */}
           <div>
-            <h3 className="mb-4 text-xs font-medium tracking-wider text-gray-500 uppercase">
+            <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-gray-500">
               Additional Information
             </h3>
             <div className="grid grid-cols-1 gap-5">
-              <Field label="Priority Available" value={skillAssessment.priorityAvailable || "N/A"} />
+              <Field
+                label="Priority Available"
+                value={skillAssessment.priorityAvailable || "N/A"}
+              />
               <div>
-                <label className="block mb-1 text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-gray-700">
                   Documents Checklist
                 </label>
                 {skillAssessment.documentsChecklist ? (
-                  <ol className="text-sm text-gray-600 list-decimal list-inside space-y-1 mt-2">
-                    {skillAssessment.documentsChecklist.split(';').map((item, idx) => {
+                  <ol className="mt-2 list-inside list-decimal space-y-1 text-sm text-gray-600">
+                    {skillAssessment.documentsChecklist.split(";").map((item, idx) => {
                       const trimmedItem = item.trim();
-                      return trimmedItem ? (
-                        <li key={idx}>{trimmedItem}</li>
-                      ) : null;
+                      return trimmedItem ? <li key={idx}>{trimmedItem}</li> : null;
                     })}
                   </ol>
                 ) : (
                   <p className="text-sm text-gray-600">—</p>
                 )}
               </div>
-              <Field 
-                label="Official Link" 
+              <Field
+                label="Official Link"
                 value={
                   skillAssessment.officialLink ? (
                     <a
                       href={skillAssessment.officialLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1 break-all"
+                      className="inline-flex items-center gap-1 break-all text-blue-600 hover:text-blue-800 hover:underline"
                     >
                       {skillAssessment.officialLink}
-                      <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      <svg
+                        className="h-3 w-3 flex-shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
                       </svg>
                     </a>
                   ) : (
                     "N/A"
                   )
-                } 
+                }
               />
             </div>
           </div>
@@ -117,16 +164,10 @@ export default function SkillAssessmentViewModal({
   );
 }
 
-function Field({
-  label,
-  value,
-}: {
-  label: string;
-  value: React.ReactNode;
-}) {
+function Field({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div>
-      <p className="text-xs font-medium text-gray-500 mb-1.5">{label}</p>
+      <p className="mb-1.5 text-xs font-medium text-gray-500">{label}</p>
       <div className="text-sm text-gray-800">{value}</div>
     </div>
   );
